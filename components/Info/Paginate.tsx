@@ -1,8 +1,8 @@
 import React from 'react';
 import { useQuery } from '@apollo/react-hooks';
 import { client } from '@components/MyApollo/MyApollo';
-import { PagProduct } from '@components/Apollo/jobs.query';
-import { Datos, Ruta, Pages} from '@components/Store/Datos';
+import { PagSearch } from '@components/Apollo/jobs.query';
+import { Datos, Ruta, Pages} from '@components/Info/Datos';
 import {useRouter} from 'next/router';
 
 const Paginate = () => {

@@ -70,7 +70,8 @@ export const Pages = (id) => {
         client: client
     });
     if(data){
-        pages = data.allServicio.pageInfo.endCursor;
+		console.log(data)
+        pages = data.allPrestadorServicio.pageInfo.endCursor;
     }else{
         pages = null;
     }

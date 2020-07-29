@@ -8,8 +8,8 @@ import { Urlgraph } from '@components/Store/Datos';
 const cache = new InMemoryCache();
 // const url = Urlgraph();
 const link = new HttpLink({
-    //uri: `http://127.0.0.1:8000/graphql/`,
-    uri: `http://192.168.123.1:8000/api/`,
+    uri: `http://localhost:8000/api/`,
+    //uri: `http://192.168.123.1:8000/api/`,
     fetch,
     
   });
