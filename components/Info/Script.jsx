@@ -1,24 +1,22 @@
 import React from 'react';
 import Head from 'next/head';
 
-const registry = () => (
+const Estilo = () => (
 	<Head>
 		
 		
-		{/*
-		<script src="vendors/jquery.min.js"></script>
-    <script src="vendors/popper/popper.js"></script>
-    <script src="vendors/bootstrap/js/bootstrap.js"></script>
-    <script src="vendors/hc-sticky/hc-sticky.js"></script>
-    <script src="vendors/isotope/isotope.pkgd.js"></script>
-    <script src="vendors/magnific-popup/jquery.magnific-popup.js"></script>
-    <script src="vendors/slick/slick.js"></script>
-	<script src="vendors/waypoints/jquery.waypoints.js"></script>
-	<script src="js/app.js"></script>
-	*/}
+		{/*<script src="vendors/jquery.min.js"></script>
+		<script src="vendors/popper/popper.js"></script>
+		<script src="vendors/bootstrap/js/bootstrap.js"></script>
+		<script src="vendors/hc-sticky/hc-sticky.js"></script>
+		<script src="vendors/isotope/isotope.pkgd.js"></script>
+		<script src="vendors/slick/slick.js"></script>
+		<script src="vendors/waypoints/jquery.waypoints.js"></script>
+		<script src="vendors/magnific-popup/jquery.magnific-popup.js"></script>
+		<script src="js/app.js"></script>
+*/}
 
-
-	
+		
 		<script
 		dangerouslySetInnerHTML={{
 			__html: `
@@ -87,7 +85,7 @@ const registry = () => (
 			`,
 	  }} src="js/app.js"></script>
 	
-	
+
 
 
 
@@ -104,4 +102,4 @@ const registry = () => (
 	</Head>
 );
 
-export default registry;
+export default Estilo;

@@ -6,15 +6,15 @@ import Footer from './Footer';
 
 
 
- function Home() {
+ function Homes() {
     
 
     return (
 <div>
-<Estilo/>
+
     {/*<!-- #site-wrapper start -->*/}
     <div id="site-wrapper" className="site-wrapper home-main">
-
+    <Estilo/>
    <Header/>
        {/* <!-- #header end -->*/}
 
@@ -25,16 +25,7 @@ import Footer from './Footer';
             <section id="section-01" className="home-main-intro">
                 <div className="home-main-intro-container">
                     <div className="container">
-                        <div className="heading mb-9">
-                            <h1 className="mb-7">
-                                <span className="d-block" >Discover</span>
-                                <span className="font-weight-light d-block"
-                                      data-animate="fadeInRight">your amazing city</span>
-                            </h1>
-                            <p className="h5 font-weight-normal text-secondary mb-0" data-animate="fadeInDown">
-                                Find great places to stay, eat, shop, or visit from local experts.
-                            </p>
-                        </div>
+                       
                         <Search/>
                         <div className="font-size-lg mb-4">
                             Or browse the highlights
@@ -209,7 +200,7 @@ import Footer from './Footer';
             {/*<!-- /#section-01 end -->*/}
             {/*<!-- #section 02start -->*/}
             
-            {/*<!-- /#section-02 end -->
+            {/*<!-- /#section-02 end -->*/}
             <section id="section-02" className="pb-8 feature-destination pt-85">
                 <div className="container">
                     <div className="mb-8">
@@ -377,7 +368,7 @@ import Footer from './Footer';
                     </div>
                 </div>
             </section>
-            */}
+            
             {/*<!-- #section 03 start -->*/}
             <section id="section-03" className="pb-8 our-directory">
                 <div className="container">
@@ -3858,7 +3849,7 @@ import Footer from './Footer';
             </a>
         </div>
     </div>
-    <svg aria-hidden="true" styles="position: absolute; width: 0; height: 0; overflow: hidden;" version="1.1"
+    <svg aria-hidden="true" contentStyleType="position: absolute; width: 0; height: 0; overflow: hidden;" version="1.1"
          xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink"> 
         <defs>
             <symbol id="icon-bed" viewBox="0 0 32 32">
@@ -3939,4 +3930,4 @@ import Footer from './Footer';
     );
 }
 
-export default Home;
+export default Homes;

@@ -10,6 +10,7 @@ import Script from '@components/Main/Script';
 
 const registry = (props) => (
 <div>	
+	                  
 	
 					<InfoData id={props.id}/>
 		

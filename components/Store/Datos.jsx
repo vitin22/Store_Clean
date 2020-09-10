@@ -7,7 +7,7 @@ export const Datos = () => {
 	const router = useRouter();
 	var datos = Array();
 	
-	var q =router.query.q;
+	//var q =router.query.q;
 	var page =router.query.page;
 	var show =router.query.show;
 	var zipcode =router.query.zipcode;
@@ -19,9 +19,10 @@ export const Datos = () => {
 
 	datos['page'] = page;
 
-	if(q==undefined){
+{/* if(q==undefined){
 		q="";
-	}
+	}*/}
+	
 	
 	if(show==undefined){
 		show='4';
@@ -37,7 +38,6 @@ export const Datos = () => {
 		list="4";
 	}
 
-	datos['q'] = q;
 	datos['page'] = page;
 	datos['show'] = show;
 	datos['zipcode'] = zipcode;
@@ -48,7 +48,8 @@ export const Datos = () => {
 }
 
 export const Ruta = (datos) => {
-    return `/pag?q=${datos['q']}&zipcode=${datos['zipcode']}&show=${datos['show']}&page=${datos['page']}&list=${datos['list']}`;
+	{/*return `/pag?q=${datos['q']}&zipcode=${datos['zipcode']}&show=${datos['show']}&page=${datos['page']}&list=${datos['list']}`;*/}
+    return `/pag?zipcode=${datos['zipcode']}&show=${datos['show']}&page=${datos['page']}&list=${datos['list']}`;
 }
 
 export const Pages = (id) => {
@@ -63,7 +64,6 @@ export const Pages = (id) => {
         variables: {
 			first: datos['show'] , 
 			after: datos['page'],
-			services_Categoria_Nombre: datos['q'],
 			zipCode: datos['zipcode']
 			
 		},
@@ -73,8 +73,8 @@ export const Pages = (id) => {
         pages = data.allServicio.pageInfo.endCursor;
     }else{
         pages = null;
-    }
-
+	}
+	
     return pages;
 }
 
@@ -89,7 +89,7 @@ export const ImageValidate = (imagen) => {
 }
 
 export const Urlgraph = () => {
-	var url = 'http://localhost:8000';
+	var url = 'http://localhost:8000/api/';
 	return url; 
 }
 

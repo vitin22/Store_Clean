@@ -5,11 +5,11 @@ import {  PagProd } from '@components/Apollo/jobs.query';
 import { useRouter } from 'next/router';
 import Show from './Show';
 import Paginate from './Paginate';
-import Datos, { ImageValidate } from '@components/Store/Datos';
+import Datos, { ImageValidate } from './Datos';
 import Cuadros from './Cuadros';
 import List from './List';
 import PanelI from './PanelI';
-import Estilo from '@components/ScriptD'
+import Estilo from '@components/Script'
 
 const InfoData = (props) => {
 	let image;
@@ -21,7 +21,7 @@ const InfoData = (props) => {
         variables: {
 			first: datos['show'] , 
 			after: datos['page'],
-			services_Categoria_Nombre: datos['q'],
+			//services_Categoria_Nombre: datos['q'],
 			zipCode: datos['zipcode']
 		},
         client: client
@@ -34,9 +34,13 @@ const InfoData = (props) => {
 	if(datos['list']=="4"){
 		console.log(datos['list']);
 	}
+	console.log({data})
 return(
+	<div>
+	<Estilo/>
 <div id="store" className="page-container row">
 	<div className="sidebar col-lg-4 order-l order-lg-0 mb-8 mb-lg-0">
+		<h1>AKI</h1>
 	<PanelI/>
 	</div>
 	<div className="page-content col-12 col-lg-8 order-0 order-lg-1">
@@ -45,17 +49,20 @@ return(
 			{(() => {
 				if(datos['list']=="4"){
 					return(
+						 
 					<Cuadros datos={data}/>	
 					)
-				}else{
+				}
+				{/*else{
 					return(
 					<List datos={data}/>	 
 					)
-				}
+				}*/}
 			})()}			
 		</div>
 		</div>
 	<Paginate/>
+</div>
 </div>
 );
 };

@@ -6,13 +6,15 @@ import { Datos, Ruta} from '@components/Info/Datos';
 
 const PanelI = () => {
 
-	const router = useRouter();
-	var datos = Datos();0
+	//const router = useRouter();
+	//var datos = Datos();0
 
-	var show = Array();
+	//var show = Array();
 
-	show=[4,12,20];
+	//show=[4,12,20];
 	
+console.log("aki esta")
+
 	return(
 		<div>
 		<div className="card search bg-white mb-6 border-0 rounded-0 px-6">

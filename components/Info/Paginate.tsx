@@ -14,7 +14,7 @@ const Paginate = () => {
         variables: {
 			first: datos['show'] , 
 			after: datos['page'],
-			services_Categoria_Nombre: datos['q'],
+			//services_Categoria_Nombre: datos['q'],
 			zipCode: datos['zipcode']
 		},
         client: client

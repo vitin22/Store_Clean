@@ -64,8 +64,8 @@ query allCiudad($condado: String!){
 `;
 
 export const PagSearch = gql`
-query allPrestadorServicio($zipcode: Int, $servCatergoria: String, $first: Int!, $after: String!){
-  allPrestadorServicio(zipCode: $zipcode, services_Categoria_Nombre: $servCatergoria, first: $first, after: $after ){
+query allPrestadorServicio($zipcode: Int, $first: Int!, $after: String!){
+  allPrestadorServicio(zipCode: $zipcode, first: $first, after: $after ){
  
     pageInfo{
       startCursor
@@ -79,8 +79,8 @@ query allPrestadorServicio($zipcode: Int, $servCatergoria: String, $first: Int!,
 
 
 export const PagProd = gql`
-query allPrestadorServicio($zipcode: Int, $servCatergoria: String, $first: Int!, $after: String!){
-  allPrestadorServicio(zipCode: $zipcode, services_Categoria_Nombre: $servCatergoria, first: $first, after: $after ){
+query allPrestadorServicio($zipcode: Int, $first: Int!, $after: String!){
+  allPrestadorServicio(zipCode: $zipcode, first: $first, after: $after ){
   edges{
     node{
       id
