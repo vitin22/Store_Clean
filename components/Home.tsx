@@ -200,7 +200,7 @@ import Footer from './Footer';
             {/*<!-- /#section-01 end -->*/}
             {/*<!-- #section 02start -->*/}
             
-            {/*<!-- /#section-02 end -->
+            {/*<!-- /#section-02 end -->*/}
             <section id="section-02" className="pb-8 feature-destination pt-85">
                 <div className="container">
                     <div className="mb-8">
@@ -368,7 +368,8 @@ import Footer from './Footer';
                     </div>
                 </div>
             </section>
-            */}
+            
+            {/*<!-- #section 02 end -->*/}
             {/*<!-- #section 03 start -->*/}
             <section id="section-03" className="pb-8 our-directory">
                 <div className="container">
@@ -3849,6 +3850,21 @@ import Footer from './Footer';
             </a>
         </div>
     </div>
+
+        {/*<!-- External JavaScripts -->*/}
+
+    <script src="vendors/jquery.min.js"></script>
+    <script src="vendors/popper/popper.js"></script>
+    <script src="vendors/bootstrap/js/bootstrap.js"></script>
+    <script src="vendors/hc-sticky/hc-sticky.js"></script>
+    <script src="vendors/isotope/isotope.pkgd.js"></script>
+    <script src="vendors/magnific-popup/jquery.magnific-popup.js"></script>
+    <script src="vendors/slick/slick.js"></script>
+    <script src="vendors/waypoints/jquery.waypoints.js"></script>
+
+    {/*<!-- Site Javascript -->*/}
+    <script src="js/app.js"></script>
+
     <svg aria-hidden="true" contentStyleType="position: absolute; width: 0; height: 0; overflow: hidden;" version="1.1"
          xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink"> 
         <defs>

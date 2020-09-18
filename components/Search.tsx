@@ -13,6 +13,7 @@ import { Ip } from './Cordenadas'
 import usZips from 'us-zips'
 import ReactMapboxGl, { Layer, Feature } from 'react-mapbox-gl'
 import geo2zip from 'geo2zip'
+import { empty } from 'apollo-boost';
 
 
   const Map = ReactMapboxGl({
@@ -39,7 +40,7 @@ const Search = () => {
 	const [longitudeZip, setlongitudeZip] = useState('null');
 	const [countryCode, setcountryCode] = useState('null');
 	//const [catserv, setcatserv] = useState('null');
-	const [condado, setcondado] = useState('null');
+	const [condado, setcondado] = useState('');
     const [zipcode, setzipcode] = useState('');
 	
 	const router = useRouter();
@@ -57,24 +58,26 @@ const Search = () => {
 */}
 
 //para detectar por la ip la geolocalizacion del cliente
-/*
- const Ip = async () => {
+
+ //const Ip = async () => {
 	 
 	 const {
 		latitud,
 		longitud,
         countrycode 
 	} = useIpCoords();
- setlatitudeIp(latitud)
- setlongitudeIp(longitud)
- setcountryCode(countrycode)
- console.log(latitudeIp)
- console.log(longitudeIp)
- console.log(countryCode)
- console.log("sopa sopa sopa")
+	//localStorage.setItem("lat",latitud)
+	//localStorage.setItem("lon",longitud)
+	//localStorage.setItem("coun",countrycode)
 
-}
+ //setlatitudeIp(latitud)
+ //setlongitudeIp(longitud)
+ //setcountryCode(countrycode)
+ //console.log(latitudeIp)
+ //console.log(longitudeIp)
+ //console.log(countryCode)
 
+/*
 const Ipsort = async () =>{
 	try {
 		await Ip();
@@ -86,8 +89,12 @@ const Ipsort = async () =>{
 */
 
 //useEffect(() => {
-	const {lat, long, count} = Ip();
-	console.log(lat)
+	//const {lat, long, count} = Ip();
+//	setlatitudeIp(lat)
+ //setlongitudeIp(long)
+ //setcountryCode(count)
+
+	//console.log(lat)
 //},[])
 
 
@@ -101,8 +108,8 @@ const Ipsort = async () =>{
  const Zipo = () =>{
 	 
 		const location = {
-			latitude: latitudeIp,
-			longitude: longitudeIp
+			latitude: latitud,
+			longitude: longitud
 		  };
 		
 		  const closestZip =  geo2zip(location);
@@ -112,6 +119,7 @@ const Ipsort = async () =>{
 		  });
 		  
   }
+  
 
   //para saber las coordenadas del zipcode
   const Zip = () =>{
@@ -123,6 +131,8 @@ const Ipsort = async () =>{
 	setlongitudeZip(x.longitude);
 
   }
+
+  
   
   
 
@@ -131,7 +141,9 @@ const Ipsort = async () =>{
 	const { loading: loade, data: datoe } = useQuery(All_CONDADO, {
 	});
 	const { loading: loadz, data: datoz } = useQuery(ALL_ZIP, {
+		skip: true,
 		variables: {condado}
+		
 	});
 
 
@@ -197,18 +209,50 @@ const Ipsort = async () =>{
 	  }
 
 
+
+	  const displayCondadoZip = () => {
+
+		
+		  
+		 let nodo = datoe.allCondado.edges.map(link => {
+			
+			  
+			{link.node.nombre}
+			 
+			
+		  }         );
+
+		  if(nodo =!undefined){
+             setzipcode(nodo)
+		  }
+		}
+	  
+
 	  //console.log(catserv)
 
 	 // Ip()
-	 // if (countryCode=="US"){
-	//	  Zipo()
-	//	  Zip()
+	  
 
-	 // }
+	   
+
+	 /* if(bandera == 2){
+	      setlatitudeIp(localStorage.getItem("lat"))
+          setlongitudeIp(localStorage.getItem("lon"))
+		  setcountryCode(localStorage.getItem("coun"))
+		  bandera++;
+
+	  }*/
+
+	  if (countryCode=="US"){
+		  Zipo()
+		  Zip()
+
+	  }
 	 
 
 
 	  {if(countryCode=="US"){
+
 	return(
 <div>
 		<div className="heading mb-9">
@@ -233,6 +277,7 @@ const Ipsort = async () =>{
 			</Layer>
 		  </Map>
 		}
+		
 	
 	</div>
 
@@ -328,7 +373,7 @@ else{
 				<p className="h5 font-weight-normal text-secondary mb-0" data-animate="fadeInDown">
 					Find great places to stay, eat, shop, or visit from local experts.
 				</p>
-				  {
+	{
 					<Map
 					style="mapbox://styles/mapbox/streets-v9"
 					containerStyle={{
@@ -337,10 +382,11 @@ else{
 					}}
 				  >
 					<Layer type="symbol" id="marker" layout={{ 'icon-image': 'marker-15' }}>
-					  
+					<Feature coordinates={[Number(latitud), Number(longitud)]} />
 					</Layer>
 				  </Map>
 				}
+				
 			
 			</div>
 		

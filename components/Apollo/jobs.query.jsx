@@ -63,6 +63,23 @@ query allCiudad($condado: String!){
 }
 `;
 
+export const ALL_CONZIP = gql `
+query allCiudad($zipcode: Int!){
+  allCiudad(zipCode: $zipcode){
+  edges{
+    node{
+      id
+      nombre
+      condado{
+        nombre
+      }
+        
+    }
+  }
+}
+}
+`;
+
 export const PagSearch = gql`
 query allPrestadorServicio($zipcode: Int, $first: Int!, $after: String!){
   allPrestadorServicio(zipCode: $zipcode, first: $first, after: $after ){

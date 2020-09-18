@@ -17,7 +17,7 @@ const registry = () => (
 	<script src="js/app.js"></script>
 	*/}
 
-
+{/*
 	
 		<script
 		dangerouslySetInnerHTML={{
@@ -87,14 +87,15 @@ const registry = () => (
 			`,
 	  }} src="js/app.js"></script>
 	
-	
+	*/}
 
 
 
 		<meta httpEquiv="X-UA-Compatible" content="IE=edge"/>
 	<meta name="viewport" content="width=device-width, initial-scale=1"/>
 	<title>Servicios y Productos - HTML Ecommerce</title>
-	
+	<link href="https://fonts.googleapis.com/css?family=Work+Sans:200,300,400,500,600,700,800,900&display=swap"
+          rel="stylesheet"/>
 	<link rel="stylesheet" type="text/css" href="vendors/font-awesome/css/fontawesome.css"/>
 	<link rel="stylesheet" type="text/css" href="vendors/magnific-popup/magnific-popup.css"/>
 	<link rel="stylesheet" type="text/css" href="vendors/slick/slick.css"/>

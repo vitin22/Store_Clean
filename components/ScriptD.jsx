@@ -4,7 +4,7 @@ import Head from 'next/head';
 const registry = () => (
 	<Head>
 
-		
+		{/*
 		<script
 		dangerouslySetInnerHTML={{
 			__html: `
@@ -101,7 +101,7 @@ const registry = () => (
 			`,
 	  }} src="js/app.js"></script>
 	
-
+*/}
 
 
 
