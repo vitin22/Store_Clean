@@ -123,3 +123,32 @@ mutation($cantidad: Int, $codigo: String!, $descripcion: String, $empresa: ID, $
 }
 `;
 
+
+export const CREARSERVICIO_MUTATION = gql`
+mutation($active: Boolean,$avaibleTimeFrom: Time,$availableTimeTo: Time, $avaliableOnlyOnBusinessLocation: Boolean, $categoriaId: Int, $licencia: String, $nombre: String, $precio: Float, $precioAlternativo: Float, $serviceDescription: String, $zipCode: Int){
+  createServicio(
+    active: $active,
+    availableTimeFrom: $avaibleTimeFrom,
+    availableTimeTo: $availableTimeTo,
+    avaliableOnlyOnBusinessLocation: $avaliableOnlyOnBusinessLocation,
+    categoriaId: $categoriaId,
+    licencia: $licencia,
+    nombre: $nombre,
+    precio: $precio,
+    precioAlternativo: $precioAlternativo,
+    serviceDescription: $serviceDescription,
+    zipCode: $zipCode
+    
+  )  {
+    servicio{
+      id
+      categoria{
+        id
+      }
+      nombre
+      precio
+      zipCode
+    }
+  }
+}
+`;

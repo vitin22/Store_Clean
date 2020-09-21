@@ -7,7 +7,7 @@ export default withApollo(
     return new ApolloClient({
       //uri: 'http://164.68.115.191:8000/graphql/',
       uri: 'http://localhost:8000/api/',
-      //uri: 'http://192.168.123.1:8000/api/',
+      //uri: 'http://5e19080.online-server.cloud:8000/api/',
       request: (operation) => {
         const token = localStorage.getItem('authToken')
         operation.setContext({

@@ -6,7 +6,7 @@ import { useQuery } from '@apollo/react-hooks';
 import { client } from './MyApollo/MyApollo';
 import Select from './Main/Select';
 import { Datos, Ruta} from './Store/Datos';
-import { All_CATSERV, All_CONDADO, ALL_ZIP } from '@components/Apollo/jobs.query';
+import { ALL_CONZIP, All_CONDADO, ALL_ZIP } from '@components/Apollo/jobs.query';
 import withApollo from './Apollo/apollo';
 import { useIpCoords } from 'use-ipcoords'
 import { Ip } from './Cordenadas'
@@ -24,6 +24,8 @@ import { empty } from 'apollo-boost';
 let num
 let bandera=1
 
+
+
 const Search = () => {
   let input;
   if(num == undefined){
@@ -34,11 +36,11 @@ const Search = () => {
   //const route = useRouter();
 
   let query;
-    const [latitudeIp, setlatitudeIp] = useState('null');
-    const [longitudeIp, setlongitudeIp] = useState('null');
+   // const [latitudeIp, setlatitudeIp] = useState('null');
+   // const [longitudeIp, setlongitudeIp] = useState('null');
     const [latitudeZip, setlatitudeZip] = useState('null');
 	const [longitudeZip, setlongitudeZip] = useState('null');
-	const [countryCode, setcountryCode] = useState('null');
+  //  const [countryCode, setcountryCode] = useState('null');
 	//const [catserv, setcatserv] = useState('null');
 	const [condado, setcondado] = useState('');
     const [zipcode, setzipcode] = useState('');
@@ -60,12 +62,13 @@ const Search = () => {
 //para detectar por la ip la geolocalizacion del cliente
 
  //const Ip = async () => {
-	 
-	 const {
-		latitud,
-		longitud,
-        countrycode 
+	 console.log("entrando para salir")
+	const {
+		latitudeIp,
+		longitudeIp,
+		countryCode 
 	} = useIpCoords();
+	console.log("saliendo para entrar")
 	//localStorage.setItem("lat",latitud)
 	//localStorage.setItem("lon",longitud)
 	//localStorage.setItem("coun",countrycode)
@@ -108,8 +111,8 @@ const Ipsort = async () =>{
  const Zipo = () =>{
 	 
 		const location = {
-			latitude: latitud,
-			longitude: longitud
+			latitude: latitudeIp,
+			longitude: longitudeIp
 		  };
 		
 		  const closestZip =  geo2zip(location);
@@ -141,8 +144,13 @@ const Ipsort = async () =>{
 	const { loading: loade, data: datoe } = useQuery(All_CONDADO, {
 	});
 	const { loading: loadz, data: datoz } = useQuery(ALL_ZIP, {
-		skip: true,
+		skip: false,
 		variables: {condado}
+		
+	});
+	const { loading: loada, data: datoa } = useQuery(ALL_CONZIP, {
+		skip: true,
+		variables: {zipcode}
 		
 	});
 
@@ -214,7 +222,7 @@ const Ipsort = async () =>{
 
 		
 		  
-		 let nodo = datoe.allCondado.edges.map(link => {
+		 let nodo = datoa.allCiudad.edges.map(link => {
 			
 			  
 			{link.node.nombre}
@@ -223,7 +231,7 @@ const Ipsort = async () =>{
 		  }         );
 
 		  if(nodo =!undefined){
-             setzipcode(nodo)
+             setcondado(nodo)
 		  }
 		}
 	  
@@ -243,15 +251,13 @@ const Ipsort = async () =>{
 
 	  }*/
 
-	  if (countryCode=="US"){
-		  Zipo()
-		  Zip()
-
-	  }
+	  
 	 
 
 
 	  {if(countryCode=="US"){
+		Zipo()
+		Zip()
 
 	return(
 <div>
@@ -382,7 +388,7 @@ else{
 					}}
 				  >
 					<Layer type="symbol" id="marker" layout={{ 'icon-image': 'marker-15' }}>
-					<Feature coordinates={[Number(latitud), Number(longitud)]} />
+					<Feature coordinates={[Number(latitudeIp), Number(longitudeZip)]} />
 					</Layer>
 				  </Map>
 				}

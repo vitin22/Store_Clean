@@ -9,7 +9,7 @@ import Datos, { ImageValidate } from './Datos';
 import Cuadros from './Cuadros';
 import List from './List';
 import PanelI from './PanelI';
-import Estilo from '@components/Script'
+import Estilo from '@components/ScriptD'
 
 const InfoData = (props) => {
 	let image;
@@ -37,6 +37,7 @@ const InfoData = (props) => {
 	console.log({data})
 return(
 	<div>
+		{/*
 	<Estilo/>
 <div id="store" className="page-container row">
 	<div className="sidebar col-lg-4 order-l order-lg-0 mb-8 mb-lg-0">
@@ -57,12 +58,31 @@ return(
 					return(
 					<List datos={data}/>	 
 					)
-				}*/}
+				}
 			})()}			
 		</div>
 		</div>
 	<Paginate/>
 </div>
+  
+
+  <script src="vendors/jquery.min.js"></script>
+    <script src="vendors/jquery-ui/jquery-ui.min.js"></script>
+    <script src="vendors/popper/popper.js"></script>
+    <script src="vendors/bootstrap/js/bootstrap.js"></script>
+    <script src="vendors/hc-sticky/hc-sticky.js"></script>
+    <script src="vendors/isotope/isotope.pkgd.js"></script>
+    <script src="vendors/magnific-popup/jquery.magnific-popup.js"></script>
+    <script src="vendors/slick/slick.js"></script>
+    <script src="vendors/waypoints/jquery.waypoints.js"></script>
+    <script src="vendors/air-datepicker/js/datepicker.min.js"></script>
+    <script src="vendors/air-datepicker/js/i18n/datepicker.en.js"></script>
+
+    
+    <script src="js/app.js"></script>
+*/}
+
+
 </div>
 );
 };
