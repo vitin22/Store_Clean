@@ -12,7 +12,7 @@ const Paginate = () => {
 
 	const { loading, data } = useQuery(PagSearch, {
         variables: {
-			first: datos['show'] , 
+			first: datos['show'], 
 			after: datos['page'],
 			//services_Categoria_Nombre: datos['q'],
 			zipCode: datos['zipcode']

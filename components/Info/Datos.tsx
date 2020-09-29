@@ -12,6 +12,7 @@ export const Datos = () => {
 	var show =router.query.show;
 	var zipcode =router.query.zipcode;
 	var list =router.query.list;
+	var catg =router.query.catg;
 
 	if(page==undefined){
 		page="";
@@ -31,6 +32,9 @@ export const Datos = () => {
 		zipcode="";
 	}
 
+	if(catg==undefined){
+		catg="";
+	}
 	
 
 	if(list==undefined){
@@ -42,13 +46,14 @@ export const Datos = () => {
 	datos['show'] = show;
 	datos['zipcode'] = zipcode;
 	datos['list'] = list;
+	datos['catg'] = catg;
 
 
 	return datos;
 }
 
 export const Ruta = (datos) => {
-    return `/pag?zipcode=${datos['zipcode']}&show=${datos['show']}&page=${datos['page']}&list=${datos['list']}`;
+    return `/store?zipcode=${datos['zipcode']}&show=${datos['show']}&page=${datos['page']}&list=${datos['list']}&catg=${datos['catg']}`;
 }
 
 export const Pages = (id) => {
@@ -93,7 +98,7 @@ export const ImageValidate = (imagen) => {
 }
 
 export const Urlgraph = () => {
-	var url = 'http://localhost:8000';
+	var url = 'http://localhost:8000/api/';
 	return url; 
 }
 

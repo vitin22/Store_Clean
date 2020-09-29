@@ -12,3 +12,9 @@ module.exports = withTM(withCSS({
     url: false
   } 
 }));
+
+//module.exports = withTM(withCSS({
+//  cssLoaderOptions: {
+//    url: false
+//  } 
+//  }));

@@ -118,3 +118,24 @@ query allPrestadorServicio($zipcode: Int, $first: Int!, $after: String!){
 `;
 
 
+export const ALL_CIUDZIP = gql`
+query allCiudad($zipCode: Int){
+  allCiudad(zipCode: $zipCode){
+   edges{
+     node{
+            nombre
+           condado{
+             estado{
+               nombre
+             }
+             nombre
+           }
+       
+    
+     }
+   }
+ }
+ }
+`;
+
+

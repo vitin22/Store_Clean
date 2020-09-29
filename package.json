@@ -34,7 +34,11 @@
     "react-bootstrap": "^1.0.1",
     "react-dom": "16.13.1",
     "react-mapbox-gl": "^4.8.6",
+    "react-multi-carousel": "^2.5.5",
+    "react-slick": "^0.27.11",
     "react-strap": "0.0.1",
+    "slick-carousel": "^1.8.1",
+    "url-loader": "^4.1.0",
     "us-zips": "^4.0.2",
     "use-ipcoords": "^1.0.11"
   },

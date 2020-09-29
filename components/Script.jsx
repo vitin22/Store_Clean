@@ -101,6 +101,7 @@ const registry = () => (
 	<link rel="stylesheet" type="text/css" href="vendors/slick/slick.css"/>
 	<link rel="stylesheet" type="text/css" href="vendors/animate.css"/>
 	<link rel="stylesheet" type="text/css" href="style.css"/>
+	
 
 	</Head>
 );

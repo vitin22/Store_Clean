@@ -3,12 +3,38 @@ import Estilo from './Script'
 import Search from './Search';
 import Header from './Header';
 import Footer from './Footer';
+//import MultipleItems from './MySlider';
+import SliderMio from '@components/Carousel'
+import SliderMioDos from '@components/CarouselDos'
+import SliderMioTres from '@components/CarouselTres'
+import Carousel from "react-multi-carousel";
+import "react-multi-carousel/lib/styles.css";
 
 
+const responsive = {
+    desktop: {
+      breakpoint: { max: 3000, min: 1024 },
+      items: 3,
+      slidesToSlide: 3 // optional, default to 1.
+    },
+    tablet: {
+      breakpoint: { max: 1024, min: 464 },
+      items: 2,
+      slidesToSlide: 2 // optional, default to 1.
+    },
+    mobile: {
+      breakpoint: { max: 464, min: 0 },
+      items: 1,
+      slidesToSlide: 1 // optional, default to 1.
+    }
+  };
+
+
+  const rueda = '{"slidesToShow": 2,"autoplay":false,"dots":false,"responsive":[{"breakpoint": 992,"settings": {"slidesToShow": 1,"arrows":false}}]}';
 
  function Home() {
     
-
+    
     return (
 <div>
 
@@ -209,7 +235,10 @@ import Footer from './Footer';
                             <span className="font-weight-light">Destinations</span>
                         </h2>
                     </div>
-                    <div className="slick-slider arrow-center"
+                   
+                   <SliderMio/>
+
+                    {/*<div className="slick-slider arrow-center"
                          data-slick-options='{"slidesToShow": 4, "autoplay":false,"dots":false,"responsive":[{"breakpoint": 992,"settings": {"slidesToShow": 3,"arrows":false,"dots":true,"autoplay":true}},{"breakpoint": 768,"settings": {"slidesToShow": 2,"arrows":false,"dots":true,"autoplay":true}},{"breakpoint": 400,"settings": {"slidesToShow": 1,"arrows":false,"dots":true,"autoplay":true}}]}'>
                         <div className="box" data-animate="zoomIn">
                             <div className="card border-0">
@@ -365,7 +394,7 @@ import Footer from './Footer';
 
                             </div>
                         </div>
-                    </div>
+                    </div>*/}
                 </div>
             </section>
             
@@ -417,7 +446,8 @@ import Footer from './Footer';
                 <div className="container container-1720">
                     <div className="tab-content">
                         <div className="tab-pane fade show active" id="all" role="tabpanel" aria-labelledby="all">
-                            <div className="slick-slider arrow-top full-slide custom-nav equal-height"
+                       <SliderMioDos/>
+                           {/* <div className="slick-slider arrow-top full-slide custom-nav equal-height"
                                  data-slick-options='{"slidesToShow": 5,"autoplay":false,"dots":false,"arrows":false,"responsive":[{"breakpoint": 2000,"settings": {"slidesToShow": 4}},{"breakpoint": 1500,"settings": {"slidesToShow": 3}},{"breakpoint": 1000,"settings": {"slidesToShow": 2}},{"breakpoint": 770,"settings": {"slidesToShow": 1}}]}'>
                                 <div className="box" data-animate="fadeInUp">
                                     <div className="store card border-0 rounded-0">
@@ -903,7 +933,7 @@ import Footer from './Footer';
                                         </ul>
                                     </div>
                                 </div>
-                            </div>
+                </div>*/}
                         </div>
                         <div className="tab-pane fade" id="feature" role="tabpanel" aria-labelledby="feature">
                             <div className="slick-slider arrow-top full-slide custom-nav equal-height"
@@ -3352,163 +3382,7 @@ import Footer from './Footer';
                     <div className="container">
                         <div className="row">
                             <div className="col col-md-12">
-                                <div className="slick-slider testimonials-slider arrow-top"
-                                     data-slick-options='{"slidesToShow": 2,"autoplay":false,"dots":false,"responsive":[{"breakpoint": 992,"settings": {"slidesToShow": 1,"arrows":false}}]}'>
-                                    <div className="box">
-                                        <div className="card testimonial h-100 border-0 bg-transparent">
-                                            <a href="#" className="author-image">
-                                                <img src="images/listing/client-1.png" alt="Testimonial"
-                                                     className="rounded-circle"/>
-                                            </a>
-                                            <div className="card-body bg-white">
-                                                <div className="testimonial-icon text-right">
-                                                    <svg className="icon icon-quote">
-                                                        <use xlinkHref="#icon-quote"></use>
-                                                    </svg>
-                                                </div>
-                                                <ul className="list-inline mb-4 d-flex align-items-end flex-wrap">
-                                                    <li className="list-inline-item">
-                                                        <a href="#"
-                                                           className="font-size-lg text-dark font-weight-semibold d-inline-block">Kanye
-                                                            West
-                                                        </a>
-                                                    </li>
-                                                    <li className="list-inline-item">
-                                                        <span className="h5 font-weight-light mb-0 d-inline-block ml-1 text-gray">/</span>
-                                                    </li>
-                                                    <li>
-                                                    <span className="text-gray">
-                                                        CEO at Google INC
-                                                    </span>
-                                                    </li>
-                                                </ul>
-                                                <div className="card-text text-gray pr-4">Sed elit quam, iaculis
-                                                    sed
-                                                    semper sit amet
-                                                    udin
-                                                    vitae nibh.<br/> at magna akal semperFusce commodo molestie
-                                                    luctus.Lorem ipsum Dolor tusima olatiup.
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div className="box">
-                                        <div className="card testimonial h-100 border-0 bg-transparent">
-                                            <a href="#" className="author-image">
-                                                <img src="images/listing/client-2.png" alt="Testimonial"
-                                                     className="rounded-circle"/>
-                                            </a>
-                                            <div className="card-body bg-white">
-                                                <div className="testimonial-icon text-right">
-                                                    <svg className="icon icon-quote">
-                                                        <use xlinkHref="#icon-quote"></use>
-                                                    </svg>
-                                                </div>
-                                                <ul className="list-inline mb-4 d-flex align-items-end flex-wrap">
-                                                    <li className="list-inline-item">
-                                                        <a href="#"
-                                                           className="font-size-lg text-dark font-weight-semibold d-inline-block">Anabella
-                                                            Kleva
-                                                        </a>
-                                                    </li>
-                                                    <li className="list-inline-item">
-                                                        <span className="h5 font-weight-light mb-0 d-inline-block ml-1 text-gray">/</span>
-                                                    </li>
-                                                    <li className="list-inline-item">
-                                                    <span className="text-gray">
-                                                        Managerment at Envato
-                                                    </span>
-                                                    </li>
-
-                                                </ul>
-                                                <div className="card-text text-gray pr-4">Sed elit quam, iaculis
-                                                    sed
-                                                    semper sit amet
-                                                    udin
-                                                    vitae nibh.<br/> at magna akal semperFusce commodo molestie
-                                                    luctus.Lorem ipsum Dolor tusima olatiup.
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div className="box">
-                                        <div className="card testimonial h-100 border-0 bg-transparent">
-                                            <a href="#" className="author-image">
-                                                <img src="images/listing/client-1.png" alt="Testimonial"
-                                                     className="rounded-circle"/>
-                                            </a>
-                                            <div className="card-body bg-white">
-                                                <div className="testimonial-icon text-right">
-                                                    <svg className="icon icon-quote">
-                                                        <use xlinkHref="#icon-quote"></use>
-                                                    </svg>
-                                                </div>
-                                                <ul className="list-inline mb-4 d-flex align-items-end flex-wrap">
-                                                    <li className="list-inline-item">
-                                                        <a href="#"
-                                                           className="font-size-lg text-dark font-weight-semibold d-inline-block">Kanye
-                                                            West
-                                                        </a>
-                                                    </li>
-                                                    <li className="list-inline-item">
-                                                        <span className="h5 font-weight-light mb-0 d-inline-block ml-1 text-gray">/</span>
-                                                    </li>
-                                                    <li>
-                                                    <span className="text-gray">
-                                                        CEO at Google INC
-                                                    </span>
-                                                    </li>
-                                                </ul>
-                                                <div className="card-text text-gray pr-4">Sed elit quam, iaculis
-                                                    sed
-                                                    semper sit amet
-                                                    udin
-                                                    vitae nibh.<br/> at magna akal semperFusce commodo molestie
-                                                    luctus.Lorem ipsum Dolor tusima olatiup.
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div className="box">
-                                        <div className="card testimonial h-100 border-0 bg-transparent">
-                                            <a href="#" className="author-image">
-                                                <img src="images/listing/client-2.png" alt="Testimonial"
-                                                     className="rounded-circle"/>
-                                            </a>
-                                            <div className="card-body bg-white">
-                                                <div className="testimonial-icon text-right">
-                                                    <svg className="icon icon-quote">
-                                                        <use xlinkHref="#icon-quote"></use>
-                                                    </svg>
-                                                </div>
-                                                <ul className="list-inline mb-4 d-flex align-items-end flex-wrap">
-                                                    <li className="list-inline-item">
-                                                        <a href="#"
-                                                           className="font-size-lg text-dark font-weight-semibold d-inline-block">Anabella
-                                                            Kleva
-                                                        </a>
-                                                    </li>
-                                                    <li className="list-inline-item">
-                                                        <span className="h5 font-weight-light mb-0 d-inline-block ml-1 text-gray">/</span>
-                                                    </li>
-                                                    <li className="list-inline-item">
-                                                    <span className="text-gray">
-                                                        Managerment at Envato
-                                                    </span>
-                                                    </li>
-
-                                                </ul>
-                                                <div className="card-text text-gray pr-4">Sed elit quam, iaculis
-                                                    sed
-                                                    semper sit amet
-                                                    udin
-                                                    vitae nibh.<br/> at magna akal semperFusce commodo molestie
-                                                    luctus.Lorem ipsum Dolor tusima olatiup.
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
+                                <SliderMioTres/>
                             </div>
                         </div>
                     </div>

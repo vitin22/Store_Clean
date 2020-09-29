@@ -5,7 +5,7 @@ import { useQuery } from '@apollo/react-hooks';
 //import { PROD_QUERY } from './Apollo/jobs.query';
 import { client } from './MyApollo/MyApollo';
 import Select from './Main/Select';
-import { Datos, Ruta} from './Store/Datos';
+import { Datos, Ruta} from './Info/Datos';
 import { ALL_CONZIP, All_CONDADO, ALL_ZIP } from '@components/Apollo/jobs.query';
 import withApollo from './Apollo/apollo';
 import { useIpCoords } from 'use-ipcoords'
@@ -32,7 +32,7 @@ const Search = () => {
 	  num = "";
   }
   
-  const ruta = "/store"
+  const ruta = "/store";
   //const route = useRouter();
 
   let query;
@@ -41,7 +41,7 @@ const Search = () => {
     const [latitudeZip, setlatitudeZip] = useState('null');
 	const [longitudeZip, setlongitudeZip] = useState('null');
   //  const [countryCode, setcountryCode] = useState('null');
-	//const [catserv, setcatserv] = useState('null');
+  //  const [catserv, setcatserv] = useState('null');
 	const [condado, setcondado] = useState('');
     const [zipcode, setzipcode] = useState('');
 	
@@ -295,6 +295,7 @@ const Ipsort = async () =>{
 									e.preventDefault();
 									datos['zipcode']=zipcode;
 									var ruta = Ruta(datos);
+									
 									router.push(ruta);
 									}
 									}>
