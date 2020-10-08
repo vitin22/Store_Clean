@@ -35,8 +35,8 @@ const Search = () => {
   //const route = useRouter();
 
   let query;
-    const [latitudeIp, setlatitudeIp] = useState('null');
-    const [longitudeIp, setlongitudeIp] = useState('null');
+    const [latitudeIp, setlatitudeIp] = useState([]);
+    const [longitudeIp, setlongitudeIp] = useState([]);
     const [latitudeZip, setlatitudeZip] = useState('null');
 	const [longitudeZip, setlongitudeZip] = useState('null');
     const [countryCode, setcountryCode] = useState('null');
@@ -60,6 +60,7 @@ const Search = () => {
 
 //para detectar por la ip la geolocalizacion del cliente
 useEffect(() => {
+	console.log("entrando para salir")
     axios
       .get("https://get.geojs.io/v1/ip/geo.json")
       .then(response => setlatitudeIp(response.data.latitude));
@@ -70,17 +71,17 @@ useEffect(() => {
       .get("https://get.geojs.io/v1/ip/geo.json")
       .then(response => setcountryCode(response.data.country_code));
   }, []);
-
+  console.log("saliendo para entrar")
 
 
  //const Ip = async () => {
-	 console.log("entrando para salir")
+	 
 	//const {
 	//	latitudeIp,
 	//	longitudeIp,
 	//	countryCode 
 	//} = IpCoords();
-	console.log("saliendo para entrar")
+	
 	//localStorage.setItem("lat",latitud)
 	//localStorage.setItem("lon",longitud)
 	//localStorage.setItem("coun",countrycode)
