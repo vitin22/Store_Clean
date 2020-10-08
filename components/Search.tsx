@@ -16,6 +16,7 @@ import geo2zip from 'geo2zip'
 import { empty } from 'apollo-boost';
 import mapboxgl from 'mapbox-gl';
 import './Map.css';
+import axios from 'axios';
 
 mapboxgl.accessToken = 'pk.eyJ1Ijoidml0aW4yMiIsImEiOiJja2R5cjRxM3YzZ2dtMnpxcXltcmNhZ21jIn0.YriEgQ-ZxlXeAUP1KP2oow';
 
@@ -34,11 +35,11 @@ const Search = () => {
   //const route = useRouter();
 
   let query;
-   // const [latitudeIp, setlatitudeIp] = useState('null');
-   // const [longitudeIp, setlongitudeIp] = useState('null');
+    const [latitudeIp, setlatitudeIp] = useState('null');
+    const [longitudeIp, setlongitudeIp] = useState('null');
     const [latitudeZip, setlatitudeZip] = useState('null');
 	const [longitudeZip, setlongitudeZip] = useState('null');
-    //const [countryCode, setcountryCode] = useState('null');
+    const [countryCode, setcountryCode] = useState('null');
   //  const [catserv, setcatserv] = useState('null');
 	const [condado, setcondado] = useState('');
     const [zipcode, setzipcode] = useState('');
@@ -58,14 +59,27 @@ const Search = () => {
 */}
 
 //para detectar por la ip la geolocalizacion del cliente
+useEffect(() => {
+    axios
+      .get("https://get.geojs.io/v1/ip/geo.json")
+      .then(response => setlatitudeIp(response.data.latitude));
+    axios
+      .get("https://get.geojs.io/v1/ip/geo.json")
+      .then(response => setlongitudeIp(response.data.longitude));
+      axios
+      .get("https://get.geojs.io/v1/ip/geo.json")
+      .then(response => setcountryCode(response.data.country_code));
+  }, []);
+
+
 
  //const Ip = async () => {
 	 console.log("entrando para salir")
-	const {
-		latitudeIp,
-		longitudeIp,
-		countryCode 
-	} = IpCoords();
+	//const {
+	//	latitudeIp,
+	//	longitudeIp,
+	//	countryCode 
+	//} = IpCoords();
 	console.log("saliendo para entrar")
 	//localStorage.setItem("lat",latitud)
 	//localStorage.setItem("lon",longitud)
@@ -299,6 +313,11 @@ const Ipsort = async () =>{
 
 	return(
 <div>
+{
+			<Map/>
+			
+		  
+		}
 		<div className="heading mb-9">
 		<h1 className="mb-7">
 			<span className="d-block" >DFiscover</span>
@@ -308,11 +327,7 @@ const Ipsort = async () =>{
 		<p className="h5 font-weight-normal text-secondary mb-0" data-animate="fadeInDown">
 			Find great places to stay, eat, shop, or visit from local experts.
 		</p>
-		  {
-			<Map/>
-			
-		  
-		}
+		 
 		
 	
 	</div>
@@ -439,6 +454,9 @@ else{
 
 	return(
 		<div>
+			{
+					<Map/>
+				}
 				<div className="heading mb-9">
 				<h1 className="mb-7">
 					<span className="d-block" >Discover</span>
@@ -448,9 +466,7 @@ else{
 				<p className="h5 font-weight-normal text-secondary mb-0" data-animate="fadeInDown">
 					Find great places to stay, eat, shop, or visit from local experts.
 				</p>
-	{
-					<Map/>
-				}
+	
 				
 			
 			</div>
