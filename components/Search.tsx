@@ -314,11 +314,11 @@ const Ipsort = async () =>{
 
 	return(
 <div>
-{
+
+	<div>
 			<Map/>
-			
+			</div>	
 		  
-		}
 		<div className="heading mb-9">
 		<h1 className="mb-7">
 			<span className="d-block" >DFiscover</span>
@@ -455,9 +455,9 @@ else{
 
 	return(
 		<div>
-			{
+				<div>
 					<Map/>
-				}
+					</div>
 				<div className="heading mb-9">
 				<h1 className="mb-7">
 					<span className="d-block" >Discover</span>
