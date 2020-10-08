@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import {useRouter, Router} from 'next/router';
 import ClearFix from './Main/ClearFix';
 import { useQuery } from '@apollo/react-hooks';
@@ -8,13 +8,14 @@ import Select from './Main/Select';
 import { Datos, Ruta} from './Info/Datos';
 import { ALL_CONZIP, All_CONDADO, ALL_ZIP } from '@components/Apollo/jobs.query';
 import withApollo from './Apollo/apollo';
-import { useIpCoords } from 'use-ipcoords'
+import { IpCoords } from './IpCoords'
 import { Ip } from './Cordenadas'
 import usZips from 'us-zips'
 import ReactMapboxGl, { Layer, Feature } from 'react-mapbox-gl'
 import geo2zip from 'geo2zip'
 import { empty } from 'apollo-boost';
-
+import mapboxgl from 'mapbox-gl';
+import './Map.css';
 
   const Map = ReactMapboxGl({
     accessToken:
@@ -40,7 +41,7 @@ const Search = () => {
    // const [longitudeIp, setlongitudeIp] = useState('null');
     const [latitudeZip, setlatitudeZip] = useState('null');
 	const [longitudeZip, setlongitudeZip] = useState('null');
-  //  const [countryCode, setcountryCode] = useState('null');
+    //const [countryCode, setcountryCode] = useState('null');
   //  const [catserv, setcatserv] = useState('null');
 	const [condado, setcondado] = useState('');
     const [zipcode, setzipcode] = useState('');
@@ -67,7 +68,7 @@ const Search = () => {
 		latitudeIp,
 		longitudeIp,
 		countryCode 
-	} = useIpCoords();
+	} = IpCoords();
 	console.log("saliendo para entrar")
 	//localStorage.setItem("lat",latitud)
 	//localStorage.setItem("lon",longitud)
@@ -76,9 +77,9 @@ const Search = () => {
  //setlatitudeIp(latitud)
  //setlongitudeIp(longitud)
  //setcountryCode(countrycode)
- //console.log(latitudeIp)
- //console.log(longitudeIp)
- //console.log(countryCode)
+ console.log(latitudeIp)
+ console.log(longitudeIp)
+ console.log(countryCode)
 
 /*
 const Ipsort = async () =>{
@@ -259,6 +260,46 @@ const Ipsort = async () =>{
 		Zipo()
 		Zip()
 
+		const Map = () => {
+			const mapContainerRef = useRef(null);
+		  
+			//const [lng, setLng] = useState(5);
+			//const [lat, setLat] = useState(34);
+			const [zoom, setZoom] = useState(1.5);
+		  
+			// Initialize map when component mounts
+			useEffect(() => {
+			  const map = new mapboxgl.Map({
+				container: mapContainerRef.current,
+				style: 'mapbox://styles/mapbox/streets-v11',
+				center: [longitudeZip, latitudeZip],
+				zoom: zoom
+			  });
+		  
+			  // Add navigation control (the +/- zoom buttons)
+			  //map.addControl(new mapboxgl.NavigationControl(), 'top-right');
+		  
+			  //map.on('move', () => {
+				//setLng(map.getCenter().lng.toFixed(4));
+				//setLat(map.getCenter().lat.toFixed(4));
+				//setZoom(map.getZoom().toFixed(2));
+			  //});
+		  
+			  // Clean up on unmount
+			//  return () => map.remove();
+			}, []); // eslint-disable-line react-hooks/exhaustive-deps
+		  
+			return (
+			  <div>
+				
+				<div className='map-container' ref={mapContainerRef} />
+			  </div>
+			);
+		  }
+
+
+
+
 	return(
 <div>
 		<div className="heading mb-9">
@@ -271,17 +312,9 @@ const Ipsort = async () =>{
 			Find great places to stay, eat, shop, or visit from local experts.
 		</p>
 		  {
-			<Map
-			style="mapbox://styles/mapbox/streets-v9"
-			containerStyle={{
-			  height: '100vh',
-			  width: '100vw'
-			}}
-		  >
-			<Layer type="symbol" id="marker" layout={{ 'icon-image': 'marker-15' }}>
-			  <Feature coordinates={[Number(latitudeZip), Number(longitudeZip)]} />
-			</Layer>
-		  </Map>
+			<Map/>
+			
+		  
 		}
 		
 	
@@ -369,6 +402,44 @@ const Ipsort = async () =>{
 }
 else{
 
+
+	const Map = () => {
+		const mapContainerRef = useRef(null);
+	  
+		//const [lng, setLng] = useState(5);
+		//const [lat, setLat] = useState(34);
+		const [zoom, setZoom] = useState(1.5);
+	  
+		// Initialize map when component mounts
+		useEffect(() => {
+		  const map = new mapboxgl.Map({
+			container: mapContainerRef.current,
+			style: 'mapbox://styles/mapbox/streets-v11',
+			center: [longitudeIp, latitudeIp],
+			zoom: zoom
+		  });
+	  
+		  // Add navigation control (the +/- zoom buttons)
+		 // map.addControl(new mapboxgl.NavigationControl(), 'top-right');
+	  
+		 // map.on('move', () => {
+			//setLng(map.getCenter().lng.toFixed(4));
+			//setLat(map.getCenter().lat.toFixed(4));
+			//setZoom(map.getZoom().toFixed(2));
+		  //});
+	  
+		  // Clean up on unmount
+		  //return () => map.remove();
+		}, []); // eslint-disable-line react-hooks/exhaustive-deps
+	  
+		return (
+		  <div>
+			
+			<div className='map-container' ref={mapContainerRef} />
+		  </div>
+		);
+	  };
+
 	return(
 		<div>
 				<div className="heading mb-9">
@@ -381,17 +452,7 @@ else{
 					Find great places to stay, eat, shop, or visit from local experts.
 				</p>
 	{
-					<Map
-					style="mapbox://styles/mapbox/streets-v9"
-					containerStyle={{
-					  height: '100vh',
-					  width: '100vw'
-					}}
-				  >
-					<Layer type="symbol" id="marker" layout={{ 'icon-image': 'marker-15' }}>
-					<Feature coordinates={[Number(latitudeIp), Number(longitudeZip)]} />
-					</Layer>
-				  </Map>
+					<Map/>
 				}
 				
 			
