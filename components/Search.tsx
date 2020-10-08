@@ -17,10 +17,7 @@ import { empty } from 'apollo-boost';
 import mapboxgl from 'mapbox-gl';
 import './Map.css';
 
-  const Map = ReactMapboxGl({
-    accessToken:
-      'pk.eyJ1Ijoidml0aW4yMiIsImEiOiJja2R5cjRxM3YzZ2dtMnpxcXltcmNhZ21jIn0.YriEgQ-ZxlXeAUP1KP2oow'
-  });
+mapboxgl.accessToken = 'pk.eyJ1Ijoidml0aW4yMiIsImEiOiJja2R5cjRxM3YzZ2dtMnpxcXltcmNhZ21jIn0.YriEgQ-ZxlXeAUP1KP2oow';
 
 let num
 let bandera=1
