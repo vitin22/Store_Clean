@@ -277,7 +277,7 @@ const Ipsort = async () =>{
 		  
 			//const [lng, setLng] = useState(5);
 			//const [lat, setLat] = useState(34);
-			const [zoom, setZoom] = useState(1.5);
+			const [zoom, setZoom] = useState(9);
 		  
 			// Initialize map when component mounts
 			useEffect(() => {
@@ -316,7 +316,9 @@ const Ipsort = async () =>{
 	return(
 <div>
 
-		
+<div>
+			<Map/>
+			</div>
 		  
 		<div className="heading mb-9">
 		<h1 className="mb-7">
@@ -328,9 +330,7 @@ const Ipsort = async () =>{
 			Find great places to stay, eat, shop, or visit from local experts.
 		</p>
 		 
-		<div>
-			<Map/>
-			</div>
+		
 	
 	</div>
 
@@ -422,7 +422,7 @@ else{
 	  
 		//const [lng, setLng] = useState(5);
 		//const [lat, setLat] = useState(34);
-		const [zoom, setZoom] = useState(1.5);
+		const [zoom, setZoom] = useState(9);
 	  
 		// Initialize map when component mounts
 		useEffect(() => {
@@ -458,6 +458,10 @@ else{
 	return(
 		<div>
 				
+				<div>
+					<Map/>
+					</div>
+
 				<div className="heading mb-9">
 				<h1 className="mb-7">
 					<span className="d-block" >Discover</span>
@@ -468,9 +472,7 @@ else{
 					Find great places to stay, eat, shop, or visit from local experts.
 				</p>
 	
-				<div>
-					<Map/>
-					</div>
+				
 			
 			</div>
 		
