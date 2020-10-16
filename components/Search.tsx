@@ -67,7 +67,7 @@ useEffect(() => {
     axios
       .get("https://get.geojs.io/v1/ip/geo.json")
       .then(response => setlongitudeIp(response.data.longitude));
-      axios
+    axios
       .get("https://get.geojs.io/v1/ip/geo.json")
       .then(response => setcountryCode(response.data.country_code));
   }, []);
@@ -283,9 +283,10 @@ const Ipsort = async () =>{
 			useEffect(() => {
 			  const map = new mapboxgl.Map({
 				container: mapContainerRef.current,
-				style: 'mapbox://styles/mapbox/streets-v11',
+				style: 'mapbox://styles/mapbox/streets-v9',
 				center: [longitudeZip, latitudeZip],
-				zoom: zoom
+				zoom: zoom,
+				interactive: false
 			  });
 		  
 			  // Add navigation control (the +/- zoom buttons)
@@ -315,9 +316,7 @@ const Ipsort = async () =>{
 	return(
 <div>
 
-	<div>
-			<Map/>
-			</div>	
+		
 		  
 		<div className="heading mb-9">
 		<h1 className="mb-7">
@@ -329,7 +328,9 @@ const Ipsort = async () =>{
 			Find great places to stay, eat, shop, or visit from local experts.
 		</p>
 		 
-		
+		<div>
+			<Map/>
+			</div>
 	
 	</div>
 
@@ -427,9 +428,10 @@ else{
 		useEffect(() => {
 		  const map = new mapboxgl.Map({
 			container: mapContainerRef.current,
-			style: 'mapbox://styles/mapbox/streets-v11',
+			style: 'mapbox://styles/mapbox/streets-v9',
 			center: [longitudeIp, latitudeIp],
-			zoom: zoom
+			zoom: zoom,
+			interactive: false
 		  });
 	  
 		  // Add navigation control (the +/- zoom buttons)
@@ -455,9 +457,7 @@ else{
 
 	return(
 		<div>
-				<div>
-					<Map/>
-					</div>
+				
 				<div className="heading mb-9">
 				<h1 className="mb-7">
 					<span className="d-block" >Discover</span>
@@ -468,7 +468,9 @@ else{
 					Find great places to stay, eat, shop, or visit from local experts.
 				</p>
 	
-				
+				<div>
+					<Map/>
+					</div>
 			
 			</div>
 		

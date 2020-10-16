@@ -1,8 +1,8 @@
 import React from 'react';
-import Dashboard from '../../components/DashboardApi'
+import DashboardList from '../../components/DashboardList'
 
 const HomePage = () => (
-        <Dashboard />
+        <DashboardList />
 );
   
   

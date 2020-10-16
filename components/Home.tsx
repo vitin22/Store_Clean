@@ -31,7 +31,7 @@ const responsive = {
 
 
   const rueda = '{"slidesToShow": 2,"autoplay":false,"dots":false,"responsive":[{"breakpoint": 992,"settings": {"slidesToShow": 1,"arrows":false}}]}';
-
+  const papa = "sonya"
  function Home() {
     
     

@@ -3,7 +3,6 @@ import { LOGIN_MUTATION } from './Apollo/jobs.mutations';
 import { useMutation } from '@apollo/react-hooks';
 import gql from 'graphql-tag';
 import {useRouter, Router} from 'next/router'
-import Estilo from './ScriptD'
 
 
 //import { newRegistery, Registery } from './Type';
@@ -46,7 +45,7 @@ import Link from 'next/link';
                                     </form>
 */ 
 
-function Login() {
+function InsertarCat() {
     // local
     const route = useRouter()
     let [username, setUserName] = useState("");
@@ -84,7 +83,7 @@ variables: { username, password}
     return (
 <div>
                    
-<Estilo/>
+
                    <div id="login-popup" className="mfp-hide">
         <div className="form-login-register">
             <div className="tabs mb-8">

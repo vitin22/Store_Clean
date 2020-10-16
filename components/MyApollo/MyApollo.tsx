@@ -8,8 +8,8 @@ import { Urlgraph } from '@components/Store/Datos';
 const cache = new InMemoryCache();
 // const url = Urlgraph();
 const link = new HttpLink({
-    //uri: `http://localhost:8000/api/`,
-    uri: `http://5e19080.online-server.cloud:8000/api/`,
+    uri: `http://localhost:8000/api/`,
+    //uri: `http://5e19080.online-server.cloud:8000/api/`,
     fetch,
     
   });

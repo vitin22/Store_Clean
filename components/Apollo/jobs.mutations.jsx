@@ -124,7 +124,158 @@ mutation($cantidad: Int, $codigo: String!, $descripcion: String, $empresa: ID, $
 `;
 
 
-export const CREARSERVICIO_MUTATION = gql`
+export const ADD_CATEGORIA = gql`
+mutation($categoria: String!){
+  createCategoriaServicio(
+    nombre: $categoria
+  )  {
+    categoria{
+      id
+      nombre
+    }
+  }
+}
+`;
+
+export const DEL_CATEGORIA = gql`
+mutation($categoriaId: String!){
+  deleteCategoriaServicio(
+    id: $categoriaId
+  )  {
+    categoria{
+      id
+      nombre
+    }
+  }
+}
+`;
+
+
+export const UPD_CATEGORIA = gql`
+mutation($categoria: String!){
+  updateCategoriaServicio(
+    nombre: $categoria
+  )  {
+    categoria{
+      id
+      nombre
+    }
+  }
+}
+`;
+
+export const ADD_TIPOPRODUCTO = gql`
+mutation($hasVariants: Boolean, $isShippingRequired: Boolean, $nombre: String){
+  tipoProductoId(
+    hasVariants: $hasVariants,
+    isShippingRequired: $isShippingRequired,
+    nombre: $nombre
+  )  
+  }
+
+`;
+
+export const UPD_TIPOPRODUCTO = gql`
+mutation($hasVariants: Boolean, $isShippingRequired: Boolean, $nombre: String!, $tipoProductoId: String!){
+  updateTipoProducto(
+    hasVariants: $hasVariants,
+    isShippingRequired: $isShippingRequired,
+    nombre: $nombre,
+    tipoProductoId: $tipoProductoId
+  )  
+  }
+
+`;
+
+export const DEL_TIPOPRODUCTO = gql`
+mutation($tipoProductoId: String!){
+  deleteTipoProducto(
+    tipoProductoId: $tipoProductoId
+  )  
+  }
+
+`;
+
+export const ADD_PRODUCTO = gql`
+mutation($description: String, $minimalVariantPriceAmount: Float, $moneda: String, $nombre: String, $priceAmount: Float, $tipoProducto: String){
+  createProducto(
+    description: $description,
+    minimalVariantPriceAmount: $minimalVariantPriceAmount,
+    moneda: $moneda,
+    nombre: $nombre,
+    priceAmount: $priceAmount,
+    tipoProducto: $tipoProducto
+  )  
+  }
+
+`;
+
+export const UPD_PRODUCTO = gql`
+mutation($description: String, $minimalVariantPriceAmount: Float, $moneda: String, $nombre: String, $priceAmount: Float, $productoId: String! $tipoProducto: String){
+  updateProducto(
+    description: $description,
+    minimalVariantPriceAmount: $minimalVariantPriceAmount,
+    moneda: $moneda,
+    nombre: $nombre,
+    priceAmount: $priceAmount,
+    productoId: $productoId
+    tipoProducto: $tipoProducto
+  )  
+  }
+
+`;
+
+export const DEL_PRODUCTO = gql`
+mutation($productoId: String!){
+  deleteProducto(
+    productoId: $productoId
+  )  
+  }
+
+`;
+
+export const ADD_VARPRODUCTO = gql`
+mutation( $codigo: String, $costPriceAmount: Float, $moneda: String, $nombre: String, $priceOverrideAmount: Float, $productoId: String! ){
+  createVarianteProducto(
+    codigo: $codigo,
+    costPriceAmount: $costPriceAmount,
+    moneda: $moneda,
+    nombre: $nombre,
+    priceOverrideAmount: $priceOverrideAmount,
+    productoId: $productoId
+  )  
+  }
+
+`;
+
+export const UPD_VARPRODUCTO = gql`
+mutation( $codigo: String, $costPriceAmount: Float, $moneda: String, $nombre: String, $priceOverrideAmount: Float, $productoId: String!,  $varianteId: String! ){
+  updateVarianteProducto(
+    codigo: $codigo,
+    costPriceAmount: $costPriceAmount,
+    moneda: $moneda,
+    nombre: $nombre,
+    priceOverrideAmount: $priceOverrideAmount,
+    productoId: $productoId,
+    varianteId: $ varianteId
+  )  
+  }
+
+`;
+
+export const DEL_VARPRODUCTO = gql`
+mutation( $varianteId: String! ){
+  updateVarianteProducto(
+    varianteId: $ varianteId
+  )  
+  }
+
+`;
+
+
+
+
+export const ADD_SERVICIO = gql`
 mutation($active: Boolean,$avaibleTimeFrom: Time,$availableTimeTo: Time, $avaliableOnlyOnBusinessLocation: Boolean, $categoriaId: Int, $licencia: String, $nombre: String, $precio: Float, $precioAlternativo: Float, $serviceDescription: String, $zipCode: Int){
   createServicio(
     active: $active,
@@ -151,4 +302,90 @@ mutation($active: Boolean,$avaibleTimeFrom: Time,$availableTimeTo: Time, $avalia
     }
   }
 }
+`;
+
+
+export const UPD_SERVICIO = gql`
+mutation($active: Boolean,$avaibleTimeFrom: Time,$availableTimeTo: Time, $avaliableOnlyOnBusinessLocation: Boolean, $categoriaId: Int, $licencia: String, $nombre: String, $precio: Float, $precioAlternativo: Float, $serviceDescription: String, $servicioId: String!, $zipCode: Int){
+  updateServicio(
+    active: $active,
+    availableTimeFrom: $avaibleTimeFrom,
+    availableTimeTo: $availableTimeTo,
+    avaliableOnlyOnBusinessLocation: $avaliableOnlyOnBusinessLocation,
+    categoriaId: $categoriaId,
+    licencia: $licencia,
+    nombre: $nombre,
+    precio: $precio,
+    precioAlternativo: $precioAlternativo,
+    serviceDescription: $serviceDescription,
+    zipCode: $zipCode,
+    servicioId: $servicioId
+    
+  )  
+}
+`;
+
+
+export const DEL_SERVICIO = gql`
+mutation( $servicioId: String! ){
+  deleteServicio(
+    servicioId: $servicioId
+  )  
+  }
+
+`;
+
+
+export const ADD_PRESERVICIO = gql`
+mutation( $active: Boolean, $apellidos: String, $background: [BackgroundCheck], $birthDate: Date, $email: String, $localidad: [ZipCodes]!, $nombre: String, $particularOrBusinessAddress: String, $phone: String, $services: [Services], $socialSecurityNumber: String ){
+  deleteServicio(
+    active: $active,
+    apellidos: $apellidos,
+    background: $background,
+    birthDate: $birthDate,
+    email: $email,
+    localidad: $localidad,
+    nombre: $nombre,
+    particularOrBusinessAddress: $particularOrBusinessAddress,
+    phone: $phone,
+    services: $services,
+    socialSecurityNumber: $socialSecurityNumber
+
+
+  )  
+  }
+
+`;
+
+export const UPD_PRESERVICIO = gql`
+mutation( $active: Boolean, $apellidos: String, $background: [BackgroundCheck], $birthDate: Date, $email: String, $localidad: [ZipCodes]!, $nombre: String, $particularOrBusinessAddress: String, $phone: String, $services: [Services],$prestadorServicioId: String $socialSecurityNumber: String ){
+  prestadorServicioId(
+    active: $active,
+    apellidos: $apellidos,
+    background: $background,
+    birthDate: $birthDate,
+    email: $email,
+    localidad: $localidad,
+    nombre: $nombre,
+    particularOrBusinessAddress: $particularOrBusinessAddress,
+    phone: $phone,
+    services: $services,
+    socialSecurityNumber: $socialSecurityNumber,
+    prestadorServicioId: $prestadorServicioId
+
+
+  )  
+  }
+
+`;
+
+
+
+export const DEL_PRESERVICIO = gql`
+mutation( $prestadorServicioIda: String! ){
+  prestadorServicioId(
+    prestadorServicioId: $prestadorServicioId
+  )  
+  }
+
 `;

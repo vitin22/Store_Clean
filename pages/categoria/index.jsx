@@ -1,8 +1,8 @@
 import React from 'react';
-import Dashboard from '../../components/DashboardApi'
+import InstertarCat from '../../components/InsertarCat'
 
 const HomePage = () => (
-        <Dashboard />
+        <InstertarCat />
 );
   
   
