@@ -12,6 +12,7 @@ export const Datos = () => {
 	var show =router.query.show;
 	var zipcode =router.query.zipcode;
 	var list =router.query.list;
+	//var catg =router.query.catg;
 
 	if(page==undefined){
 		page="";

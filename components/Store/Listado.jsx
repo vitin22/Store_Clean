@@ -5,7 +5,7 @@ import { PagProd } from '@components/Apollo/jobs.query';
 import { useRouter } from 'next/router';
 import Show from './Show';
 import Paginate from './Paginate';
-import Datos, { ImageValidate } from '@components/Info/Datos';
+import Datos, { ImageValidate } from './Datos';
 import Cuadros from './Cuadros';
 import List from './List';
 import Estilo from '@components/ScriptD'
@@ -27,16 +27,16 @@ const Listado = (props) => {
         client: client
     });
 
-	if (loading || !data) {
-	    return <img src="img/giphy.gif"/>;
-    }
+	//if (loading || !data) {
+	//    return <img src="img/giphy.gif"/>;
+    //}
     
-    //console.log(data);
+    //.console.log(data);
     console.log(rango)
 
 	if(datos['list']=="4"){
         console.log(datos['list']);
-        console.log("llego hasta aki el store")
+        console.log(datos['zipcode']);
 	}
 return(
 <div >
