@@ -1,40 +1,8 @@
 import React, { useState } from 'react';
 import Estilo from './ScriptD'
 
-import { ADD_CATEGORIA } from './Apollo/jobs.mutations';
-import { useMutation } from '@apollo/react-hooks';
-import gql from 'graphql-tag';
-import {useRouter, Router} from 'next/router'
 
-
-//import { newRegistery, Registery } from './Type';
-import withApollo from './Apollo/apollo';
-import Link from 'next/link';
-
-
-
-
-
-
-const DashboardList = () => {
-    const [categoria, setcategoria] = useState('');
-    const route = useRouter()
-    const [createCategoriaServicio, { error,data }] = useMutation(ADD_CATEGORIA, {
-        variables: { categoria} 
-      });
-
-
-      const handleSubmit = async (event,createCategoriaServicio) => {
-  
-        event.preventDefault();
-        await createCategoriaServicio().then(res => {
-        console.log("sirvio")
-        console.log(error.message)  
-        }).catch(error => {
-          console.log('error de registro')
-      });
-        
-      };
+function DashboardMenu() {
 
     return(
         <div>
@@ -315,8 +283,7 @@ const DashboardList = () => {
                                         Log in</a>
                                 </div>
                                 <div className="header-customize-item">
-                                    <a href="#add-categoria" className="btn btn-primary btn-icon-right" data-gtf-mfp="true"
-                                       data-mfp-options='{"type":"inline"}'>Add
+                                    <a href="page-submit-listing.html" className="btn btn-primary btn-icon-right">Add
                                         Listing <i
                                                 className="far fa-angle-right"></i></a>
                                 </div>
@@ -342,7 +309,7 @@ const DashboardList = () => {
                         </div>
                         <ul className="list-group list-group-flush list-group-borderless">
                             <li className="list-group-item p-0 mb-2 lh-15">
-                                <a href='/dashboard'
+                                <a href="panel-dashboard.html"
                                    className="d-flex align-items-center link-hover-dark-primary font-size-md">
                                     <span className="d-inline-block mr-3"><i className="fal fa-cog"></i></span>
                                     <span>Dashboard</span>
@@ -355,12 +322,12 @@ const DashboardList = () => {
                                    aria-expanded="false">
 									<span className="d-inline-block mr-3"><svg className="icon icon-layers"><use
                                             xlinkHref="#icon-layers"></use></svg></span>
-                                    <span>My Listing</span>
+                                    <span>Gestionar</span>
                                     <span className=" ml-auto"><i className="fal fa-chevron-down"></i></span>
                                 </a>
                                 <ul className="submenu collapse list-group list-group-flush list-group-borderless pt-2 mb-0 sidebar-menu"
                                     id="listing">
-                                    <li className="list-group-item p-0 mb-2 lh-15"><a href="/dahsboardlist"
+                                    <li className="list-group-item p-0 mb-2 lh-15"><a href="panel-my-listing.html"
                                                                                   className="link-hover-dark-primary font-size-md">My
                                         Listing</a></li>
                                 </ul>
@@ -458,544 +425,310 @@ const DashboardList = () => {
                 </div>
                 <div className="page-container">
                     <div className="container-fluid">
-                        <div className="page-content-wrapper d-flex flex-column">
-                            <h1 className="font-size-h4 mb-4 font-weight-normal">My Listings</h1>
-                            <div className="page-content">
-                                <div className="tabs">
-                                    <ul className="nav nav-pills tab-style-01 font-size-lg" role="tablist">
-                                        <li className="nav-item">
-                                            <a className="nav-link active" id="all-tab" data-toggle="tab" href="#all"
-                                               role="tab"
-                                               aria-controls="all" aria-selected="true">All Listings (15) </a>
-                                        </li>
-                                        
-                                        
-                                       
-                                    </ul>
-                                </div>
-                                <div className="tab-content">
-                                    <div className="tab-pane fade show active" id="all" role="tabpanel"
-                                         aria-labelledby="all-tab">
-                                        <div className="store-listing-style-04">
-                                            <div className="store-listing-item">
-                                                <div className="d-flex align-items-center flex-wrap flex-lg-nowrap border-bottom py-4 py-lg-0">
-                                                    <div className="store media align-items-stretch py-4">
-                                                        <a href="listing-details-full-image.html" className="store-image">
-                                                            <img src="images/shop/favourite-01.jpg" alt="Favourite 1"/>
-                                                        </a>
-                                                        <div className="media-body px-0 pt-4 pt-md-0">
-                                                            <a href="listing-details-image.html"
-                                                               className="font-size-lg font-weight-semibold text-dark d-inline-block mb-2 lh-1"><span
-                                                                    className="letter-spacing-25">Furniture Assembly</span>
-                                                            </a>
-                                                            <ul className="list-inline store-meta mb-3 font-size-sm d-flex align-items-center flex-wrap">
-                                                                <li className="list-inline-item"><span
-                                                                        className="badge badge-success d-inline-block mr-1">5.0</span><span
-                                                                        className="number">4 rating</span>
-                                                                </li>
-                                                                <li className="list-inline-item separate"></li>
-                                                                <li className="list-inline-item"><span
-                                                                        className="mr-1">From</span><span
-                                                                        className="text-danger font-weight-semibold">$56.00</span>
-                                                                </li>
-                                                                <li className="list-inline-item separate"></li>
-                                                                <li className="list-inline-item"><a href="#"
-                                                                                                className="link-hover-secondary-primary">
-                                                                    <svg className="icon icon-cog">
-                                                                        <use xlinkHref="#icon-cog"></use>
-                                                                    </svg>
-                                                                    <span>Service</span>
-                                                                </a></li>
-                                                            </ul>
-                                                            <div className="border-top pt-2 d-flex">
-															<span
-                                                                    className="d-inline-block mr-1"><i
-                                                                    className="fal fa-map-marker-alt">
-															</i>
-																</span>
-                                                                <a href="#"
-                                                                   className="text-secondary text-decoration-none address">San
-                                                                    Francisco,
-                                                                    CA</a>
-                                                                <div className="ml-0 ml-sm-auto">
-                                                                    <span className="label">Status:</span>
-                                                                    <span className="status active">Active</span>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div className="action ml-0 ml-lg-auto mt-3 mt-lg-0 align-items-center flex-wrap flex-sm-nowrap w-100 w-lg-auto">
-                                                        <a href="page-submit-listing.html"
-                                                           className="btn btn-light btn-icon-left mb-2 mb-sm-0 font-size-md">
-                                                            <i className="fal fa-edit"></i>
-                                                            Edit
-                                                        </a>
-                                                        <a href="#"
-                                                           className="btn btn-primary btn-icon-left mb-2 mb-sm-0 px-5 font-size-md">
-                                                            <i className="fal fa-trash-alt"></i>
-                                                            Delete
-                                                        </a>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div className="store-listing-item">
-                                                <div className="d-flex align-items-center flex-wrap flex-lg-nowrap border-bottom py-4 py-lg-0">
-                                                    <div className="store media align-items-stretch py-4">
-                                                        <a href="listing-details-full-image.html" className="store-image">
-                                                            <img src="images/shop/favourite-02.jpg" alt="Favourite 1"/>
-                                                        </a>
-                                                        <div className="media-body px-0 pt-4 pt-md-0">
-                                                            <a href="listing-details-image.html"
-                                                               className="font-size-lg font-weight-semibold text-dark d-inline-block mb-2 lh-1"><span
-                                                                    className="letter-spacing-25">Roman Kraft Hotel</span>
-                                                            </a>
-                                                            <ul className="list-inline store-meta mb-3 font-size-sm d-flex align-items-center flex-wrap">
-                                                                <li className="list-inline-item"><span
-                                                                        className="badge badge-success d-inline-block mr-1">5.0</span><span
-                                                                        className="number">4 rating</span>
-                                                                </li>
-                                                                <li className="list-inline-item separate"></li>
-                                                                <li className="list-inline-item"><span
-                                                                        className="mr-1">From</span><span
-                                                                        className="text-danger font-weight-semibold">$56.00</span>
-                                                                </li>
-                                                                <li className="list-inline-item separate"></li>
-                                                                <li className="list-inline-item">
-                                                                    <a href="#" className="link-hover-secondary-primary">
-                                                                        <svg className="icon icon-bed">
-                                                                            <use xlinkHref="#icon-bed"></use>
-                                                                        </svg>
-                                                                        <span>Hotel</span>
-                                                                    </a>
-                                                                </li>
-                                                            </ul>
-                                                            <div className="border-top pt-2 d-flex">
-															<span
-                                                                    className="d-inline-block mr-1"><i
-                                                                    className="fal fa-map-marker-alt">
-															</i>
-																</span>
-                                                                <a href="#"
-                                                                   className="text-secondary text-decoration-none address">San
-                                                                    Francisco,
-                                                                    CA</a>
-                                                                <div className="ml-0 ml-sm-auto">
-                                                                    <span className="label">Status:</span>
-                                                                    <span className="status active">Active</span>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div className="action ml-0 ml-lg-auto mt-3 mt-lg-0 align-items-center flex-wrap flex-sm-nowrap w-100 w-lg-auto">
-                                                        <a href="page-submit-listing.html"
-                                                           className="btn btn-light btn-icon-left mb-2 mb-sm-0 font-size-md">
-                                                            <i className="fal fa-edit"></i>
-                                                            Edit
-                                                        </a>
-                                                        <a href="#"
-                                                           className="btn btn-primary btn-icon-left mb-2 mb-sm-0 px-5 font-size-md">
-                                                            <i className="fal fa-trash-alt"></i>
-                                                            Delete
-                                                        </a>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div className="store-listing-item">
-                                                <div className="d-flex align-items-center flex-wrap flex-lg-nowrap border-bottom py-4 py-lg-0">
-                                                    <div className="store media align-items-stretch py-4">
-                                                        <a href="listing-details-full-image.html" className="store-image">
-                                                            <img src="images/shop/favourite-03.jpg" alt="Favourite 1"/>
-                                                        </a>
-                                                        <div className="media-body px-0 pt-4 pt-md-0">
-                                                            <a href="listing-details-image.html"
-                                                               className="font-size-lg font-weight-semibold text-dark d-inline-block mb-2 lh-1"><span
-                                                                    className="letter-spacing-25">Karly Gomez Cake</span>
-                                                            </a>
-                                                            <ul className="list-inline store-meta mb-3 font-size-sm d-flex align-items-center flex-wrap">
-                                                                <li className="list-inline-item"><span
-                                                                        className="mr-1">From</span><span
-                                                                        className="text-danger font-weight-semibold">$56.00</span>
-                                                                </li>
-                                                                <li className="list-inline-item separate"></li>
-                                                                <li className="list-inline-item">
-                                                                    <a href="#"
-                                                                       className="link-hover-secondary-primary">
-                                                                        <svg className="icon icon-bed">
-                                                                            <use xlinkHref="#icon-bed"></use>
-                                                                        </svg>
-                                                                        Hotel
-                                                                    </a>
-                                                                </li>
-                                                            </ul>
-                                                            <div className="border-top pt-2 d-flex">
-															<span
-                                                                    className="d-inline-block mr-1"><i
-                                                                    className="fal fa-map-marker-alt">
-															</i>
-																</span>
-                                                                <a href="#"
-                                                                   className="text-secondary text-decoration-none address">San
-                                                                    Francisco,
-                                                                    CA</a>
-                                                                <div className="ml-0 ml-sm-auto">
-                                                                    <span className="label">Status:</span>
-                                                                    <span className="status pending">Pending</span>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div className="action ml-0 ml-lg-auto mt-3 mt-lg-0 align-items-center flex-wrap flex-sm-nowrap w-100 w-lg-auto">
-                                                        <a href="page-submit-listing.html"
-                                                           className="btn btn-light btn-icon-left mb-2 mb-sm-0 font-size-md">
-                                                            <i className="fal fa-edit"></i>
-                                                            Edit
-                                                        </a>
-                                                        <a href="#"
-                                                           className="btn btn-primary btn-icon-left mb-2 mb-sm-0 px-5 font-size-md">
-                                                            <i className="fal fa-trash-alt"></i>
-                                                            Delete
-                                                        </a>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div className="store-listing-item">
-                                                <div className="d-flex align-items-center flex-wrap flex-lg-nowrap border-bottom py-4 py-lg-0">
-                                                    <div className="store media align-items-stretch py-4">
-                                                        <a href="listing-details-full-image.html" className="store-image">
-                                                            <img src="images/shop/favourite-04.jpg" alt="Favourite 1"/>
-                                                        </a>
-                                                        <div className="media-body px-0 pt-4 pt-md-0">
-                                                            <a href="listing-details-image.html"
-                                                               className="font-size-lg font-weight-semibold text-dark d-inline-block mb-2 lh-1"><span
-                                                                    className="letter-spacing-25">Furniture Assembly</span>
-                                                            </a>
-                                                            <ul className="list-inline store-meta mb-3 font-size-sm d-flex align-items-center flex-wrap">
-                                                                <li className="list-inline-item"><span
-                                                                        className="badge badge-success d-inline-block mr-1">5.0</span><span
-                                                                        className="number">4 rating</span>
-                                                                </li>
-                                                                <li className="list-inline-item separate"></li>
-                                                                <li className="list-inline-item"><span
-                                                                        className="mr-1">From</span><span
-                                                                        className="text-danger font-weight-semibold">$56.00</span>
-                                                                </li>
-                                                                <li className="list-inline-item separate"></li>
-                                                                <li className="list-inline-item"><a href="#"
-                                                                                                className="link-hover-secondary-primary">
-                                                                    <svg className="icon icon-cog">
-                                                                        <use xlinkHref="#icon-cog"></use>
-                                                                    </svg>
-                                                                    <span>Service</span>
-                                                                </a></li>
-                                                            </ul>
-                                                            <div className="border-top pt-2 d-flex">
-															<span
-                                                                    className="d-inline-block mr-1"><i
-                                                                    className="fal fa-map-marker-alt">
-															</i>
-																</span>
-                                                                <a href="#"
-                                                                   className="text-secondary text-decoration-none address">San
-                                                                    Francisco,
-                                                                    CA</a>
-                                                                <div className="ml-0 ml-sm-auto">
-                                                                    <span className="label">Status:</span>
-                                                                    <span className="status experied">Experied</span>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div className="action ml-0 ml-lg-auto mt-3 mt-lg-0 align-items-center flex-wrap flex-sm-nowrap w-100 w-lg-auto">
-                                                        <a href="page-submit-listing.html"
-                                                           className="btn btn-light btn-icon-left mb-2 mb-sm-0 font-size-md">
-                                                            <i className="fal fa-edit"></i>
-                                                            Edit
-                                                        </a>
-                                                        <a href="#"
-                                                           className="btn btn-primary btn-icon-left  mb-2 mb-sm-0 px-5 font-size-md">
-                                                            <i className="fal fa-trash-alt"></i>
-                                                            Delete
-                                                        </a>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <ul className="pagination pagination-style-02">
-                                            <li className="page-item"><a href="#" className="page-link bg-gray"><i
-                                                    className="fal fa-chevron-left"></i></a>
-                                            </li>
-                                            <li className="page-item"><a href="#" className="page-link current bg-gray">1</a>
-                                            </li>
-                                            <li className="page-item"><a href="#" className="page-link bg-gray">2</a></li>
-                                            <li className="page-item"><a href="#" className="page-link bg-gray">3</a></li>
-                                            <li className="page-item"><a href="#" className="page-link bg-gray">...</a></li>
-                                            <li className="page-item"><a href="#" className="page-link bg-gray">5</a></li>
-                                            <li className="page-item"><a href="#" className="page-link bg-gray"><i
-                                                    className="fal fa-chevron-right"></i></a>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                    <div className="tab-pane fade" id="active" role="tabpanel" aria-labelledby="active-tab">
-                                        <div className="store-listing-style-04">
-                                            <div className="store-listing-item">
-                                                <div className="d-flex align-items-center flex-wrap flex-lg-nowrap border-bottom py-4 py-lg-0">
-                                                    <div className="store media align-items-stretch py-4">
-                                                        <a href="listing-details-full-image.html" className="store-image">
-                                                            <img src="images/shop/favourite-01.jpg" alt="Favourite 1"/>
-                                                        </a>
-                                                        <div className="media-body px-0 pt-4 pt-md-0">
-                                                            <a href="listing-details-image.html"
-                                                               className="font-size-lg font-weight-semibold text-dark d-inline-block mb-2 lh-1"><span
-                                                                    className="letter-spacing-25">Furniture Assembly</span>
-                                                            </a>
-                                                            <ul className="list-inline store-meta mb-3 font-size-sm d-flex align-items-center flex-wrap">
-                                                                <li className="list-inline-item"><span
-                                                                        className="badge badge-success d-inline-block mr-1">5.0</span><span
-                                                                        className="number">4 rating</span>
-                                                                </li>
-                                                                <li className="list-inline-item separate"></li>
-                                                                <li className="list-inline-item"><span
-                                                                        className="mr-1">From</span><span
-                                                                        className="text-danger font-weight-semibold">$56.00</span>
-                                                                </li>
-                                                                <li className="list-inline-item separate"></li>
-                                                                <li className="list-inline-item"><a href="#"
-                                                                                                className="link-hover-secondary-primary">
-                                                                    <svg className="icon icon-cog">
-                                                                        <use xlinkHref="#icon-cog"></use>
-                                                                    </svg>
-                                                                    <span>Service</span>
-                                                                </a></li>
-                                                            </ul>
-                                                            <div className="border-top pt-2 d-flex">
-															<span
-                                                                    className="d-inline-block mr-1"><i
-                                                                    className="fal fa-map-marker-alt">
-															</i>
-																</span>
-                                                                <a href="#"
-                                                                   className="text-secondary text-decoration-none address">San
-                                                                    Francisco,
-                                                                    CA</a>
-                                                                <div className="ml-0 ml-sm-auto">
-                                                                    <span className="label">Status:</span>
-                                                                    <span className="status active">Active</span>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div className="action ml-0 ml-lg-auto mt-3 mt-lg-0 align-items-center flex-wrap flex-sm-nowrap w-100 w-lg-auto">
-                                                        <a href="page-submit-listing.html"
-                                                           className="btn btn-light btn-icon-left mb-2 mb-sm-0 font-size-md">
-                                                            <i className="fal fa-edit"></i>
-                                                            Edit
-                                                        </a>
-                                                        <a href="#"
-                                                           className="btn btn-primary btn-icon-left mb-2 mb-sm-0 px-5 font-size-md">
-                                                            <i className="fal fa-trash-alt"></i>
-                                                            Delete
-                                                        </a>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div className="store-listing-item">
-                                                <div className="d-flex align-items-center flex-wrap flex-lg-nowrap border-bottom py-4 py-lg-0">
-                                                    <div className="store media align-items-stretch py-4">
-                                                        <a href="listing-details-full-image.html" className="store-image">
-                                                            <img src="images/shop/favourite-02.jpg" alt="Favourite 1"/>
-                                                        </a>
-                                                        <div className="media-body px-0 pt-4 pt-md-0">
-                                                            <a href="listing-details-image.html"
-                                                               className="font-size-lg font-weight-semibold text-dark d-inline-block mb-2 lh-1"><span
-                                                                    className="letter-spacing-25">Roman Kraft Hotel</span>
-                                                            </a>
-                                                            <ul className="list-inline store-meta mb-3 font-size-sm d-flex align-items-center flex-wrap">
-                                                                <li className="list-inline-item"><span
-                                                                        className="badge badge-success d-inline-block mr-1">5.0</span><span
-                                                                        className="number">4 rating</span>
-                                                                </li>
-                                                                <li className="list-inline-item separate"></li>
-                                                                <li className="list-inline-item"><span
-                                                                        className="mr-1">From</span><span
-                                                                        className="text-danger font-weight-semibold">$56.00</span>
-                                                                </li>
-                                                                <li className="list-inline-item separate"></li>
-                                                                <li className="list-inline-item">
-                                                                    <a href="#"
-                                                                       className="link-hover-secondary-primary">
-                                                                        <svg className="icon icon-bed">
-                                                                            <use xlinkHref="#icon-bed"></use>
-                                                                        </svg>
-                                                                        Hotel
-                                                                    </a>
-                                                                </li>
-                                                            </ul>
-                                                            <div className="border-top pt-2 d-flex">
-															<span
-                                                                    className="d-inline-block mr-1"><i
-                                                                    className="fal fa-map-marker-alt">
-															</i>
-																</span>
-                                                                <a href="#"
-                                                                   className="text-secondary text-decoration-none address">San
-                                                                    Francisco,
-                                                                    CA</a>
-                                                                <div className="ml-0 ml-sm-auto">
-                                                                    <span className="label">Status:</span>
-                                                                    <span className="status active">Active</span>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div className="action ml-0 ml-lg-auto mt-3 mt-lg-0 align-items-center flex-wrap flex-sm-nowrap w-100 w-lg-auto">
-                                                        <a href="page-submit-listing.html"
-                                                           className="btn btn-light btn-icon-left mb-2 mb-sm-0 font-size-md">
-                                                            <i className="fal fa-edit"></i>
-                                                            Edit
-                                                        </a>
-                                                        <a href="#"
-                                                           className="btn btn-primary btn-icon-left mb-2 mb-sm-0 px-5 font-size-md">
-                                                            <i className="fal fa-trash-alt"></i>
-                                                            Delete
-                                                        </a>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div className="tab-pane fade" id="pending" role="tabpanel"
-                                         aria-labelledby="pending-tab">
-                                        <div className="store-listing-style-04">
-                                            <div className="store-listing-item">
-                                                <div className="d-flex align-items-center flex-wrap flex-lg-nowrap border-bottom py-4 py-lg-0">
-                                                    <div className="store media align-items-stretch py-4">
-                                                        <a href="listing-details-full-image.html" className="store-image">
-                                                            <img src="images/shop/favourite-03.jpg" alt="Favourite 1"/>
-                                                        </a>
-                                                        <div className="media-body px-0 pt-4 pt-md-0">
-                                                            <a href="listing-details-image.html"
-                                                               className="font-size-lg font-weight-semibold text-dark d-inline-block mb-2 lh-1"><span
-                                                                    className="letter-spacing-25">Karly Gomez Cake</span>
-                                                            </a>
-                                                            <ul className="list-inline store-meta mb-3 font-size-sm d-flex align-items-center flex-wrap">
-                                                                <li className="list-inline-item"><span
-                                                                        className="mr-1">From</span><span
-                                                                        className="text-danger font-weight-semibold">$56.00</span>
-                                                                </li>
-                                                                <li className="list-inline-item separate"></li>
-                                                                <li className="list-inline-item">
-                                                                    <a href="#" className="link-hover-secondary-primary">
-                                                                        <svg className="icon icon-bed">
-                                                                            <use xlinkHref="#icon-bed"></use>
-                                                                        </svg>
-                                                                        <span>Hotel</span>
-                                                                    </a>
-                                                                </li>
-                                                            </ul>
-                                                            <div className="border-top pt-2 d-flex">
-															<span
-                                                                    className="d-inline-block mr-1"><i
-                                                                    className="fal fa-map-marker-alt">
-															</i>
-																</span>
-                                                                <a href="#"
-                                                                   className="text-secondary text-decoration-none address">San
-                                                                    Francisco,
-                                                                    CA</a>
-                                                                <div className="ml-0 ml-sm-auto">
-                                                                    <span className="label">Status:</span>
-                                                                    <span className="status pending">Pending</span>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div className="action ml-0 ml-lg-auto mt-3 mt-lg-0 align-items-center flex-wrap flex-sm-nowrap w-100 w-lg-auto">
-                                                        <a href="page-submit-listing.html"
-                                                           className="btn btn-light btn-icon-left mb-2 mb-sm-0 font-size-md">
-                                                            <i className="fal fa-edit"></i>
-                                                            Edit
-                                                        </a>
-                                                        <a href="#"
-                                                           className="btn btn-primary btn-icon-left mb-2 mb-sm-0 px-5 font-size-md">
-                                                            <i className="fal fa-trash-alt"></i>
-                                                            Delete
-                                                        </a>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                    </div>
-                                    <div className="tab-pane fade" id="expires" role="tabpanel"
-                                         aria-labelledby="expires-tab">
-                                        <div className="store-listing-style-04">
-                                            <div className="store-listing-item">
-                                                <div className="d-flex align-items-center flex-wrap flex-lg-nowrap border-bottom py-4 py-lg-0">
-                                                    <div className="store media align-items-stretch py-4">
-                                                        <a href="listing-details-full-image.html" className="store-image">
-                                                            <img src="images/shop/favourite-04.jpg" alt="Favourite 1"/>
-                                                        </a>
-                                                        <div className="media-body px-0 pt-4 pt-md-0">
-                                                            <a href="listing-details-image.html"
-                                                               className="font-size-lg font-weight-semibold text-dark d-inline-block mb-2 lh-1"><span
-                                                                    className="letter-spacing-25">Furniture Assembly</span>
-                                                            </a>
-                                                            <ul className="list-inline store-meta mb-3 font-size-sm d-flex align-items-center flex-wrap">
-                                                                <li className="list-inline-item"><span
-                                                                        className="badge badge-success d-inline-block mr-1">5.0</span><span
-                                                                        className="number">4 rating</span>
-                                                                </li>
-                                                                <li className="list-inline-item separate"></li>
-                                                                <li className="list-inline-item"><span
-                                                                        className="mr-1">From</span><span
-                                                                        className="text-danger font-weight-semibold">$56.00</span>
-                                                                </li>
-                                                                <li className="list-inline-item separate"></li>
-                                                                <li className="list-inline-item"><a href="#"
-                                                                                                className="link-hover-secondary-primary">
-                                                                    <svg className="icon icon-cog">
-                                                                        <use xlinkHref="#icon-cog"></use>
-                                                                    </svg>
-                                                                    <span>Service</span>
-                                                                </a></li>
-                                                            </ul>
-                                                            <div className="border-top pt-2 d-flex">
-															<span
-                                                                    className="d-inline-block mr-1"><i
-                                                                    className="fal fa-map-marker-alt">
-															</i>
-																</span>
-                                                                <a href="#"
-                                                                   className="text-secondary text-decoration-none address">San
-                                                                    Francisco,
-                                                                    CA</a>
-                                                                <div className="ml-0 ml-sm-auto">
-                                                                    <span className="label">Status:</span>
-                                                                    <span className="status experied">Experied</span>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div className="action ml-0 ml-lg-auto mt-3 mt-lg-0 align-items-center flex-wrap flex-sm-nowrap w-100 w-lg-auto">
-                                                        <a href="page-submit-listing.html"
-                                                           className="btn btn-light btn-icon-left mb-2 mb-sm-0 font-size-md">
-                                                            <i className="fal fa-edit"></i>
-                                                            Edit
-                                                        </a>
-                                                        <a href="#"
-                                                           className="btn btn-primary btn-icon-left mb-2 mb-sm-0 px-5 font-size-md">
-                                                            <i className="fal fa-trash-alt"></i>
-                                                            Delete
-                                                        </a>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
+                        <div className="page-content-wrapper d-flex flex-column justify-content-center">
+                            <div className="features card-deck">
+                                <div className="card rounded-0 border-0 bg-transparent mb-6">
+                                    <div className="card-body d-flex align-items-center py-6 px-8 bg-white">
+                                        <span className="font-size-h1 font-weight-semibold d-inline-block mr-2 text-primary lh-1">15</span>
+                                        <span className="font-size-md font-weight-semibold text-uppercase text-dark lh-13">All <br/> Listings</span>
                                     </div>
                                 </div>
-
+                                <div className="card rounded-0 border-0 bg-transparent mb-6">
+                                    <div className="card-body d-flex align-items-center py-6 px-8 bg-white">
+                                        <span className="font-size-h1 font-weight-semibold d-inline-block mr-2 text-darker-light lh-1">0</span>
+                                        <span className="font-size-md font-weight-semibold text-uppercase text-dark lh-13">Pending<br/> Listings</span>
+                                    </div>
+                                </div>
+                                <div className="card rounded-0 border-0 bg-transparent mb-6">
+                                    <div className="card-body d-flex align-items-center py-6 px-8 bg-white">
+                                        <span className="font-size-h1 font-weight-semibold d-inline-block mr-2 lh-1 published">12</span>
+                                        <span className="font-size-md font-weight-semibold text-uppercase text-dark lh-13">published<br/> Listings</span>
+                                    </div>
+                                </div>
+                                <div className="card rounded-0 border-0 bg-transparent mb-6">
+                                    <div className="card-body d-flex align-items-center py-6 px-8 bg-white">
+                                        <span className="font-size-h1 font-weight-semibold d-inline-block mr-2 lh-1 experied">2</span>
+                                        <span className="font-size-md font-weight-semibold text-uppercase text-dark lh-13">Experied<br/> Listings</span>
+                                    </div>
+                                </div>
+                                <div className="card rounded-0 border-0 bg-transparent mb-6">
+                                    <div className="card-body d-flex align-items-center p-6 bg-white">
+                                        <span className="font-size-h1 font-weight-semibold d-inline-block mr-2 lh-1 active">1</span>
+                                        <span className="font-size-md font-weight-semibold text-uppercase text-dark lh-13">Active campaign <br/> Listings</span>
+                                    </div>
+                                </div>
                             </div>
-                            <div className="mt-5">
+                            <div className="d-flex two-column mb-13 mx-n3">
+                                <div className="page-left mb-6 px-3">
+                                    <div className="alert alert-success mb-6 alert-dismissible fade show d-flex align-items-center pr-3">
+                                        <div className="font-size-lg py-0 mr-6">Your listing <a
+                                                href="listing-details-full-image.html"
+                                                className="font-weight-semibold link-hover-dark-primary">Hotel Govendor</a>
+                                            has
+                                            been
+                                            approved!
+                                        </div>
+                                        <div className="ml-auto">
+                                            <a href="#" className="alert-button py-0 font-size-h3 lh-1" data-dismiss="alert"
+                                               aria-label="Close"><i className="fal fa-times"></i></a>
+                                        </div>
+                                    </div>
+                                    <div className="facts-box mb-6 row">
+                                        <div className="col-lg-4 mb-6 mb-xl-0">
+                                            <div className="card view rounded-0 border-0 text-white">
+                                                <div className="card-body d-flex align-items-center p-0">
+                                                    <div className="content mr-auto">
+                                                        <span className="font-size-h1 font-weight-semibold lh-1 d-block">824</span>
+                                                        <span className="font-size-lg">Total Views</span>
+                                                    </div>
+                                                    <div className="fact-icon">
+                                                        <svg className="icon icon-eye">
+                                                            <use xlinkHref="#icon-eye"></use>
+                                                        </svg>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div className="col-lg-4 mb-6 mb-xl-0">
+                                            <div className="card review rounded-0 border-0 text-white">
+                                                <div className="card-body d-flex align-items-center p-0">
+                                                    <div className="content mr-auto">
+                                                        <span className="font-size-h1 font-weight-semibold lh-1 d-block">73</span>
+                                                        <span className="font-size-lg">Total Reviews</span>
+                                                    </div>
+                                                    <div className="fact-icon">
+                                                        <i className="fal fa-star"></i>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div className="col-lg-4">
+                                            <div className="card time-bookmark rounded-0 border-0 text-white">
+                                                <div className="card-body d-flex align-items-center p-0">
+                                                    <div className="content mr-auto">
+                                                        <span className="font-size-h1 font-weight-semibold lh-1 d-block">269</span>
+                                                        <span className="font-size-lg">Times Bookmarked</span>
+                                                    </div>
+                                                    <div className="fact-icon">
+                                                        <i className="fal fa-bookmark"></i>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div className="row tables">
+                                        <div className="col-xl-6 mb-6 mb-xl-0">
+                                            <div className="card rounded-0 border-0 reccent-activities">
+                                                <div className="card-body">
+                                                    <h5 className="card-title text-capitalize border-bottom pb-2 mb-2">
+                                                        Recent
+                                                        Activities</h5>
+                                                    <div className="table-responsive">
+                                                        <table className="table">
+                                                            <tbody>
+                                                                <tr>
+                                                                    <td>
+                                                                        <div className="icon-box no-shape icon-box-style-03 d-flex">
+																	<span className="icon-box-icon">
+																		<svg className="icon icon-layers"><use
+                                                                                xlinkHref="#icon-layers"></use></svg>
+																	</span>
+                                                                            <div className="content-box">Your listing <a
+                                                                                    href="listing-details-full-image.html"
+                                                                                    className="font-weight-semibold link-hover-dark-primary">Hotel
+                                                                                Govendor</a>
+                                                                                has
+                                                                                been approved!
+                                                                            </div>
+                                                                        </div>
+                                                                    </td>
+                                                                    <td>8 Hours ago</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>
+                                                                        <div className="icon-box no-shape icon-box-style-03 d-flex">
+																	<span className="icon-box-icon">
+																		<i className="fal fa-bookmark"></i>
+																	</span>
+                                                                            <div className="content-box"><a href="#"
+                                                                                                        className="font-weight-semibold link-hover-dark-primary">David
+                                                                                Eggsy</a>
+                                                                                bookmarked your <a
+                                                                                        href="listing-details-full-image.html"
+                                                                                        className="font-weight-semibold link-hover-dark-primary">Thai
+                                                                                    Taste’s Restaurant</a>
+                                                                                listing!
+                                                                            </div>
+                                                                        </div>
+                                                                    </td>
+                                                                    <td>15 Hours ago</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>
+                                                                        <div className="icon-box no-shape icon-box-style-03 d-flex">
+																	<span className="icon-box-icon">
+																		<i className="fal fa-star"></i>
+																	</span>
+                                                                            <div className="content-box"><a href="#"
+                                                                                                        className="font-weight-semibold link-hover-dark-primary">Kathy
+                                                                                Brown</a>
+                                                                                left a review <a
+                                                                                        href="panel-review-submitted.html"
+                                                                                        className="font-weight-semibold link-hover-dark-primary">5
+                                                                                    Star</a>
+                                                                                on
+                                                                                <a href="listing-details-full-image.html"
+                                                                                   className="font-weight-semibold link-hover-dark-primary">Roman
+                                                                                    Kraft Hotel</a>
+                                                                            </div>
+                                                                        </div>
+                                                                    </td>
+                                                                    <td>1 days ago</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>
+                                                                        <div className="icon-box no-shape icon-box-style-03 d-flex">
+																	<span className="icon-box-icon">
+																		<svg className="icon icon-layers"><use
+                                                                                xlinkHref="#icon-layers"></use></svg>
+																	</span>
+                                                                            <div className="content-box">Your listing <a
+                                                                                    href="listing-details-full-image.html"
+                                                                                    className="font-weight-semibold link-hover-dark-primary">Hotel
+                                                                                Govendor</a>
+                                                                                has
+                                                                                been approved!
+                                                                            </div>
+                                                                        </div>
+                                                                    </td>
+                                                                    <td>8 Hours ago</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>
+                                                                        <div className="icon-box no-shape icon-box-style-03 d-flex">
+																	<span className="icon-box-icon">
+																		<i className="fal fa-bookmark"></i>
+																	</span>
+                                                                            <div className="content-box"><a href="#"
+                                                                                                        className="font-weight-semibold link-hover-dark-primary">David
+                                                                                Eggsy</a>
+                                                                                bookmarked your <a
+                                                                                        href="listing-details-full-image.html"
+                                                                                        className="font-weight-semibold link-hover-dark-primary">Thai
+                                                                                    Taste’s Restaurant</a>
+                                                                                listing!
+                                                                            </div>
+                                                                        </div>
+                                                                    </td>
+                                                                    <td>15 Hours ago</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>
+                                                                        <div className="icon-box no-shape icon-box-style-03 d-flex">
+																	<span className="icon-box-icon">
+																		<i className="fal fa-star"></i>
+																	</span>
+                                                                            <div className="content-box"><a href="#"
+                                                                                                        className="font-weight-semibold link-hover-dark-primary">Kathy
+                                                                                Brown</a>
+                                                                                left a review <a
+                                                                                        href="panel-review-submitted.html"
+                                                                                        className="font-weight-semibold link-hover-dark-primary">5
+                                                                                    Star</a>
+                                                                                on
+                                                                                <a href="listing-details-full-image.html"
+                                                                                   className="font-weight-semibold link-hover-dark-primary">
+                                                                                    Roman Kraft Hotel</a>
+                                                                            </div>
+                                                                        </div>
+                                                                    </td>
+                                                                    <td>1 days ago</td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div className="col-xl-6">
+                                            <div className="card rounded-0 border-0 invoices">
+                                                <div className="card-body">
+                                                    <h5 className="card-title text-capitalize border-bottom pb-2 mb-2">
+                                                        Invoices</h5>
+                                                    <div className="table-responsive-sm">
+                                                        <table className="table">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th>ID</th>
+                                                                    <th>Date</th>
+                                                                    <th>Plan</th>
+                                                                    <th>Amount</th>
+                                                                    <th>Status</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <tr>
+                                                                    <td>
+                                                                        <a href="panel-invoice-details.html"
+                                                                           className="link-hover-dark-blue">INV-00001</a>
+                                                                    </td>
+                                                                    <td>22/10/2017</td>
+                                                                    <td>Basic</td>
+                                                                    <td>$264.00</td>
+                                                                    <td><span className="status paid">Paid</span></td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>
+                                                                        <a href="panel-invoice-details.html"
+                                                                           className="link-hover-dark-blue">INV-00002</a>
+
+                                                                    </td>
+                                                                    <td>15/16/2016</td>
+                                                                    <td>Premium</td>
+                                                                    <td>$528.00</td>
+                                                                    <td><span className="status overdue">Overdue</span></td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>
+                                                                        <a href="panel-invoice-details.html"
+                                                                           className="link-hover-dark-blue">INV-00003</a>
+                                                                    </td>
+                                                                    <td>18/10/2017</td>
+                                                                    <td>Ultimate</td>
+                                                                    <td>$1,528.00</td>
+                                                                    <td><span className="status pending">Pending</span></td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                                <div className="page-right px-3">
+                                    <div className="card rounded-0 border-0 contact py-6 px-3">
+                                        <div className="card-body text-center p-0">
+                                            <div className="contact-icon text-dark mb-3">
+                                                <svg className="icon icon-headset">
+                                                    <use xlinkHref="#icon-headset"></use>
+                                                </svg>
+                                            </div>
+                                            <div className="text-dark font-size-md mb-5">
+                                                <p className="mb-2">Have any problem and<br/> need support? Call Us directly
+                                                </p>
+                                                <p className="font-weight-semibold h5 mb-2">(+34) 967-123-888</p>
+                                                <p>Or chat with us</p>
+                                            </div>
+                                            <a href="#" className="btn btn-primary font-size-md px-8 lh-15">Contact Us</a>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+
+                            <div className="copy-right mt-auto">
                                 &copy; 2020 Thedir. All Rights Reserved.
                             </div>
                         </div>
@@ -1135,6 +868,10 @@ const DashboardList = () => {
             </form>
         </div>
     </div>
+
+
+
+    {/* la lupa popover*/}
     <div id="search-popup" className="mfp-hide">
         <div className="search-popup text-center">
             <h2 className="mb-8">Search</h2>
@@ -1370,52 +1107,6 @@ const DashboardList = () => {
         </div>
     </div>
 
-
-    <div id="add-categoria" className="mfp-hide">
-        <div className="form-login-register">
-            <div className="tabs mb-8">
-                <ul className="nav nav-pills tab-style-01 text-capitalize justify-content-center"
-                    role="tablist">
-                    <li className="nav-item">
-                        <a className="nav-link active" id="login-tab" data-toggle="tab"
-                           href="#login"
-                           role="tab"
-                           aria-controls="login" aria-selected="true"><h3>Category</h3></a>
-                    </li>
-                    
-                </ul>
-            </div>
-            <div className="tab-content">
-                <div className="tab-pane fade show active" id="login" role="tabpanel"
-                     aria-labelledby="login-tab">
-                    <div className="form-login">
-                        <form onSubmit={event => handleSubmit(event,createCategoriaServicio)}>
-                            <div className="font-size-md text-dark mb-5">Create Category of Service</div>
-                            <div className="form-group mb-2">
-                                <label htmlFor="username" className="sr-only">Category</label>
-                                <input id="username" type="text" className="form-control" value={categoria} onChange={e => setcategoria(e.target.value)} placeholder="Username"/>
-                            </div>
-                            
-                            
-                            <button type="submit"
-                                    className="btn btn-primary btn-block font-weight-bold text-uppercase font-size-lg rounded-sm mb-8" onClick={()=> createCategoriaServicio()}>
-                                Add
-                            </button>
-                        </form>
-                        
-                        
-                    </div>
-
-
-                </div>
-                
-            </div>
-            <form>
-
-            </form>
-        </div>
-    </div>
-
     {/*<!-- External JavaScripts -->*/}
     <script src="vendors/jquery.min.js"></script>
     <script src="vendors/jquery-ui/jquery-ui.min.js"></script>
@@ -1540,4 +1231,4 @@ const DashboardList = () => {
 
 }
 
-export default withApollo(DashboardList);
+export default DashboardMenu;

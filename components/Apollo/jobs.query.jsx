@@ -96,25 +96,47 @@ query allPrestadorServicio($zipcode: Int, $first: Int!, $after: String!){
 
 
 export const PagProd = gql`
-query allPrestadorServicio($zipcode: Int, $first: Int!, $after: String!){
-  allPrestadorServicio(zipCode: $zipcode, first: $first, after: $after ){
-  edges{
-    node{
-      id
-      birthDate
-      
-     
-    }
-    
-  }
-    pageInfo{
-      startCursor
-      endCursor
-      hasNextPage
-      hasPreviousPage
-    }
+query allPrestadorServicio($services_Zipcode: Int,$first: Int, $after: String){
+  allPrestadorServicio(services_Zipcode: $services_Zipcode,first: $first, after: $after){
+   edges{
+     node{
+       id
+       nombre
+       services{
+        edges{
+          node{
+            nombre
+            precio
+            serviceDescription
+          }
+     }
+   }
+ }
 }
 }
+}
+`;
+
+export const PagProServ = gql`
+query allPrestadorServicio($first: Int, $after: String){
+  allPrestadorServicio(first: $first, after: $after){
+   edges{
+     node{
+       id
+       nombre
+       services{
+        edges{
+          node{
+            nombre
+            precio
+            serviceDescription
+          }
+        }
+      }
+     }
+   }
+ }
+ }
 `;
 
 

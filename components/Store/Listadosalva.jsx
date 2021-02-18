@@ -17,17 +17,15 @@ const Listado = (props) => {
     var datos = Datos();
     const [rango, setRango] = useState('null');
 
-  
     console.log(datos['zipcode']);
-    console.log("es este de arriba");
-
-    const { loading, error, data } = useQuery(PagProd, {
+    console.log("es este")
+  
+    const { loading, data } = useQuery(PagProd, {
         variables: {
 			first: datos['show'], 
 			after: datos['page'],
 			services_Categoria_Nombre: datos['q'],
-            services_Zipcode: datos['zipcode']
-           // services_Zipcode: 32110
+			services_Zipcode: datos['zipcode']
 		},
         client: client
     });
@@ -39,17 +37,12 @@ const Listado = (props) => {
     console.log(data);
     console.log(rango)
 
-    if(loading) return <text>Cargando....</text>;
-    if (error) return (
-    <text>Error! ${error.message}</text>
-    );
 	/*if(datos['list']=="4"){
         console.log(datos['list']);
         console.log(datos['zipcode']);
 	}*/
 return(
 <div >
-    {console.log("loco")}
 	<Estilo/>
     <div id="site-wrapper" className="site-wrapper explore-sidebar explore-full-map-list">
 
@@ -249,10 +242,7 @@ return(
                             </div>
                         </div>
                         <div className="store-listing-style store-listing-style-01">
-                            {data.allPrestadorServicio.edges.map(prestador => {
-                                return (
-                                    
-                                    <div className="mb-6">
+                            <div className="mb-6">
                                 <div className="store media align-items-stretch bg-white">
                                     <div className="position-relative store-image"
                                              
@@ -277,7 +267,7 @@ return(
                                     <div className="media-body pt-4 pb-3 px-5">
                                         <a href="listing-details-full-image.html"
                                            className="h5 text-dark d-inline-block mb-2"><span
-                                className="letter-spacing-25">{prestador.node.nombre}</span></a>
+                                                className="letter-spacing-25">Paradico’s Beach Luxury Hotel</span></a>
                                         <ul className="list-inline store-meta mb-4 font-size-sm d-flex align-items-center flex-wrap">
                                             <li className="list-inline-item"><span
                                                     className="badge badge-success d-inline-block mr-1">4.8</span><span
@@ -285,9 +275,9 @@ return(
                                             </li>
                                             <li className="list-inline-item separate"></li>
                                             <li className="list-inline-item"><span className="mr-1">From</span><span
-                                                    className="text-danger font-weight-semibold">{prestador.node.services.precio}</span></li>
+                                                    className="text-danger font-weight-semibold">$4.00</span></li>
                                             <li className="list-inline-item separate"></li>
-                                            <li className="list-inline-item"><span className="text-green">{prestador.node.services.nombre}</span></li>
+                                            <li className="list-inline-item"><span className="text-green">Open now!</span></li>
                                         </ul>
 
                                         <div className="media">
@@ -295,7 +285,10 @@ return(
                                                     src="images/listing/testimonial-1.png"
                                                     alt="testimonial" className="rounded-circle"/>
                                             </a>
-                                            <div className="media-body lh-14 font-size-sm">{prestador.node.services.serviceDescription}
+                                            <div className="media-body lh-14 font-size-sm">There is also free complimentary
+                                                wi-fi for
+                                                the room and there is a turn down service in the eve..
+                                                They specialize in makgeolli...
                                             </div>
                                         </div>
                                         <div className="border-top pt-3 mt-5 lh-12">
@@ -311,16 +304,312 @@ return(
                                     </div>
                                 </div>
                             </div>
-                             )
-                                }
-                            )}
-                            
-                            
-                            
-                            
+                            <div className="mb-6">
+                                <div className="store media align-items-stretch bg-white">
+                                    <div className="position-relative store-image"
+                                    style={{backgroundImage: 'url(images/shop/hotels-shop-1.jpg)'}}>
+                                         {/*style="background-image: url('images/shop/hotels-shop-1.jpg')">*/}
+                                        <div className="image-content position-absolute d-flex align-items-center">
+                                            <div className="content-right ml-auto d-flex">
+                                                <a href="images/shop/full-hotels-shop-1.jpg"
+                                                   className="item viewing"
+                                                   data-toggle="tooltip"
+                                                   data-placement="top"
+                                                   title="Quickview" data-gtf-mfp="true">
+                                                    <svg className="icon icon-expand">
+                                                        <use xlinkHref="#icon-expand"></use>
+                                                    </svg>
+                                                </a>
+                                                <a href="#" className="item marking" data-toggle="tooltip"
+                                                   data-placement="top"
+                                                   title="Bookmark"><i className="fal fa-bookmark"></i></a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div className="media-body pt-4 pb-3 px-5">
+                                        <a href="listing-details-full-image.html"
+                                           className="h5 text-dark d-inline-block mb-2"><span
+                                                className="letter-spacing-25">Casar Camper Hotel Barcelona</span></a>
+                                        <ul className="list-inline store-meta mb-4 font-size-sm d-flex align-items-center flex-wrap">
+                                            <li className="list-inline-item"><span
+                                                    className="badge badge-success d-inline-block mr-1">4.8</span><span
+                                            >2 rating</span>
+                                            </li>
+                                            <li className="list-inline-item separate"></li>
+                                            <li className="list-inline-item"><span className="mr-1">From</span><span
+                                                    className="text-danger font-weight-semibold">$4.00</span></li>
+                                            <li className="list-inline-item separate"></li>
+                                            <li className="list-inline-item"><span className="text-green">Open now!</span></li>
+                                        </ul>
+                                        <div className="media">
+                                            <a href="#" className="d-inline-block mr-3"><img
+                                                    src="images/listing/testimonial-1.png"
+                                                    alt="testimonial" className="rounded-circle"/>
+                                            </a>
+                                            <div className="media-body lh-14 font-size-sm">There is also free complimentary
+                                                wi-fi for
+                                                the room and there is a turn down service in the eve..
+                                                They specialize in makgeolli...
+                                            </div>
+                                        </div>
+                                        <div className="border-top pt-3 mt-5 lh-12">
+												<span
+                                                        className="d-inline-block mr-1"><i
+                                                        className="fal fa-map-marker-alt">
+											</i>
+												</span>
+                                            <a href="#" className="text-secondary text-decoration-none address">92
+                                                Halsey St,
+                                                Brooklyn, NY</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div className="mb-6">
+                                <div className="store media align-items-stretch bg-white">
+                                    <div className="position-relative store-image"
+                                    style={{backgroundImage: 'url(images/shop/hotels-shop-2.jpg)'}}>
+                                         {/*style="background-image: url('images/shop/hotels-shop-2.jpg');">*/}
+                                        <div className="image-content position-absolute d-flex align-items-center">
+                                            <div className="content-right ml-auto d-flex">
+                                                <a href="images/shop/full-hotels-shop-2.jpg"
+                                                   className="item viewing"
+                                                   data-toggle="tooltip"
+                                                   data-placement="top"
+                                                   title="Quickview" data-gtf-mfp="true">
+                                                    <svg className="icon icon-expand">
+                                                        <use xlinkHref="#icon-expand"></use>
+                                                    </svg>
+                                                </a>
+                                                <a href="#" className="item marking" data-toggle="tooltip"
+                                                   data-placement="top"
+                                                   title="Bookmark"><i className="fal fa-bookmark"></i></a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div className="media-body pt-4 pb-3 px-5">
+                                        <a href="listing-details-full-image.html"
+                                           className="h5 text-dark d-inline-block mb-2"><span
+                                                className="letter-spacing-25">Mandapa, A Ritz-Carlton Reserve</span></a>
+                                        <ul className="list-inline store-meta mb-4 font-size-sm d-flex align-items-center flex-wrap">
+                                            <li className="list-inline-item"><span
+                                                    className="badge badge-success d-inline-block mr-1">4.8</span><span
+                                            >2 rating</span>
+                                            </li>
+                                            <li className="list-inline-item separate"></li>
+                                            <li className="list-inline-item"><span className="mr-1">From</span><span
+                                                    className="text-danger font-weight-semibold">$4.00</span></li>
+                                            <li className="list-inline-item separate"></li>
+                                            <li className="list-inline-item"><span className="text-green">Open now!</span></li>
+                                        </ul>
+                                        <div className="media">
+                                            <a href="#" className="d-inline-block mr-3"><img
+                                                    src="images/listing/testimonial-1.png"
+                                                    alt="testimonial" className="rounded-circle"/>
+                                            </a>
+                                            <div className="media-body lh-14 font-size-sm">There is also free complimentary
+                                                wi-fi for
+                                                the room and there is a turn down service in the eve..
+                                                They specialize in makgeolli...
+                                            </div>
+                                        </div>
+                                        <div className="border-top pt-3 mt-5 lh-12">
+												<span
+                                                        className="d-inline-block mr-1"><i
+                                                        className="fal fa-map-marker-alt">
+											</i>
+												</span>
+                                            <a href="#" className="text-secondary text-decoration-none address">92
+                                                Halsey St,
+                                                Brooklyn, NY</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div className="mb-6">
+                                <div className="store media align-items-stretch bg-white">
+                                    <div className="position-relative store-image"
+                                    style={{backgroundImage: 'url(images/shop/hotels-shop-3.jpg)'}}>
+                                         {/*style="background-image: url('images/shop/hotels-shop-3.jpg');">*/}
+                                        <div className="image-content position-absolute d-flex align-items-center">
+                                            <div className="content-right ml-auto d-flex">
+                                                <a href="images/shop/full-hotels-shop-3.jpg"
+                                                   className="item viewing"
+                                                   data-toggle="tooltip"
+                                                   data-placement="top"
+                                                   title="Quickview" data-gtf-mfp="true">
+                                                    <svg className="icon icon-expand">
+                                                        <use xlinkHref="#icon-expand"></use>
+                                                    </svg>
+                                                </a>
+                                                <a href="#" className="item marking" data-toggle="tooltip"
+                                                   data-placement="top"
+                                                   title="Bookmark"><i className="fal fa-bookmark"></i></a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div className="media-body pt-4 pb-3 px-5">
+                                        <a href="listing-details-full-image.html"
+                                           className="h5 text-dark d-inline-block mb-2"><span
+                                                className="letter-spacing-25">Turin Palace Hotel</span></a>
+                                        <ul className="list-inline store-meta mb-4 font-size-sm d-flex align-items-center flex-wrap">
+                                            <li className="list-inline-item"><span
+                                                    className="badge badge-success d-inline-block mr-1">4.8</span><span
+                                            >2 rating</span>
+                                            </li>
+                                            <li className="list-inline-item separate"></li>
+                                            <li className="list-inline-item"><span className="mr-1">From</span><span
+                                                    className="text-danger font-weight-semibold">$4.00</span></li>
+                                            <li className="list-inline-item separate"></li>
+                                            <li className="list-inline-item"><span className="text-green">Open now!</span></li>
+                                        </ul>
+                                        <div className="media">
+                                            <a href="#" className="d-inline-block mr-3"><img
+                                                    src="images/listing/testimonial-1.png"
+                                                    alt="testimonial" className="rounded-circle"/>
+                                            </a>
+                                            <div className="media-body lh-14 font-size-sm">There is also free complimentary
+                                                wi-fi for
+                                                the room and there is a turn down service in the eve..
+                                                They specialize in makgeolli...
+                                            </div>
+                                        </div>
+                                        <div className="border-top pt-3 mt-5 lh-12">
+												<span
+                                                        className="d-inline-block mr-1"><i
+                                                        className="fal fa-map-marker-alt">
+											</i>
+												</span>
+                                            <a href="#" className="text-secondary text-decoration-none address">92
+                                                Halsey St,
+                                                Brooklyn, NY</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div className="mb-6">
+                                <div className="store media align-items-stretch bg-white">
+                                    <div className="position-relative store-image"
+                                    style={{backgroundImage: 'url(images/shop/hotels-shop-5.jpg)'}}>
+                                         {/*style="background-image: url('images/shop/hotels-shop-5.jpg')">*/}
+                                        <div className="image-content position-absolute d-flex align-items-center">
+                                            <div className="content-right ml-auto d-flex">
+                                                <a href="images/shop/full-hotels-shop-5.jpg"
+                                                   className="item viewing"
+                                                   data-toggle="tooltip"
+                                                   data-placement="top"
+                                                   title="Quickview" data-gtf-mfp="true">
+                                                    <svg className="icon icon-expand">
+                                                        <use xlinkHref="#icon-expand"></use>
+                                                    </svg>
+                                                </a>
+                                                <a href="#" className="item marking" data-toggle="tooltip"
+                                                   data-placement="top"
+                                                   title="Bookmark"><i className="fal fa-bookmark"></i></a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div className="media-body pt-4 pb-3 px-5">
+                                        <a href="listing-details-full-image.html"
+                                           className="h5 text-dark d-inline-block mb-2"><span
+                                                className="letter-spacing-25">Romance Hotel Santorini</span></a>
+                                        <ul className="list-inline store-meta mb-4 font-size-sm d-flex align-items-center flex-wrap">
+                                            <li className="list-inline-item"><span
+                                                    className="badge badge-success d-inline-block mr-1">4.8</span><span
+                                            >2 rating</span>
+                                            </li>
+                                            <li className="list-inline-item separate"></li>
+                                            <li className="list-inline-item"><span className="mr-1">From</span><span
+                                                    className="text-danger font-weight-semibold">$4.00</span></li>
+                                            <li className="list-inline-item separate"></li>
+                                            <li className="list-inline-item"><span className="text-green">Open now!</span></li>
+                                        </ul>
+                                        <div className="media">
+                                            <a href="#" className="d-inline-block mr-3"><img
+                                                    src="images/listing/testimonial-1.png"
+                                                    alt="testimonial" className="rounded-circle"/>
+                                            </a>
+                                            <div className="media-body lh-14 font-size-sm">There is also free complimentary
+                                                wi-fi for
+                                                the room and there is a turn down service in the eve..
+                                                They specialize in makgeolli...
+                                            </div>
+                                        </div>
+                                        <div className="border-top pt-3 mt-5 lh-12">
+												<span
+                                                        className="d-inline-block mr-1"><i
+                                                        className="fal fa-map-marker-alt">
+											</i>
+												</span>
+                                            <a href="#" className="text-secondary text-decoration-none address">92
+                                                Halsey St,
+                                                Brooklyn, NY</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div className="mb-6">
+                                <div className="store media align-items-stretch bg-white">
+                                    <div className="position-relative store-image"
+                                    style={{backgroundImage: 'url(images/shop/hotels-shop-6.jpg)'}}>
+                                         {/*style="background-image: url('images/shop/hotels-shop-6.jpg')">*/}
+                                        <div className="image-content position-absolute d-flex align-items-center">
+                                            <div className="content-right ml-auto d-flex">
+                                                <a href="images/shop/full-hotels-shop-6.jpg"
+                                                   className="item viewing"
+                                                   data-toggle="tooltip"
+                                                   data-placement="top"
+                                                   title="Quickview" data-gtf-mfp="true">
+                                                    <svg className="icon icon-expand">
+                                                        <use xlinkHref="#icon-expand"></use>
+                                                    </svg>
+                                                </a>
+                                                <a href="#" className="item marking" data-toggle="tooltip"
+                                                   data-placement="top"
+                                                   title="Bookmark"><i className="fal fa-bookmark"></i></a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div className="media-body pt-4 pb-3 px-5">
+                                        <a href="listing-details-full-image.html"
+                                           className="h5 text-dark d-inline-block mb-2"><span
+                                                className="letter-spacing-25">Sunset Glow Hotel Italy</span></a>
+                                        <ul className="list-inline store-meta mb-4 font-size-sm d-flex align-items-center flex-wrap">
+                                            <li className="list-inline-item"><span
+                                                    className="badge badge-success d-inline-block mr-1">4.8</span><span
+                                            >2 rating</span>
+                                            </li>
+                                            <li className="list-inline-item separate"></li>
+                                            <li className="list-inline-item"><span className="mr-1">From</span><span
+                                                    className="text-danger font-weight-semibold">$4.00</span></li>
+                                            <li className="list-inline-item separate"></li>
+                                            <li className="list-inline-item"><span className="text-green">Open now!</span></li>
+                                        </ul>
+                                        <div className="media">
+                                            <a href="#" className="d-inline-block mr-3"><img
+                                                    src="images/listing/testimonial-1.png"
+                                                    alt="testimonial" className="rounded-circle"/>
+                                            </a>
+                                            <div className="media-body lh-14 font-size-sm">There is also free complimentary
+                                                wi-fi for
+                                                the room and there is a turn down service in the eve..
+                                                They specialize in makgeolli...
+                                            </div>
+                                        </div>
+                                        <div className="border-top pt-3 mt-5 lh-12">
+												<span
+                                                        className="d-inline-block mr-1"><i
+                                                        className="fal fa-map-marker-alt">
+											</i>
+												</span>
+                                            <a href="#" className="text-secondary text-decoration-none address">92
+                                                Halsey St,
+                                                Brooklyn, NY</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-
-
                         <ul className="pagination pagination-style-02 justify-content-center pb-13">
                             <li className="page-item"><a href="#" className="page-link"><i className="fal fa-chevron-left"></i></a>
                             </li>
@@ -494,7 +783,166 @@ return(
         </div>
        {/* <!-- #wrapper-content end -->*/}
 
-        
+        {/*<!-- #footer start -->*/}
+        <footer className="main-footer main-footer-style-01 bg-pattern-01 pt-12 pb-8">
+            <div className="footer-second">
+                <div className="container">
+                    <div className="row">
+                        <div className="col-sm-6 col-lg-4 mb-6 mb-lg-0">
+                            <div className="mb-8"><img src="images/logo.png" alt="Thedir"/></div>
+                            <div className="mb-7">
+                                <div className="font-size-md font-weight-semibold text-dark mb-4">Global Headquaters</div>
+                                <p className="mb-0">
+                                    90 Fifth Avenue, 3rd Floor<br/>
+                                    New York NY 10011<br/>
+                                    212.913.9058</p>
+                            </div>
+                            <div className="region pt-1">
+                                <div className="font-size-md font-weight-semibold text-dark mb-2">Recent Region</div>
+                                <form>
+                                    <div className="select-custom">
+                                        <select className="form-control">
+                                            <option value="1">San Fracisco, CA</option>
+                                            <option value="1">New York</option>
+                                            <option value="1">LA</option>
+                                        </select>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                        <div className="col-md-6 col-lg mb-6 mb-lg-0">
+                            <div className="font-size-md font-weight-semibold text-dark mb-4">
+                                Company
+                            </div>
+                            <ul className="list-group list-group-flush list-group-borderless">
+                                <li className="list-group-item px-0 lh-1625 bg-transparent py-1">
+                                    <a href="page-about.html" className="link-hover-secondary-primary">About Us</a>
+                                </li>
+                                <li className="list-group-item px-0 lh-1625 bg-transparent py-1">
+                                    <a href="#" className="link-hover-secondary-primary">Team</a>
+                                </li>
+                                <li className="list-group-item px-0 lh-1625 bg-transparent py-1">
+                                    <a href="#" className="link-hover-secondary-primary">Careers</a>
+                                </li>
+                                <li className="list-group-item px-0 lh-1625 bg-transparent py-1">
+                                    <a href="#" className="link-hover-secondary-primary">Investors</a>
+                                </li>
+                                <li className="list-group-item px-0 lh-1625 bg-transparent py-1">
+                                    <a href="page-contact.html" className="link-hover-secondary-primary">Contact Us</a>
+                                </li>
+                                <li className="list-group-item px-0 lh-1625 bg-transparent py-1">
+                                    <a href="#" className="link-hover-secondary-primary">Offices</a>
+                                </li>
+                            </ul>
+                        </div>
+                        <div className="col-md-6 col-lg mb-6 mb-lg-0">
+                            <div className="font-size-md font-weight-semibold text-dark mb-4">
+                                Quick Links
+                            </div>
+                            <ul className="list-group list-group-flush list-group-borderless">
+                                <li className="list-group-item px-0 lh-1625 bg-transparent py-1">
+                                    <a href="page-faqs.html" className="link-hover-secondary-primary">FAQS</a>
+                                </li>
+                                <li className="list-group-item px-0 lh-1625 bg-transparent py-1">
+                                    <a href="#" className="link-hover-secondary-primary">Support</a>
+                                </li>
+                                <li className="list-group-item px-0 lh-1625 bg-transparent py-1">
+                                    <a href="#" className="link-hover-secondary-primary">Sitemap</a>
+                                </li>
+                                <li className="list-group-item px-0 lh-1625 bg-transparent py-1">
+                                    <a href="#" className="link-hover-secondary-primary">Community</a>
+                                </li>
+                            </ul>
+                        </div>
+                        <div className="col-sm-6 col-lg-4 mb-6 mb-lg-0">
+                            <div className="pl-0 pl-lg-9">
+                                <div className="font-size-md font-weight-semibold text-dark mb-4">Our Newsletter</div>
+                                <div className="mb-4">Subscribe to our newsletter and<br/>
+                                    we will inform you about newset directory and promotions
+                                </div>
+                                <div className="form-newsletter">
+                                    <form>
+                                        <div className="input-group bg-white">
+                                            <input type="text"
+                                                   className="form-control border-0"
+                                                   placeholder="Email Address... "/>
+                                            <button type="button"
+                                                    className="input-group-append btn btn-white bg-transparent text-dark border-0">
+                                                <i className="fas fa-arrow-right"></i>
+                                            </button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div className="footer-last mt-8 mt-md-11">
+                <div className="container">
+                    <div className="footer-last-container position-relative">
+                        <div className="row align-items-center">
+                            <div className="col-lg-4 mb-3 mb-lg-0">
+                                <div className="social-icon text-dark">
+                                    <ul className="list-inline">
+                                        <li className="list-inline-item mr-5">
+                                            <a target="_blank" title="Twitter" href="#">
+                                                <i className="fab fa-twitter">
+                                                </i>
+                                                <span>Twitter</span>
+                                            </a>
+                                        </li>
+                                        <li className="list-inline-item mr-5">
+                                            <a target="_blank" title="Facebook" href="#">
+                                                <i className="fab fa-facebook-f">
+                                                </i>
+                                                <span>Facebook</span>
+                                            </a>
+                                        </li>
+                                        <li className="list-inline-item mr-5">
+                                            <a target="_blank" title="Google plus" href="#">
+                                                <svg className="icon icon-google-plus-symbol">
+                                                    <use xlinkHref="#icon-google-plus-symbol"></use>
+                                                </svg>
+                                                <span>Google plus</span>
+                                            </a>
+                                        </li>
+                                        <li className="list-inline-item mr-5">
+                                            <a target="_blank" title="Instagram" href="#">
+                                                <svg className="icon icon-instagram">
+                                                    <use xlinkHref="#icon-instagram"></use>
+                                                </svg>
+                                                <span>Instagram</span>
+                                            </a>
+                                        </li>
+                                        <li className="list-inline-item mr-5">
+                                            <a target="_blank" title="Rss" href="#">
+                                                <i className="fas fa-rss"></i>
+                                                <span>Rss</span>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div className="col-lg-5 mb-3 mb-lg-0">
+                                <div>
+                                    &copy; 2020 <a href="index.html"
+                                                   className="link-hover-dark-primary font-weight-semibold">The Dir.</a> All
+                                    Rights Resevered. Design
+                                    by <a href="http://g5plus.net/"
+                                          className="link-hover-dark-primary font-weight-semibold">G5Theme</a>
+                                </div>
+                            </div>
+                            <div className="back-top text-left text-lg-right">
+                                <a href="#" className="gtf-back-to-top link-hover-secondary-primary"><i
+                                        className="fal fa-arrow-up"></i><span>Back To Top</span></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </footer>
+    {/* <!-- #footer end -->*/}
     </div>
     {/*<!-- #site-wrapper end-->*/}
 

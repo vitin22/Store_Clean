@@ -322,7 +322,7 @@ function Dashboard() {
                                    aria-expanded="false">
 									<span className="d-inline-block mr-3"><svg className="icon icon-layers"><use
                                             xlinkHref="#icon-layers"></use></svg></span>
-                                    <span>My Listing</span>
+                                    <span>Gestionar</span>
                                     <span className=" ml-auto"><i className="fal fa-chevron-down"></i></span>
                                 </a>
                                 <ul className="submenu collapse list-group list-group-flush list-group-borderless pt-2 mb-0 sidebar-menu"
@@ -868,6 +868,10 @@ function Dashboard() {
             </form>
         </div>
     </div>
+
+
+
+    {/* la lupa popover*/}
     <div id="search-popup" className="mfp-hide">
         <div className="search-popup text-center">
             <h2 className="mb-8">Search</h2>
