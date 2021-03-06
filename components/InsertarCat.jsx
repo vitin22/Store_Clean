@@ -222,7 +222,7 @@ variables: { username, password}
     );
 }
 
-export default withApollo(Login);
+export default withApollo(InsertarCat);
 
 
 

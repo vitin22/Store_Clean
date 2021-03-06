@@ -1,5 +1,5 @@
 import React from 'react';
-import InstertarCat from '../../components/InsertarCat'
+import InstertarCat from '../../components/Categoria'
 
 const HomePage = () => (
         <InstertarCat />

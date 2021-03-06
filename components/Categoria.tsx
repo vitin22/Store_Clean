@@ -1,402 +1,114 @@
-import {useRouter} from 'next/router'
-import Datos, { ImageValidate , Urlgraph } from '@components/Store/Datos';
-import Estilo from './ScriptCategoria'
+import React, { useState } from 'react';
+import Estilo from './ScriptD'
 
-const InstertarCategoria = (props) => {
+import { ADD_CATEGORIA } from './Apollo/jobs.mutations';
+import {  PagProServ } from './Apollo/jobs.query';
+import { useMutation, useQuery } from '@apollo/react-hooks';
+import gql from 'graphql-tag';
+import {useRouter, Router} from 'next/router'
+import Header from './Header'
+import DashboardSidebar from './DashboardSidebar'
+import Datos, { ImageValidate } from './Store/Datos';
+
+
+
+//import { newRegistery, Registery } from './Type';
+import withApollo from './Apollo/apollo';
+import Link from 'next/link';
+
+
+
+
+
+
+const InstertarCategoria = () => {
+
+    const router = useRouter();
+    var datos = Datos();
+    const [rango, setRango] = useState('null');
+
+    const [categoria, setcategoria] = useState('');
+    const route = useRouter()
+    const [createCategoriaServicio, { error,data }] = useMutation(ADD_CATEGORIA, {
+        variables: { categoria} 
+      });
+
+        const { loading, error: error1, data: dato } = useQuery(PagProServ, {
         
-       
+    });
 
+    
+
+
+
+
+      const handleSubmit = async (event,createCategoriaServicio) => {
+  
+        event.preventDefault();
+        await createCategoriaServicio().then(res => {
+        console.log("sirvio")
+        console.log(error.message)  
+        }).catch(error => {
+          console.log('error de registro')
+      });
+        
+      };
+
+
+      if(loading) return <text>Cargando....</text>;
+    if (error1) return (
+    <text>Error! ${error1.message}</text>
+    );
+
+      console.log({dato})
     return(
         <div>
-       <Estilo/>
-
-
-
-    {/*<!-- #site-wrapper start -->*/}
-    <div id="site-wrapper" className="site-wrapper page-shop shop-checkout">
-    
-                                
-        {/* <!-- #page-title start -->*/}
-        <div id="page-title" className="page-title text-center pt-12">
-            <div className="container">
-                <div className="h-100 ">
-                    <h3 className="mb-0">
-                        Checkout
-                    </h3>
-                </div>
-            </div>
-        </div>
-    {/*<!-- #page-title end -->*/}
+<Estilo/>
+{/*<!-- #site-wrapper start -->*/}
+    <div id="site-wrapper" className="site-wrapper panel dashboards">
+        {/*<!-- #header start -->*/}
+        <Header/>
+        {/*<!-- #header end -->*/}
         {/*<!-- #wrapper-content start -->*/}
-        <div id="wrapper-content" className="wrapper-content">
-            <div className="container">
-                <form className="form">
-                    <div className="page-container row">
-                        <div className="col-md-7 mb-5 mb-md-0">
-                            <div className="alert px-4 py-3 rounded-0 lh-12 d-flex align-items-center">
-                                <div className=" mr-3"><i className="fal fa-comment"></i></div>
-                                <div className="text-gray">
-                                    <span className="d-inline-block mr-1">Returning customer ?</span>
-                                    <a href="#login-popup" data-gtf-mfp="true"
-                                       data-mfp-options='{"type":"inline"}'
-                                       className="link-hover-dark-primary font-weight-semibold d-inline-block py-1">Click
-                                        here to
-                                        Log in</a>
-                                </div>
-                            </div>
-                            <h5 className="mb-6">Billing detail</h5>
-                            <div className="form-group mb-3">
-                                <label htmlFor="country" className="mb-2 text-gray">Country <span
-                                        className="text-danger">*</span></label>
-                                <div className="arrows">
-                                    <select id="country" className="form-control form-control-lg" required>
-                                        <option value="">United Kingdom (UK)</option>
-                                        <option value="">San Francisco (US)</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div className="form-group mb-3">
-                                <label htmlFor="first-name" className="mb-2 text-gray">First Name <span
-                                        className="text-danger">*</span></label>
-                                <input type="text" id="first-name" className="form-control form-control-lg"
-                                       required/>
-                            </div>
-                            <div className="form-group mb-3">
-                                <label htmlFor="last-name" className="mb-2 text-gray">Last Name <span
-                                        className="text-danger">*</span></label>
-                                <input type="text" id="last-name" required className="form-control form-control-lg"/>
-                            </div>
-                            <div className="form-group mb-3">
-                                <label htmlFor="company-name" className="mb-2 text-gray">Company Name</label>
-                                <input type="text" id="company-name" className="form-control form-control-lg"/>
-                            </div>
-                            <div className="form-group mb-3">
-                                <label htmlFor="address" className="mb-2 text-gray">Address <span
-                                        className="text-danger">*</span></label>
-                                <input type="text" id="address" className="form-control form-control-lg mb-3" required/>
-                                <input type="text" className="form-control form-control-lg"/>
-                            </div>
-                            <div className="form-group mb-3">
-                                <label htmlFor="city" className="mb-2 text-gray">City / Town <span className="text-danger">*</span></label>
-                                <input type="text" id="city" className="form-control form-control-lg" required/>
-                            </div>
-                            <div className="form-group mb-3">
-                                <label htmlFor="email" className="mb-2 text-gray">Email <span
-                                        className="text-danger">*</span></label>
-                                <input type="text" id="email" className="form-control form-control-lg" required/>
-                            </div>
-                            <div className="form-group mb-7">
-                                <label htmlFor="phone" className="mb-2 text-gray">Phone <span
-                                        className="text-danger">*</span></label>
-                                <input type="text" id="phone" className="form-control form-control-lg" required/>
-                            </div>
-                            <div className="custom-control custom-checkbox mb-6">
-                                <input className="custom-control-input" type="checkbox" id="check" checked/>
-                                <label className="custom-control-label text-dark" htmlFor="check">
-                                    Ship to a different address?
-                                </label>
-                            </div>
-                            <div className="other-address pt-1">
-                                <div className="form-group mb-3">
-                                    <label htmlFor="other-country" className="mb-2 text-gray">Country <span
-                                            className="text-danger">*</span></label>
-                                    <div className="arrows">
-                                        <select id="other-country" className="form-control form-control-lg" required>
-                                            <option value="">United Kingdom (UK)</option>
-                                            <option value="">United Kingdom (UK)</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div className="form-group mb-3">
-                                    <label htmlFor="other-first-name" className="mb-2 text-gray">First Name <span
-                                            className="text-danger">*</span></label>
-                                    <input type="text" id="other-first-name" className="form-control form-control-lg"
-                                           required/>
-                                </div>
-                                <div className="form-group mb-3">
-                                    <label htmlFor="other-last-name" className="mb-2 text-gray">Last Name <span
-                                            className="text-danger">*</span></label>
-                                    <input type="text" id="other-last-name" required
-                                           className="form-control form-control-lg"/>
-                                </div>
-                                <div className="form-group mb-3">
-                                    <label htmlFor="other-company-name" className="mb-2 text-gray">Company Name</label>
-                                    <input type="text" id="other-company-name" className="form-control form-control-lg"/>
-                                </div>
-                                <div className="form-group mb-3">
-                                    <label htmlFor="other-address" className="mb-2 text-gray">Address <span
-                                            className="text-danger">*</span></label>
-                                    <input type="text" id="other-address" className="form-control form-control-lg mb-3"
-                                           required/>
-                                    <input type="text" className="form-control form-control-lg"/>
-                                </div>
-                                <div className="form-group mb-3">
-                                    <label htmlFor="other-city" className="mb-2 text-gray">City / Town <span
-                                            className="text-danger">*</span></label>
-                                    <input type="text" id="other-city" className="form-control form-control-lg" required/>
-                                </div>
-                                <div className="form-group mb-3">
-                                    <label htmlFor="note" className="mb-2 text-gray">Order Notes</label>
-                                    <textarea id="note" className="form-control"></textarea>
-                                </div>
-                            </div>
-                        </div>
-                        <div className="col-md-5 primary-sidebar sidebar-sticky" id="sidebar">
-                            <div className="primary-sidebar-inner">
-                                <div className="alert px-4 py-3 rounded-0 lh-12 d-flex align-items-center">
-                                    <div className="mr-3"><i className="fal fa-comment"></i></div>
-                                    <div className="text-gray">
-                                        <span className="d-inline-block mr-1">Have a Coupon ?</span>
-                                        <a href="#"
-                                           className="link-hover-dark-primary font-weight-semibold d-inline-block py-1">Click
-                                            here to enter
-                                            your code</a>
-                                    </div>
-                                </div>
-                                <h5 className="mb-6">Your order</h5>
-                                <div className="card border-0 rounded-0 mb-4 sidebar-checkout">
-                                    <div className="card-header d-flex bg-transparent px-0 pt-0 pb-2 mb-6">
-                                        <div className="text-gray text-uppercase">Product</div>
-                                        <div className="text-gray text-uppercase ml-auto">Total</div>
-                                    </div>
-                                    <div className="card-body p-0">
-                                        <div className="border-bottom pb-8 mb-5">
-                                            <div className="font-size-md mb-2 d-flex lh-15">
-                                                <label className="text-dark mb-0">Black Printed T-shirt</label>
-                                                <span className="text-dark ml-auto"> $39.00</span>
-                                            </div>
-                                            <div className="font-size-md mb-2 d-flex lh-15">
-                                                <label className="text-dark mb-0">White Retro Sneaker</label>
-                                                <span className="text-dark ml-auto">$29.00</span>
-                                            </div>
-                                            <div className="font-size-md mb-2 d-flex lh-15">
-                                                <label className="text-dark mb-0">Shipping Standard</label>
-                                                <span className="text-danger ml-auto">+$10.00</span>
-                                            </div>
-                                        </div>
-                                        <div className="d-flex align-items-center border-bottom pb-5 mb-6">
-                                            <label className="text-dark font-size-md mb-0">Order Totals</label>
-                                            <span className="text-danger ml-auto font-size-h5 font-weight-semibold">
-                                                                $78.00
-                                                            </span>
-                                        </div>
-                                        <div className="form-check pl-0">
-                                            <div className="custom-control custom-radio mb-5">
-                                                <input className="custom-control-input" type="radio"
-                                                       name="payment-method"
-                                                       id="direct-bank" value="option1" checked/>
-                                                <label className="custom-control-label text-dark ml-2"
-                                                       htmlFor="direct-bank">
-                                                    Direct Bank Transfer
-                                                </label>
-                                                <div className="text-gray pl-2 pt-4">Donec sed odio dui. Nulla vitae
-                                                    elit
-                                                    libero, a
-                                                    phara
-                                                    etra augue. Nullam id dolor id nibh ultricies vehicula ut id
-                                                    elit.
-                                                </div>
-                                            </div>
-                                            <div className="custom-control custom-radio mb-5">
-                                                <input className="custom-control-input" type="radio"
-                                                       name="payment-method"
-                                                       id="cheque" value="option1"/>
-                                                <label className="custom-control-label text-dark ml-2" htmlFor="cheque">
-                                                    Cheque Payment
-                                                </label>
-                                            </div>
-                                            <div className="custom-control custom-radio mb-5">
-                                                <input className="custom-control-input" type="radio"
-                                                       name="payment-method"
-                                                       id="cash" value="option1"/>
-                                                <label className="custom-control-label text-dark ml-2" htmlFor="cash">
-                                                    Cash On Delivery
-                                                </label>
-                                            </div>
-                                            <div className="custom-control custom-radio">
-                                                <input className="custom-control-input" type="radio"
-                                                       name="payment-method"
-                                                       id="paypal" value="option1"/>
-                                                <label className="custom-control-label text-dark ml-2" htmlFor="paypal">
-                                                    Paypal
-                                                </label>
-                                            </div>
-                                        </div>
+        <div id="wrapper-content" className="wrapper-content pt-0 pb-0">
+            <div className="page-wrapper d-flex flex-wrap flex-xl-nowrap">
+                <DashboardSidebar/>
+                <div className="page-container">
+                    <div className="container-fluid">
+                        <div className="page-content-wrapper d-flex flex-column">
+                            <h1 className="font-size-h4 mb-4 font-weight-normal">Categoria</h1>
+                            <div className="page-content">
+                                
+                                <div className="tab-content">
+                                    
 
-                                    </div>
+                                <div className="mb-2 d-flex align-items-center lh-15">
+													<label className="mb-0 text-dark font-weight-semibold font-size-md lh-15" htmlFor="city">Nombre</label>
+													<a href="#" className="text-darker-light d-inline-block ml-2" data-toggle="tooltip" data-placement="top" title="" data-original-title="Region of listing">
+														<i className="fas fa-question-circle"></i></a></div>
+												<input type="text" id="city" className="form-control" value={categoria} onChange={e => setcategoria(e.target.value)} placeholder="Nombre de la Categoria"/>
+											
+
+                                   
+                                    
+                                   
                                 </div>
-                                <button className="btn btn-primary font-size-h5 btn-block text-uppercase py-3 rounded-0"
-                                        type="submit">
-                                    Place Oder
-                                </button>
+
+                            <a className="btn btn-primary" title="Accent Button" href="#" onClick={()=> createCategoriaServicio()}> Primary
+                                Button </a>
+                        
+
+                            </div>
+                            <div className="mt-5">
+                                &copy; 2020 Thedir. All Rights Reserved.
                             </div>
                         </div>
                     </div>
-                </form>
+                </div>
             </div>
+
         </div>
-    {/* <!-- #wrapper-content end -->*/}
-
-    {/*<!-- #footer start -->*/}
-        <footer className="main-footer main-footer-style-01 bg-pattern-01 pt-12 pb-8">
-            <div className="footer-second">
-                <div className="container">
-                    <div className="row">
-                        <div className="col-sm-6 col-lg-4 mb-6 mb-lg-0">
-                            <div className="mb-8"><img src="images/logo.png" alt="Thedir"/></div>
-                            <div className="mb-7">
-                                <div className="font-size-md font-weight-semibold text-dark mb-4">Global Headquaters</div>
-                                <p className="mb-0">
-                                    90 Fifth Avenue, 3rd Floor<br/>
-                                    New York NY 10011<br/>
-                                    212.913.9058</p>
-                            </div>
-                            <div className="region pt-1">
-                                <div className="font-size-md font-weight-semibold text-dark mb-2">Recent Region</div>
-                                <form>
-                                    <div className="select-custom">
-                                        <select className="form-control">
-                                            <option value="1">San Fracisco, CA</option>
-                                            <option value="1">New York</option>
-                                            <option value="1">LA</option>
-                                        </select>
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
-                        <div className="col-md-6 col-lg mb-6 mb-lg-0">
-                            <div className="font-size-md font-weight-semibold text-dark mb-4">
-                                Company
-                            </div>
-                            <ul className="list-group list-group-flush list-group-borderless">
-                                <li className="list-group-item px-0 lh-1625 bg-transparent py-1">
-                                    <a href="page-about.html" className="link-hover-secondary-primary">About Us</a>
-                                </li>
-                                <li className="list-group-item px-0 lh-1625 bg-transparent py-1">
-                                    <a href="#" className="link-hover-secondary-primary">Team</a>
-                                </li>
-                                <li className="list-group-item px-0 lh-1625 bg-transparent py-1">
-                                    <a href="#" className="link-hover-secondary-primary">Careers</a>
-                                </li>
-                                <li className="list-group-item px-0 lh-1625 bg-transparent py-1">
-                                    <a href="#" className="link-hover-secondary-primary">Investors</a>
-                                </li>
-                                <li className="list-group-item px-0 lh-1625 bg-transparent py-1">
-                                    <a href="page-contact.html" className="link-hover-secondary-primary">Contact Us</a>
-                                </li>
-                                <li className="list-group-item px-0 lh-1625 bg-transparent py-1">
-                                    <a href="#" className="link-hover-secondary-primary">Offices</a>
-                                </li>
-                            </ul>
-                        </div>
-                        <div className="col-md-6 col-lg mb-6 mb-lg-0">
-                            <div className="font-size-md font-weight-semibold text-dark mb-4">
-                                Quick Links
-                            </div>
-                            <ul className="list-group list-group-flush list-group-borderless">
-                                <li className="list-group-item px-0 lh-1625 bg-transparent py-1">
-                                    <a href="page-faqs.html" className="link-hover-secondary-primary">FAQS</a>
-                                </li>
-                                <li className="list-group-item px-0 lh-1625 bg-transparent py-1">
-                                    <a href="#" className="link-hover-secondary-primary">Support</a>
-                                </li>
-                                <li className="list-group-item px-0 lh-1625 bg-transparent py-1">
-                                    <a href="#" className="link-hover-secondary-primary">Sitemap</a>
-                                </li>
-                                <li className="list-group-item px-0 lh-1625 bg-transparent py-1">
-                                    <a href="#" className="link-hover-secondary-primary">Community</a>
-                                </li>
-                            </ul>
-                        </div>
-                        <div className="col-sm-6 col-lg-4 mb-6 mb-lg-0">
-                            <div className="pl-0 pl-lg-9">
-                                <div className="font-size-md font-weight-semibold text-dark mb-4">Our Newsletter</div>
-                                <div className="mb-4">Subscribe to our newsletter and<br/>
-                                    we will inform you about newset directory and promotions
-                                </div>
-                                <div className="form-newsletter">
-                                    <form>
-                                        <div className="input-group bg-white">
-                                            <input type="text"
-                                                   className="form-control border-0"
-                                                   placeholder="Email Address... "/>
-                                            <button type="button"
-                                                    className="input-group-append btn btn-white bg-transparent text-dark border-0">
-                                                <i className="fas fa-arrow-right"></i>
-                                            </button>
-                                        </div>
-                                    </form>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div className="footer-last mt-8 mt-md-11">
-                <div className="container">
-                    <div className="footer-last-container position-relative">
-                        <div className="row align-items-center">
-                            <div className="col-lg-4 mb-3 mb-lg-0">
-                                <div className="social-icon text-dark">
-                                    <ul className="list-inline">
-                                        <li className="list-inline-item mr-5">
-                                            <a target="_blank" title="Twitter" href="#">
-                                                <i className="fab fa-twitter">
-                                                </i>
-                                                <span>Twitter</span>
-                                            </a>
-                                        </li>
-                                        <li className="list-inline-item mr-5">
-                                            <a target="_blank" title="Facebook" href="#">
-                                                <i className="fab fa-facebook-f">
-                                                </i>
-                                                <span>Facebook</span>
-                                            </a>
-                                        </li>
-                                        <li className="list-inline-item mr-5">
-                                            <a target="_blank" title="Google plus" href="#">
-                                                <svg className="icon icon-google-plus-symbol">
-                                                    <use xlinkHref="#icon-google-plus-symbol"></use>
-                                                </svg>
-                                                <span>Google plus</span>
-                                            </a>
-                                        </li>
-                                        <li className="list-inline-item mr-5">
-                                            <a target="_blank" title="Instagram" href="#">
-                                                <svg className="icon icon-instagram">
-                                                    <use xlinkHref="#icon-instagram"></use>
-                                                </svg>
-                                                <span>Instagram</span>
-                                            </a>
-                                        </li>
-                                        <li className="list-inline-item mr-5">
-                                            <a target="_blank" title="Rss" href="#">
-                                                <i className="fas fa-rss"></i>
-                                                <span>Rss</span>
-                                            </a>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
-                            <div className="col-lg-5 mb-3 mb-lg-0">
-                                <div>
-                                    &copy; 2020 <a href="index.html"
-                                                   className="link-hover-dark-primary font-weight-semibold">The Dir.</a> All
-                                    Rights Resevered. Design
-                                    by <a href="http://g5plus.net/"
-                                          className="link-hover-dark-primary font-weight-semibold">G5Theme</a>
-                                </div>
-                            </div>
-                            <div className="back-top text-left text-lg-right">
-                                <a href="#" className="gtf-back-to-top link-hover-secondary-primary"><i
-                                        className="fal fa-arrow-up"></i><span>Back To Top</span></a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </footer>
-       {/* <!-- #footer end -->*/}
+        {/*<!-- #wrapper-content end -->*/}
     </div>
     {/*<!-- #site-wrapper end-->*/}
     <div id="login-popup" className="mfp-hide">
@@ -436,8 +148,8 @@ const InstertarCategoria = (props) => {
                             </div>
                             <div className="form-group mb-6">
                                 <div className="custom-control custom-checkbox">
-                                    <input type="checkbox" className="custom-control-input" id="check-01"/>
-                                    <label className="custom-control-label text-dark" htmlFor="check-01">Remember</label>
+                                    <input type="checkbox" className="custom-control-input" id="check"/>
+                                    <label className="custom-control-label text-dark" htmlFor="check">Remember</label>
                                 </div>
                             </div>
                             <button type="submit"
@@ -492,8 +204,8 @@ const InstertarCategoria = (props) => {
                                 <input id="username-rt" type="text" className="form-control" placeholder="Username"/>
                             </div>
                             <div className="form-group mb-2">
-                                <label htmlFor="email-01" className="sr-only">Email</label>
-                                <input id="email-01" type="text" className="form-control" placeholder="Email Address"/>
+                                <label htmlFor="email" className="sr-only">Email</label>
+                                <input id="email" type="text" className="form-control" placeholder="Email Address"/>
                             </div>
                             <div className="form-group mb-2">
                                 <label htmlFor="password-rt" className="sr-only">Username</label>
@@ -762,6 +474,52 @@ const InstertarCategoria = (props) => {
         </div>
     </div>
 
+
+    <div id="add-categoria" className="mfp-hide">
+        <div className="form-login-register">
+            <div className="tabs mb-8">
+                <ul className="nav nav-pills tab-style-01 text-capitalize justify-content-center"
+                    role="tablist">
+                    <li className="nav-item">
+                        <a className="nav-link active" id="login-tab" data-toggle="tab"
+                           href="#login"
+                           role="tab"
+                           aria-controls="login" aria-selected="true"><h3>Category</h3></a>
+                    </li>
+                    
+                </ul>
+            </div>
+            <div className="tab-content">
+                <div className="tab-pane fade show active" id="login" role="tabpanel"
+                     aria-labelledby="login-tab">
+                    <div className="form-login">
+                        <form onSubmit={event => handleSubmit(event,createCategoriaServicio)}>
+                            <div className="font-size-md text-dark mb-5">Create Category of Service</div>
+                            <div className="form-group mb-2">
+                                <label htmlFor="username" className="sr-only">Category</label>
+                                <input id="username" type="text" className="form-control" value={categoria} onChange={e => setcategoria(e.target.value)} placeholder="Username"/>
+                            </div>
+                            
+                            
+                            <button type="submit"
+                                    className="btn btn-primary btn-block font-weight-bold text-uppercase font-size-lg rounded-sm mb-8" onClick={()=> createCategoriaServicio()}>
+                                Add
+                            </button>
+                        </form>
+                        
+                        
+                    </div>
+
+
+                </div>
+                
+            </div>
+            <form>
+
+            </form>
+        </div>
+    </div>
+
     {/*<!-- External JavaScripts -->*/}
     <script src="vendors/jquery.min.js"></script>
     <script src="vendors/jquery-ui/jquery-ui.min.js"></script>
@@ -816,6 +574,10 @@ const InstertarCategoria = (props) => {
                 <title>checkmark-circle</title>
                 <path d="M15.2 32c-4.061 0-7.877-1.581-10.749-4.451s-4.451-6.688-4.451-10.747c0-4.061 1.581-7.877 4.451-10.749s6.688-4.453 10.749-4.453c4.061 0 7.877 1.581 10.749 4.453s4.451 6.688 4.451 10.749-1.581 7.877-4.451 10.747c-2.87 2.87-6.688 4.451-10.749 4.451zM15.2 3.2c-7.499 0-13.6 6.101-13.6 13.6s6.101 13.6 13.6 13.6 13.6-6.101 13.6-13.6-6.101-13.6-13.6-13.6zM12 23.2c-0.205 0-0.41-0.078-0.566-0.234l-4.8-4.8c-0.312-0.312-0.312-0.819 0-1.131s0.819-0.312 1.131 0l4.234 4.234 10.634-10.634c0.312-0.312 0.819-0.312 1.131 0s0.312 0.819 0 1.131l-11.2 11.2c-0.157 0.157-0.362 0.234-0.566 0.234z"></path>
             </symbol>
+            <symbol id="icon-user-circle-o" viewBox="0 0 28 28">
+                <title>user-circle-o</title>
+                <path d="M14 0c7.734 0 14 6.266 14 14 0 7.688-6.234 14-14 14-7.75 0-14-6.297-14-14 0-7.734 6.266-14 14-14zM23.672 21.109c1.453-2 2.328-4.453 2.328-7.109 0-6.609-5.391-12-12-12s-12 5.391-12 12c0 2.656 0.875 5.109 2.328 7.109 0.562-2.797 1.922-5.109 4.781-5.109 1.266 1.234 2.984 2 4.891 2s3.625-0.766 4.891-2c2.859 0 4.219 2.312 4.781 5.109zM20 11c0-3.313-2.688-6-6-6s-6 2.688-6 6 2.688 6 6 6 6-2.688 6-6z"></path>
+            </symbol>
             <symbol id="icon-expand" viewBox="0 0 32 32">
                 <title>expand</title>
                 <path d="M12.566 11.434l-9.834-9.834h6.069c0.442 0 0.8-0.358 0.8-0.8s-0.358-0.8-0.8-0.8h-8c-0.442 0-0.8 0.358-0.8 0.8v8c0 0.442 0.358 0.8 0.8 0.8s0.8-0.358 0.8-0.8v-6.069l9.834 9.834c0.157 0.157 0.362 0.234 0.566 0.234s0.41-0.078 0.566-0.234c0.312-0.312 0.312-0.819 0-1.131zM31.2 0h-8c-0.442 0-0.8 0.358-0.8 0.8s0.358 0.8 0.8 0.8h6.069l-9.834 9.834c-0.312 0.312-0.312 0.819 0 1.131 0.157 0.157 0.362 0.234 0.565 0.234s0.41-0.078 0.565-0.234l9.835-9.834v6.069c0 0.442 0.358 0.8 0.8 0.8s0.8-0.358 0.8-0.8v-8c0-0.442-0.358-0.8-0.8-0.8zM12.566 19.435c-0.312-0.312-0.819-0.312-1.131 0l-9.834 9.834v-6.069c0-0.442-0.358-0.8-0.8-0.8s-0.8 0.358-0.8 0.8v8c0 0.442 0.358 0.8 0.8 0.8h8c0.442 0 0.8-0.358 0.8-0.8s-0.358-0.8-0.8-0.8h-6.069l9.834-9.835c0.312-0.312 0.312-0.819 0-1.131zM31.2 22.4c-0.442 0-0.8 0.358-0.8 0.8v6.069l-9.835-9.834c-0.312-0.312-0.819-0.312-1.131 0s-0.312 0.819 0 1.131l9.835 9.834h-6.069c-0.442 0-0.8 0.358-0.8 0.8s0.358 0.8 0.8 0.8h8c0.442 0 0.8-0.358 0.8-0.8v-8c0-0.442-0.358-0.8-0.8-0.8z"></path>
@@ -833,84 +595,53 @@ const InstertarCategoria = (props) => {
                 <title>instagram</title>
                 <path d="M17 1h-14c-1.1 0-2 0.9-2 2v14c0 1.101 0.9 2 2 2h14c1.1 0 2-0.899 2-2v-14c0-1.1-0.9-2-2-2zM9.984 15.523c3.059 0 5.538-2.481 5.538-5.539 0-0.338-0.043-0.664-0.103-0.984h1.581v7.216c0 0.382-0.31 0.69-0.693 0.69h-12.614c-0.383 0-0.693-0.308-0.693-0.69v-7.216h1.549c-0.061 0.32-0.104 0.646-0.104 0.984 0 3.059 2.481 5.539 5.539 5.539zM6.523 9.984c0-1.912 1.55-3.461 3.462-3.461s3.462 1.549 3.462 3.461-1.551 3.462-3.462 3.462c-1.913 0-3.462-1.55-3.462-3.462zM16.307 6h-1.615c-0.382 0-0.692-0.312-0.692-0.692v-1.617c0-0.382 0.31-0.691 0.691-0.691h1.615c0.384 0 0.694 0.309 0.694 0.691v1.616c0 0.381-0.31 0.693-0.693 0.693z"></path>
             </symbol>
-            <symbol id="icon-telephone" viewBox="0 0 32 32">
-                <title>telephone</title>
-                <path d="M25.6 32c-2.834 0-5.848-0.803-8.96-2.387-2.869-1.461-5.702-3.552-8.195-6.048s-4.581-5.333-6.040-8.203c-1.581-3.114-2.384-6.128-2.384-8.962 0-1.837 1.712-3.611 2.446-4.288 1.058-0.974 2.722-2.112 3.931-2.112 0.602 0 1.306 0.394 2.219 1.238 0.68 0.63 1.446 1.485 2.213 2.47 0.462 0.595 2.768 3.634 2.768 5.091 0 1.195-1.352 2.027-2.782 2.906-0.554 0.339-1.125 0.691-1.538 1.022-0.442 0.354-0.52 0.541-0.533 0.582 1.518 3.786 6.16 8.427 9.944 9.944 0.034-0.011 0.221-0.085 0.581-0.533 0.331-0.413 0.683-0.986 1.022-1.538 0.88-1.43 1.71-2.782 2.906-2.782 1.458 0 4.496 2.306 5.091 2.768 0.986 0.766 1.84 1.533 2.47 2.213 0.845 0.912 1.238 1.618 1.238 2.219 0 1.21-1.138 2.878-2.11 3.941-0.678 0.739-2.453 2.459-4.29 2.459zM6.39 1.6c-0.429 0.008-1.582 0.533-2.837 1.688-1.19 1.098-1.931 2.29-1.931 3.112 0 10.766 13.222 24 23.978 24 0.821 0 2.013-0.744 3.11-1.941 1.157-1.261 1.682-2.419 1.69-2.85-0.051-0.304-0.893-1.486-3.195-3.259-1.979-1.523-3.584-2.341-3.997-2.35-0.029 0.008-0.208 0.077-0.571 0.538-0.315 0.402-0.653 0.95-0.981 1.482-0.896 1.458-1.742 2.835-2.973 2.835-0.198 0-0.394-0.038-0.581-0.114-4.2-1.68-9.166-6.646-10.846-10.846-0.202-0.504-0.234-1.294 0.758-2.194 0.528-0.478 1.258-0.926 1.965-1.362 0.531-0.326 1.082-0.664 1.482-0.981 0.461-0.363 0.53-0.542 0.538-0.571-0.011-0.413-0.827-2.018-2.35-3.997-1.773-2.302-2.955-3.142-3.259-3.195z"></path>
-            </symbol>
-            <symbol id="icon-ionicons_svg_md-images" viewBox="0 0 32 32">
-                <title>ionicons_svg_md-images</title>
-                <path d="M28.6 8.762l-5.156-0.25-0.3-3.362c-0.063-0.706-0.694-1.2-1.431-1.144l-18.494 1.519c-0.737 0.063-1.269 0.656-1.212 1.356l1.325 14.737c0.063 0.706 0.7 1.2 1.431 1.144l0.938-0.075-0.15 2.863c-0.037 0.788 0.575 1.425 1.4 1.469l20.631 0.981c0.825 0.038 1.506-0.538 1.55-1.325l0.869-16.456c0.038-0.781-0.581-1.419-1.4-1.456zM6.419 9.094l-0.444 8.425-1.094 1.544-1.006-11.125v-0.063c0.063-0.313 0.275-0.563 0.6-0.588l16.313-1.338c0.325-0.025 0.606 0.188 0.656 0.494 0 0.013 0.019 0.013 0.019 0.025 0 0.006 0.019 0.013 0.019 0.025l0.169 1.925-13.688-0.656c-0.825-0.025-1.506 0.55-1.544 1.331zM27.294 23.9l-5.3-6.219-2.337 2.144-4.325-5.050-7.669 8.169 0.65-12.444v-0.025c0.063-0.338 0.387-0.581 0.744-0.563l18.2 0.875c0.363 0.019 0.644 0.294 0.65 0.637 0 0.012 0.019 0.019 0.019 0.031l-0.631 12.444z"></path>
-                <path d="M24 16c1.1 0 2-0.9 2-2s-0.894-2-2-2c-1.1 0-2 0.894-2 2s0.894 2 2 2z"></path>
-            </symbol>
-            <symbol id="icon-dollar-sign" viewBox="0 0 24 24">
-                <title>dollar-sign</title>
-                <path d="M11 11h-1.5c-0.691 0-1.314-0.279-1.768-0.732s-0.732-1.077-0.732-1.768 0.279-1.314 0.732-1.768 1.077-0.732 1.768-0.732h1.5zM13 13h1.5c0.691 0 1.314 0.279 1.768 0.732s0.732 1.077 0.732 1.768-0.279 1.314-0.732 1.768-1.077 0.732-1.768 0.732h-1.5zM17 4h-4v-3c0-0.552-0.448-1-1-1s-1 0.448-1 1v3h-1.5c-1.242 0-2.369 0.505-3.182 1.318s-1.318 1.94-1.318 3.182 0.505 2.369 1.318 3.182 1.94 1.318 3.182 1.318h1.5v5h-5c-0.552 0-1 0.448-1 1s0.448 1 1 1h5v3c0 0.552 0.448 1 1 1s1-0.448 1-1v-3h1.5c1.242 0 2.369-0.505 3.182-1.318s1.318-1.94 1.318-3.182-0.505-2.369-1.318-3.182-1.94-1.318-3.182-1.318h-1.5v-5h4c0.552 0 1-0.448 1-1s-0.448-1-1-1z"></path>
-            </symbol>
-            <symbol id="icon-chart-bars" viewBox="0 0 32 32">
-                <title>chart-bars</title>
-                <path d="M28 32h-25.6c-1.323 0-2.4-1.077-2.4-2.4v-25.6c0-1.323 1.077-2.4 2.4-2.4h25.6c1.323 0 2.4 1.077 2.4 2.4v25.6c0 1.323-1.077 2.4-2.4 2.4zM2.4 3.2c-0.442 0-0.8 0.358-0.8 0.8v25.6c0 0.442 0.358 0.8 0.8 0.8h25.6c0.442 0 0.8-0.358 0.8-0.8v-25.6c0-0.442-0.358-0.8-0.8-0.8h-25.6zM10.4 27.2h-3.2c-0.442 0-0.8-0.358-0.8-0.8v-14.4c0-0.442 0.358-0.8 0.8-0.8h3.2c0.442 0 0.8 0.358 0.8 0.8v14.4c0 0.442-0.358 0.8-0.8 0.8zM8 25.6h1.6v-12.8h-1.6v12.8zM16.8 27.2h-3.2c-0.442 0-0.8-0.358-0.8-0.8v-19.2c0-0.442 0.358-0.8 0.8-0.8h3.2c0.442 0 0.8 0.358 0.8 0.8v19.2c0 0.442-0.358 0.8-0.8 0.8zM14.4 25.6h1.6v-17.6h-1.6v17.6zM23.2 27.2h-3.2c-0.442 0-0.8-0.358-0.8-0.8v-8c0-0.442 0.358-0.8 0.8-0.8h3.2c0.442 0 0.8 0.358 0.8 0.8v8c0 0.442-0.358 0.8-0.8 0.8zM20.8 25.6h1.6v-6.4h-1.6v6.4z"></path>
+            <symbol id="icon-bag-1" viewBox="0 0 32 32">
+                <title>bag-1</title>
+                <path d="M26.832 7.898h-5.174v-1.684c0-3.426-2.787-6.214-6.214-6.214s-6.213 2.787-6.213 6.214v1.684h-4.458c-0.376 0-0.681 0.305-0.681 0.681l-3.827 22.74c0 0.376 0.305 0.681 0.681 0.681h30.107c0.376 0 0.681-0.305 0.681-0.681l-4.221-22.74c0-0.376-0.305-0.681-0.681-0.681zM10.593 6.214c0-2.675 2.177-4.852 4.852-4.852s4.852 2.177 4.852 4.852v1.684h-9.704v-1.684zM30.373 30.638h-28.746l3.826-21.379h3.777v2.998c-0.329 0.22-0.544 0.594-0.544 1.019 0 0.677 0.548 1.226 1.225 1.226s1.226-0.548 1.226-1.226c0-0.425-0.217-0.799-0.545-1.019v-2.998h9.705v2.998c-0.328 0.22-0.545 0.594-0.545 1.019 0 0.677 0.548 1.226 1.226 1.226s1.226-0.548 1.226-1.226c0-0.425-0.217-0.799-0.545-1.019v-2.998h4.494l4.222 21.379z"></path>
             </symbol>
             <symbol id="icon-check-circle" viewBox="0 0 24 24">
                 <title>check-circle</title>
                 <path d="M21 11.080v0.92c-0.001 2.485-1.009 4.733-2.64 6.362s-3.88 2.634-6.365 2.632-4.734-1.009-6.362-2.64-2.634-3.879-2.633-6.365 1.009-4.733 2.64-6.362 3.88-2.634 6.365-2.633c1.33 0.001 2.586 0.289 3.649 0.775 0.502 0.23 1.096 0.008 1.325-0.494s0.008-1.096-0.494-1.325c-1.327-0.606-2.866-0.955-4.479-0.956-3.037-0.002-5.789 1.229-7.78 3.217s-3.224 4.74-3.226 7.777 1.229 5.789 3.217 7.78 4.739 3.225 7.776 3.226 5.789-1.229 7.78-3.217 3.225-4.739 3.227-7.777v-0.92c0-0.552-0.448-1-1-1s-1 0.448-1 1zM21.293 3.293l-9.293 9.302-2.293-2.292c-0.391-0.391-1.024-0.391-1.414 0s-0.391 1.024 0 1.414l3 3c0.391 0.391 1.024 0.39 1.415 0l10-10.010c0.39-0.391 0.39-1.024-0.001-1.414s-1.024-0.39-1.414 0.001z"></path>
             </symbol>
-            <symbol id="icon-ionicons_svg_logo-model-s" viewBox="0 0 32 32">
-                <title>ionicons_svg_logo-model-s</title>
-                <path d="M27.725 13.025c-0.194-0.119-0.137-0.412 0.081-0.456l0.331-0.069c0.444 0 1.4-0.144 1.6-0.338 0.194-0.2 0.262-0.338 0.262-0.512s-0.106-0.481-0.3-0.694c-0.188-0.213-1-0.325-1.481-0.387s-0.544 0-0.669 0.075c-0.125 0.081-0.175 0.594-0.194 0.938-0.006 0.075-0.056 0.137-0.131 0.156l-0.025 0.006c-0.206 0.044-0.413-0.069-0.488-0.269-0.288-0.813-0.669-2.031-1.212-3.025-0.719-1.3-1.469-1.713-1.781-1.813-0.306-0.094-0.587-0.162-2.688-0.381-2.113-0.225-3.944-0.256-5.031-0.256s-2.919 0.031-5.037 0.256c-2.1 0.213-2.381 0.281-2.688 0.381-0.313 0.1-1.063 0.513-1.781 1.813-0.588 1.069-0.981 2.394-1.275 3.206-0.037 0.094-0.138 0.15-0.237 0.131-0.194-0.044-0.338-0.206-0.35-0.406-0.025-0.313-0.075-0.669-0.181-0.731-0.125-0.081-0.188-0.137-0.669-0.075s-1.288 0.175-1.481 0.387c-0.188 0.213-0.294 0.519-0.294 0.694s0.069 0.319 0.263 0.519c0.194 0.2 1.156 0.338 1.6 0.338l0.331 0.069c0.219 0.044 0.275 0.338 0.081 0.456-0.569 0.356-1.45 0.956-2.019 1.6 0 0-0.256 1.794-0.256 3.881 0 3 0.362 5.775 0.362 5.775 0.112 0.019 0.225 0.038 0.331 0.056 0 0.075 0.044 0.819 0.125 1.325 0.019 0.125 0.081 0.344 0.388 0.344h4.044c0.119 0 0.319-0.1 0.319-0.231l0.063-1.063c0.45 0.006 0.2 0.006 0.681 0 1.55-0.019 0.975-0.469 1.694-0.456 0.706 0.012 3.438 0.188 6 0.188s5.294-0.175 6-0.188c0.719-0.012 0.144 0.444 1.694 0.456 0.481 0.006 0.294 0.006 0.744 0l0.063 1.063c0 0.131 0.2 0.231 0.319 0.231h3.969c0.306 0 0.369-0.219 0.387-0.344 0.081-0.506 0.119-1.244 0.125-1.325l0.337-0.056s0.363-2.769 0.363-5.775c0-2.094-0.256-3.881-0.256-3.881-0.581-0.656-1.462-1.256-2.031-1.613zM7.713 9.675c0.138-0.319 0.369-0.725 0.625-1.075 0.313-0.419 0.775-0.7 1.287-0.781 1.044-0.169 3.287-0.456 6.369-0.456s5.325 0.287 6.369 0.456c0.512 0.081 0.975 0.363 1.288 0.781 0.262 0.35 0.494 0.756 0.631 1.075 0.244 0.575 0.65 1.919 0.587 2.075s0.063 0.231-0.762 0.162c-0.819-0.063-5.663-0.131-8.106-0.131-2.45 0-7.294 0.069-8.106 0.131-0.825 0.069-0.706-0.012-0.763-0.162s0.338-1.5 0.581-2.075zM8.238 16.925c-0.619 0-1.862-0.063-2.156-0.075-0.294-0.006-0.55 0.238-0.7 0.238s-1.594-0.225-1.75-0.931c-0.106-0.469-0.069-0.95-0.038-1.219 0.019-0.119 0.119-0.213 0.237-0.219 0.9-0.031 1.825 0.031 3.456 0.494 1.081 0.306 1.863 0.787 2.306 1.112 0.175 0.131 0.113 0.406-0.106 0.45-0.381 0.069-0.9 0.15-1.25 0.15zM21.387 21.488c-0.794 0.106-3.656 0.137-5.387 0.137s-4.594-0.031-5.387-0.137c-0.819-0.106-1.863-1.081-1.15-1.887 0.475-0.531 1.3-0.85 3.056-1.081 1.863-0.238 3.037-0.269 3.475-0.269s1.612 0.031 3.475 0.269c1.756 0.231 2.7 0.6 3.056 1.081 0.65 0.863-0.319 1.775-1.137 1.887zM28.369 16.163c-0.156 0.7-1.6 0.931-1.75 0.931s-0.406-0.244-0.7-0.238c-0.294 0.012-1.538 0.075-2.156 0.075-0.344 0-0.863-0.081-1.25-0.15-0.219-0.038-0.281-0.319-0.106-0.45 0.444-0.325 1.225-0.806 2.306-1.113 1.631-0.463 2.55-0.525 3.456-0.494 0.125 0.006 0.225 0.094 0.238 0.219 0.031 0.269 0.069 0.75-0.038 1.219z"></path>
+            <symbol id="icon-layers" viewBox="0 0 32 32">
+                <title>layers</title>
+                <path d="M16 19.2c-0.106 0-0.211-0.021-0.31-0.062l-15.2-6.4c-0.296-0.125-0.49-0.416-0.49-0.738s0.194-0.613 0.49-0.738l15.2-6.4c0.198-0.083 0.422-0.083 0.621 0l15.2 6.4c0.296 0.125 0.49 0.416 0.49 0.738s-0.194 0.613-0.49 0.738l-15.2 6.4c-0.099 0.042-0.205 0.062-0.31 0.062zM2.861 12l13.139 5.531 13.139-5.531-13.139-5.531-13.139 5.531zM16 24c-0.106 0-0.211-0.021-0.31-0.062l-15.2-6.4c-0.406-0.171-0.598-0.64-0.427-1.048s0.64-0.598 1.048-0.427l14.89 6.269 14.89-6.269c0.406-0.171 0.877 0.019 1.048 0.427s-0.019 0.877-0.427 1.048l-15.2 6.4c-0.099 0.042-0.205 0.062-0.31 0.062zM16 28.8c-0.106 0-0.211-0.021-0.31-0.062l-15.2-6.4c-0.406-0.171-0.598-0.64-0.427-1.048s0.64-0.598 1.048-0.427l14.89 6.269 14.89-6.269c0.406-0.171 0.877 0.019 1.048 0.427s-0.019 0.877-0.427 1.048l-15.2 6.4c-0.099 0.042-0.205 0.062-0.31 0.062z"></path>
             </symbol>
-            <symbol id="icon-ionicons_svg_md-star" viewBox="0 0 32 32">
-                <title>ionicons_svg_md-star</title>
-                <path d="M16 23.293l7.802 4.707-2.064-8.879 6.887-5.97-9.079-0.78-3.546-8.371-3.546 8.371-9.079 0.78 6.887 5.97-2.064 8.879z"></path>
+            <symbol id="icon-receipt" viewBox="0 0 32 32">
+                <title>receipt</title>
+                <path d="M28 32c-0.122 0-0.245-0.027-0.358-0.085l-2.842-1.421-2.842 1.421c-0.226 0.112-0.49 0.112-0.715 0l-2.842-1.421-2.842 1.421c-0.226 0.112-0.49 0.112-0.715 0l-2.842-1.421-2.842 1.421c-0.226 0.112-0.49 0.112-0.715 0l-2.842-1.421-2.842 1.421c-0.248 0.123-0.542 0.11-0.778-0.035s-0.379-0.403-0.379-0.68v-28.8c0-0.302 0.171-0.581 0.442-0.715l3.2-1.6c0.226-0.112 0.49-0.112 0.715 0l2.842 1.421 2.842-1.421c0.226-0.112 0.49-0.112 0.715 0l2.842 1.421 2.842-1.421c0.226-0.112 0.49-0.112 0.715 0l2.842 1.421 2.842-1.421c0.226-0.112 0.49-0.112 0.715 0l3.2 1.6c0.27 0.136 0.442 0.413 0.442 0.715v28.8c0 0.277-0.144 0.534-0.379 0.68-0.128 0.080-0.274 0.12-0.421 0.12zM18.4 28.8c0.123 0 0.245 0.029 0.358 0.085l2.842 1.421 2.842-1.421c0.226-0.112 0.49-0.112 0.715 0l2.042 1.021v-27.011l-2.4-1.2-2.842 1.421c-0.226 0.112-0.49 0.112-0.715 0l-2.842-1.421-2.842 1.421c-0.226 0.112-0.49 0.112-0.715 0l-2.842-1.421-2.842 1.421c-0.226 0.112-0.49 0.112-0.715 0l-2.842-1.421-2.4 1.2v27.011l2.042-1.021c0.226-0.112 0.49-0.112 0.715 0l2.842 1.421 2.842-1.421c0.226-0.112 0.49-0.112 0.715 0l2.842 1.421 2.842-1.421c0.112-0.056 0.235-0.085 0.358-0.085zM18.4 20.8h-5.6v-1.6h5.6c0.442 0 0.8-0.358 0.8-0.8s-0.358-0.8-0.8-0.8h-2.4v-0.8c0-0.442-0.358-0.8-0.8-0.8s-0.8 0.358-0.8 0.8v0.8h-2.4c-0.442 0-0.8 0.358-0.8 0.8v3.2c0 0.442 0.358 0.8 0.8 0.8h5.6v1.6h-5.6c-0.442 0-0.8 0.358-0.8 0.8s0.358 0.8 0.8 0.8h2.4v0.8c0 0.442 0.358 0.8 0.8 0.8s0.8-0.358 0.8-0.8v-0.8h2.4c0.442 0 0.8-0.358 0.8-0.8v-3.2c0-0.442-0.358-0.8-0.8-0.8zM20 8h-9.6c-0.442 0-0.8-0.358-0.8-0.8s0.358-0.8 0.8-0.8h9.6c0.442 0 0.8 0.358 0.8 0.8s-0.358 0.8-0.8 0.8zM23.2 11.2h-16c-0.442 0-0.8-0.358-0.8-0.8s0.358-0.8 0.8-0.8h16c0.442 0 0.8 0.358 0.8 0.8s-0.358 0.8-0.8 0.8zM23.2 14.4h-16c-0.442 0-0.8-0.358-0.8-0.8s0.358-0.8 0.8-0.8h16c0.442 0 0.8 0.358 0.8 0.8s-0.358 0.8-0.8 0.8z"></path>
             </symbol>
-            <symbol id="icon-watch" viewBox="0 0 24 24">
-                <title>watch</title>
-                <path d="M6 12q0 2.484 1.758 4.242t4.242 1.758 4.242-1.758 1.758-4.242-1.758-4.242-4.242-1.758-4.242 1.758-1.758 4.242zM20.016 12q0 1.641-0.891 3.469t-2.156 2.813l-0.984 5.719h-7.969l-0.984-5.719q-3.047-2.344-3.047-6.281t3.047-6.281l0.984-5.719h7.969l0.984 5.719q3.047 2.438 3.047 6.281z"></path>
+            <symbol id="icon-calendar-empty" viewBox="0 0 32 32">
+                <title>calendar-empty</title>
+                <path d="M29.6 3.2h-4v-0.8c0-0.442-0.358-0.8-0.8-0.8s-0.8 0.358-0.8 0.8v0.8h-16v-0.8c0-0.442-0.358-0.8-0.8-0.8s-0.8 0.358-0.8 0.8v0.8h-4c-1.323 0-2.4 1.077-2.4 2.4v22.4c0 1.323 1.077 2.4 2.4 2.4h27.2c1.323 0 2.4-1.077 2.4-2.4v-22.4c0-1.323-1.077-2.4-2.4-2.4zM2.4 4.8h4v2.4c0 0.442 0.358 0.8 0.8 0.8s0.8-0.358 0.8-0.8v-2.4h16v2.4c0 0.442 0.358 0.8 0.8 0.8s0.8-0.358 0.8-0.8v-2.4h4c0.442 0 0.8 0.358 0.8 0.8v4h-28.8v-4c0-0.442 0.358-0.8 0.8-0.8zM29.6 28.8h-27.2c-0.442 0-0.8-0.358-0.8-0.8v-16.8h28.8v16.8c0 0.442-0.358 0.8-0.8 0.8z"></path>
             </symbol>
-            <symbol id="icon-ionicons_svg_md-sync" viewBox="0 0 32 32">
-                <title>ionicons_svg_md-sync</title>
-                <path d="M16 5.818v-3.818l-5 5.091 5 5.091v-3.818c4.125 0 7.5 3.436 7.5 7.636 0 1.273-0.313 2.482-0.875 3.564l1.813 1.846c1-1.591 1.563-3.437 1.563-5.409 0-5.6-4.5-10.182-10-10.182zM16 23.637c-4.125 0-7.5-3.437-7.5-7.637 0-1.273 0.313-2.482 0.875-3.564l-1.812-1.845c-1 1.527-1.563 3.436-1.563 5.409 0 5.6 4.5 10.182 10 10.182v3.818l5-5.091-5-5.091v3.818z"></path>
+            <symbol id="icon-document" viewBox="0 0 32 32">
+                <title>document</title>
+                <path d="M26.4 32h-20.8c-1.323 0-2.4-1.077-2.4-2.4v-25.6c0-1.323 1.077-2.4 2.4-2.4h20.8c1.323 0 2.4 1.077 2.4 2.4v25.6c0 1.323-1.077 2.4-2.4 2.4zM5.6 3.2c-0.442 0-0.8 0.358-0.8 0.8v25.6c0 0.442 0.358 0.8 0.8 0.8h20.8c0.442 0 0.8-0.358 0.8-0.8v-25.6c0-0.442-0.358-0.8-0.8-0.8h-20.8zM20 8h-11.2c-0.442 0-0.8-0.358-0.8-0.8s0.358-0.8 0.8-0.8h11.2c0.442 0 0.8 0.358 0.8 0.8s-0.358 0.8-0.8 0.8zM23.2 11.2h-14.4c-0.442 0-0.8-0.358-0.8-0.8s0.358-0.8 0.8-0.8h14.4c0.442 0 0.8 0.358 0.8 0.8s-0.358 0.8-0.8 0.8zM23.2 14.4h-14.4c-0.442 0-0.8-0.358-0.8-0.8s0.358-0.8 0.8-0.8h14.4c0.442 0 0.8 0.358 0.8 0.8s-0.358 0.8-0.8 0.8zM16.8 17.6h-8c-0.442 0-0.8-0.358-0.8-0.8s0.358-0.8 0.8-0.8h8c0.442 0 0.8 0.358 0.8 0.8s-0.358 0.8-0.8 0.8zM23.2 24h-14.4c-0.442 0-0.8-0.358-0.8-0.8s0.358-0.8 0.8-0.8h14.4c0.442 0 0.8 0.358 0.8 0.8s-0.358 0.8-0.8 0.8zM20 27.2h-11.2c-0.442 0-0.8-0.358-0.8-0.8s0.358-0.8 0.8-0.8h11.2c0.442 0 0.8 0.358 0.8 0.8s-0.358 0.8-0.8 0.8z"></path>
             </symbol>
-            <symbol id="icon-laptop" viewBox="0 0 32 32">
-                <title>laptop</title>
-                <path d="M3.058 24.345h25.885c0.536 0 0.971-0.435 0.971-0.971v-16.64c0-0.535-0.435-0.971-0.971-0.971h-25.885c-0.535 0-0.971 0.435-0.971 0.971v16.64c0 0.535 0.436 0.971 0.971 0.971zM2.919 6.734c0-0.077 0.062-0.139 0.139-0.139h25.885c0.077 0 0.139 0.062 0.139 0.139v16.64c0 0.077-0.062 0.139-0.139 0.139h-25.885c-0.077 0-0.139-0.062-0.139-0.139v-16.64zM32 25.087v0.777c0 0.206-0.167 0.373-0.373 0.373h-31.255c-0.206 0-0.373-0.167-0.373-0.373v-0.777h13.142c0.065 0.217 0.263 0.375 0.501 0.375h4.714c0.237 0 0.436-0.159 0.501-0.375h13.142z"></path>
+            <symbol id="icon-user" viewBox="0 0 32 32">
+                <title>user</title>
+                <path d="M15.2 17.6c-4.853 0-8.8-3.947-8.8-8.8s3.947-8.8 8.8-8.8 8.8 3.947 8.8 8.8-3.947 8.8-8.8 8.8zM15.2 1.6c-3.97 0-7.2 3.23-7.2 7.2s3.23 7.2 7.2 7.2c3.97 0 7.2-3.23 7.2-7.2s-3.23-7.2-7.2-7.2zM28 32h-25.6c-1.323 0-2.4-1.077-2.4-2.4 0-0.109 0.022-2.696 1.96-5.28 1.128-1.504 2.672-2.699 4.59-3.55 2.342-1.042 5.253-1.57 8.65-1.57s6.307 0.528 8.65 1.57c1.918 0.853 3.462 2.046 4.59 3.55 1.938 2.584 1.96 5.171 1.96 5.28 0 1.323-1.077 2.4-2.4 2.4zM15.2 20.8c-5.579 0-9.696 1.525-11.906 4.41-1.656 2.162-1.693 4.371-1.694 4.394 0 0.438 0.358 0.797 0.8 0.797h25.6c0.442 0 0.8-0.358 0.8-0.8 0-0.019-0.037-2.229-1.694-4.39-2.211-2.885-6.328-4.41-11.906-4.41z"></path>
             </symbol>
-            <symbol id="icon-chart-bar" viewBox="0 0 20 20">
-                <title>chart-bar</title>
-                <path d="M1 10h3v10h-3v-10zM6 0h3v20h-3v-20zM11 8h3v12h-3v-12zM16 4h3v16h-3v-16z"></path>
+            <symbol id="icon-exit" viewBox="0 0 32 32">
+                <title>exit</title>
+                <path d="M18.4 12.8c0.442 0 0.8-0.358 0.8-0.8v-6.4c0-1.323-1.077-2.4-2.4-2.4h-14.4c-1.323 0-2.4 1.077-2.4 2.4v19.2c0 1.194 0.859 2.496 1.955 2.965l8.259 3.539c0.285 0.122 0.574 0.182 0.851 0.182 0.341 0 0.666-0.093 0.942-0.275 0.502-0.331 0.792-0.92 0.792-1.613v-2.4h4c1.323 0 2.4-1.077 2.4-2.4v-6.4c0-0.442-0.358-0.8-0.8-0.8s-0.8 0.358-0.8 0.8v6.4c0 0.442-0.358 0.8-0.8 0.8h-4v-15.2c0-1.194-0.859-2.496-1.955-2.965l-6.147-2.635h12.102c0.442 0 0.8 0.358 0.8 0.8v6.4c0 0.442 0.358 0.8 0.8 0.8zM10.214 8.906c0.515 0.221 0.986 0.934 0.986 1.494v19.2c0 0.166-0.045 0.259-0.072 0.277s-0.13 0.022-0.283-0.043l-8.259-3.539c-0.515-0.221-0.986-0.933-0.986-1.494v-19.2c0-0.126 0.029-0.245 0.082-0.352l8.533 3.658zM29.366 14.634l-4.8-4.8c-0.312-0.312-0.819-0.312-1.131 0s-0.312 0.819 0 1.131l3.434 3.434h-10.069c-0.442 0-0.8 0.358-0.8 0.8s0.358 0.8 0.8 0.8h10.069l-3.434 3.434c-0.312 0.312-0.312 0.819 0 1.131 0.157 0.157 0.362 0.234 0.566 0.234s0.41-0.078 0.566-0.234l4.8-4.8c0.312-0.312 0.312-0.819 0-1.131z"></path>
             </symbol>
-            <symbol id="icon-ionicons_svg_md-pizza" viewBox="0 0 32 32">
-                <title>ionicons_svg_md-pizza</title>
-                <path d="M25.45 8.15c-2.906-1.181-6.088-1.775-9.45-1.775-3.369 0-6.769 0.644-9.45 1.75-0.506 0.206-0.956 0.563-0.631 1.219s10.075 20.656 10.075 20.656l10.062-20.619c0.2-0.431 0.056-0.963-0.606-1.231zM11.637 12.75c-1.169 0-2-0.894-2-2s0.831-2 2-2 2 0.894 2 2-0.831 2-2 2zM16 21.688c-1.169 0-2-0.894-2-2s0.831-2 2-2 2 0.894 2 2-0.831 2-2 2zM20.363 14c-1.169 0-2-0.894-2-2s0.831-2 2-2 2 0.894 2 2-0.831 2-2 2z"></path>
-                <path d="M27.306 4.125c-3.262-1.288-7.288-2.125-11.306-2.125s-7.975 0.756-11.306 2.088c-0.294 0.119-0.694 0.35-0.694 0.862l0.606 1.506c0.175 0.306 0.544 0.513 0.944 0.513 0.112 0 0.269-0.019 0.456-0.094 3.063-1.181 6.444-1.85 10-1.85s7.2 0.725 10 1.85c0.225 0.088 0.35 0.094 0.456 0.094 0.413 0 0.762-0.206 0.938-0.506l0.613-1.506c-0.012-0.456-0.313-0.675-0.706-0.831z"></path>
+            <symbol id="icon-eye" viewBox="0 0 32 32">
+                <title>eye</title>
+                <path d="M31.795 16.266c-0.075-0.085-1.891-2.088-4.73-4.115-1.675-1.197-3.36-2.15-5.008-2.837-2.088-0.87-4.126-1.312-6.058-1.312s-3.97 0.442-6.058 1.312c-1.648 0.686-3.333 1.642-5.008 2.837-2.838 2.027-4.654 4.032-4.73 4.115-0.274 0.304-0.274 0.766 0 1.070 0.075 0.085 1.891 2.088 4.73 4.115 1.675 1.197 3.36 2.15 5.008 2.837 2.088 0.87 4.126 1.312 6.058 1.312s3.97-0.442 6.058-1.312c1.648-0.686 3.333-1.642 5.008-2.837 2.838-2.027 4.654-4.032 4.73-4.115 0.274-0.304 0.274-0.766 0-1.070zM20.118 10.301c1.451 1.221 2.282 2.997 2.282 4.899 0 3.53-2.87 6.4-6.4 6.4s-6.4-2.87-6.4-6.4c0-1.901 0.83-3.678 2.282-4.899 1.315-0.429 2.706-0.701 4.118-0.701s2.803 0.272 4.118 0.701zM26.107 20.17c-2.453 1.747-6.197 3.83-10.107 3.83s-7.654-2.083-10.107-3.83c-1.851-1.318-3.267-2.653-3.982-3.37 0.715-0.717 2.131-2.050 3.982-3.37 0.848-0.605 1.85-1.248 2.96-1.832-0.555 1.101-0.853 2.328-0.853 3.602 0 4.411 3.589 8 8 8s8-3.589 8-8c0-1.274-0.298-2.501-0.853-3.602 1.11 0.584 2.112 1.229 2.96 1.832 1.851 1.318 3.267 2.653 3.982 3.37-0.715 0.717-2.131 2.050-3.982 3.37z"></path>
             </symbol>
-            <symbol id="icon-ionicons_svg_md-airplane" viewBox="0 0 32 32">
-                <title>ionicons_svg_md-airplane</title>
-                <path d="M28 21v-2.5l-10-6.5v-7.050c0-1.106-0.925-1.95-2-1.95s-2 0.844-2 1.95v7.050l-10 6.5v2.5l10-3v7.1l-3 1.95v1.95l5-1 5 1v-1.95l-3-1.95v-7.1l10 3z"></path>
-            </symbol>
-            <symbol id="icon-map-marker-crossed" viewBox="0 0 32 32">
-                <title>map-marker-crossed</title>
-                <path d="M28.504 1.779c-0.342-0.278-0.846-0.227-1.125 0.117l-2.786 3.429c-1.576-3.154-4.835-5.325-8.594-5.325-5.293 0-9.6 4.307-9.6 9.6 0 2.458 0.477 5.152 1.414 8.013 0.587 1.789 1.357 3.646 2.293 5.539l-3.53 4.344c-0.278 0.342-0.227 0.846 0.117 1.125 0.149 0.12 0.326 0.179 0.504 0.179 0.232 0 0.464-0.101 0.621-0.296l3.088-3.8c2.203 4.099 4.371 6.874 4.462 6.99 0.152 0.194 0.384 0.306 0.629 0.306s0.477-0.112 0.629-0.306c0.091-0.117 2.269-2.902 4.475-7.016 1.299-2.421 2.336-4.798 3.080-7.066 0.939-2.859 1.414-5.555 1.414-8.013 0-0.883-0.12-1.739-0.346-2.552l3.366-4.142c0.278-0.342 0.227-0.846-0.117-1.125zM8 9.6c0-4.411 3.589-8 8-8 3.395 0 6.302 2.126 7.462 5.117l-2.68 3.299c0.011-0.138 0.018-0.275 0.018-0.416 0-2.646-2.154-4.8-4.8-4.8s-4.8 2.154-4.8 4.8 2.154 4.8 4.8 4.8c0.482 0 0.946-0.072 1.386-0.205l-6.162 7.584c-1.65-3.477-3.222-7.912-3.222-12.181zM16 12.8c-1.765 0-3.2-1.435-3.2-3.2s1.435-3.2 3.2-3.2c1.765 0 3.2 1.435 3.2 3.2s-1.435 3.2-3.2 3.2zM24 9.6c0 5.197-2.333 10.643-4.291 14.296-1.445 2.698-2.906 4.843-3.709 5.962-0.8-1.114-2.251-3.246-3.694-5.936-0.099-0.184-0.198-0.374-0.299-0.568l11.939-14.694c0.037 0.309 0.056 0.622 0.056 0.939z"></path>
-            </symbol>
-            <symbol id="icon-ionicons_svg_md-code-working" viewBox="0 0 32 32">
-                <title>ionicons_svg_md-code-working</title>
-                <path d="M11.9 22.131l-6.156-6.131 6.15-6.131-1.875-1.869-8.019 8 8.025 8 1.875-1.869zM20.1 22.131l6.15-6.131-6.15-6.131 1.875-1.869 8.025 8-8.025 8-1.875-1.869z"></path>
-                <path d="M9.725 17.25h2.5v-2.5h-2.5v2.5zM22.275 14.75h-2.5v2.5h2.5v-2.5zM14.75 17.25h2.5v-2.5h-2.5v2.5z"></path>
-            </symbol>
-            <symbol id="icon-user-circle-o" viewBox="0 0 28 28">
-                <title>user-circle-o</title>
-                <path d="M14 0c7.734 0 14 6.266 14 14 0 7.688-6.234 14-14 14-7.75 0-14-6.297-14-14 0-7.734 6.266-14 14-14zM23.672 21.109c1.453-2 2.328-4.453 2.328-7.109 0-6.609-5.391-12-12-12s-12 5.391-12 12c0 2.656 0.875 5.109 2.328 7.109 0.562-2.797 1.922-5.109 4.781-5.109 1.266 1.234 2.984 2 4.891 2s3.625-0.766 4.891-2c2.859 0 4.219 2.312 4.781 5.109zM20 11c0-3.313-2.688-6-6-6s-6 2.688-6 6 2.688 6 6 6 6-2.688 6-6z"></path>
-            </symbol>
-            <symbol id="icon-bag-1" viewBox="0 0 32 32">
-                <title>bag-1</title>
-                <path d="M26.832 7.898h-5.174v-1.684c0-3.426-2.787-6.214-6.214-6.214s-6.213 2.787-6.213 6.214v1.684h-4.458c-0.376 0-0.681 0.305-0.681 0.681l-3.827 22.74c0 0.376 0.305 0.681 0.681 0.681h30.107c0.376 0 0.681-0.305 0.681-0.681l-4.221-22.74c0-0.376-0.305-0.681-0.681-0.681zM10.593 6.214c0-2.675 2.177-4.852 4.852-4.852s4.852 2.177 4.852 4.852v1.684h-9.704v-1.684zM30.373 30.638h-28.746l3.826-21.379h3.777v2.998c-0.329 0.22-0.544 0.594-0.544 1.019 0 0.677 0.548 1.226 1.225 1.226s1.226-0.548 1.226-1.226c0-0.425-0.217-0.799-0.545-1.019v-2.998h9.705v2.998c-0.328 0.22-0.545 0.594-0.545 1.019 0 0.677 0.548 1.226 1.226 1.226s1.226-0.548 1.226-1.226c0-0.425-0.217-0.799-0.545-1.019v-2.998h4.494l4.222 21.379z"></path>
+            <symbol id="icon-headset" viewBox="0 0 32 32">
+                <title>headset</title>
+                <path d="M29.6 20.845c-0.442 0-0.8-0.358-0.8-0.8v-5.645c0-8.134-4.666-12.8-12.8-12.8s-12.8 4.666-12.8 12.8v5.645c0 0.442-0.358 0.8-0.8 0.8s-0.8-0.358-0.8-0.8v-5.645c0-2.422 0.379-4.598 1.126-6.472 0.712-1.786 1.763-3.309 3.125-4.525 2.491-2.227 6-3.403 10.15-3.403s7.659 1.178 10.15 3.403c1.36 1.216 2.411 2.739 3.125 4.525 0.747 1.872 1.126 4.050 1.126 6.472v5.645c0 0.442-0.358 0.8-0.8 0.8zM10.4 12.8c-1.051 0-1.946 0.678-2.269 1.621-1.765 0.109-3.030 0.662-3.854 1.683-0.734 0.912-1.077 2.15-1.077 3.896s0.342 2.984 1.077 3.896c0.824 1.022 2.088 1.574 3.854 1.683 0.325 0.942 1.219 1.621 2.269 1.621 1.323 0 2.4-1.077 2.4-2.4v-9.6c0-1.323-1.077-2.4-2.4-2.4zM4.8 20c0-2.258 0.56-3.73 3.2-3.966v7.933c-2.64-0.237-3.2-1.709-3.2-3.966zM11.2 24.8c0 0.442-0.358 0.8-0.8 0.8s-0.8-0.358-0.8-0.8v-9.6c0-0.442 0.358-0.8 0.8-0.8s0.8 0.358 0.8 0.8v9.6zM27.723 16.104c-0.824-1.022-2.088-1.574-3.853-1.683-0.325-0.942-1.219-1.621-2.269-1.621-1.323 0-2.4 1.077-2.4 2.4v9.6c0 1.323 1.077 2.4 2.4 2.4 1.051 0 1.946-0.678 2.269-1.621 1.427-0.088 2.526-0.467 3.331-1.149v1.968c0 1.323-1.077 2.4-2.4 2.4h-5.738c-0.33-0.931-1.219-1.6-2.262-1.6-1.323 0-2.4 1.077-2.4 2.4s1.077 2.4 2.4 2.4c1.043 0 1.933-0.669 2.262-1.6h5.738c2.205 0 4-1.795 4-4v-6.4c0-1.746-0.342-2.984-1.077-3.896zM16.8 30.4c-0.442 0-0.8-0.358-0.8-0.8s0.358-0.8 0.8-0.8 0.8 0.358 0.8 0.8-0.358 0.8-0.8 0.8zM21.6 25.6c-0.442 0-0.8-0.358-0.8-0.8v-9.6c0-0.442 0.358-0.8 0.8-0.8s0.8 0.358 0.8 0.8v9.6c0 0.442-0.358 0.8-0.8 0.8zM24 23.966v-7.933c2.64 0.237 3.2 1.709 3.2 3.966s-0.56 3.73-3.2 3.966z"></path>
             </symbol>
         </defs>
     </svg>
 
+        </div>
 
+    );
 
-          </div>
-)
-};
+}
 
-export default InstertarCategoria;
+export default withApollo(InstertarCategoria);
