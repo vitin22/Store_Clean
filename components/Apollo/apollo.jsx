@@ -12,7 +12,7 @@ export default withApollo(
         const token = localStorage.getItem('authToken')
         operation.setContext({
           headers: {
-            authorization: token ? `Bearer ${token}` : ''
+            authorization: token ? `JWT ${token}` : ''
           }
         })
       }

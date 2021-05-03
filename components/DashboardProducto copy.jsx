@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 import Estilo from './ScriptD'
 
-import { ADD_CATEGORIA } from './Apollo/jobs.mutations';
-import {  All_CATSERV } from './Apollo/jobs.query';
-import { useMutation, useQuery } from '@apollo/react-hooks';
+import { ADD_PRODUCTO } from '@components/Apollo/jobs.mutations';
+import { ALL_TYPEPROD, PagProduc} from '@components/Apollo/jobs.query';
+import { useMutation } from '@apollo/react-hooks';
+import { useQuery } from '@apollo/react-hooks';
 import gql from 'graphql-tag';
 import {useRouter, Router} from 'next/router'
 import Header from './Header'
@@ -19,67 +20,29 @@ import Link from 'next/link';
 
 
 
-const DashboardCategoria = () => {
-
-    /*
-    	let image;
-
-	const router = useRouter();
-    var datos = Datos();
-    const [rango, setRango] = useState('null');
-
-  
-    console.log(datos['zipcode']);
-    console.log("es este de arriba");
-
-    const { loading, error, data } = useQuery(PagProd, {
-        variables: {
-			first: datos['show'], 
-			after: datos['page'],
-			services_Categoria_Nombre: datos['q'],
-            services_Zipcode: datos['zipcode']
-           // services_Zipcode: 32110
-		},
-        client: client
-    });
-
-	//if (loading || !data) {
-	//    return <img src="img/giphy.gif"/>;
-    //}
-    
-    console.log(data);
-    console.log(rango)
-
-    if(loading) return <text>Cargando....</text>;
-    if (error) return (
-    <text>Error! ${error.message}</text>
-    );
-    */
+const DashboardProducto = () => {
     const [nombre, setnombre] = useState('');
+    const [descripcion, setdescripcion] = useState('');
+    const [minimalVariantPriceAmount, setminimalVariantPriceAmount] = useState('');
+    const [moneda, setmoneda] = useState('');
+    const [priceAmount, setprecioAmount] = useState('');
+    const [tipoProducto, settipoProducto] = useState('');
     const route = useRouter()
-    const [categoria, { error,data }] = useMutation(ADD_CATEGORIA, {
-        variables: {nombre} 
+    const [createProducto, { error,data }] = useMutation(ADD_PRODUCTO, {
+        variables: { descripcion, minimalVariantPriceAmount, moneda, nombre, priceAmount, tipoProducto} 
       });
 
-      const { loading, error: error1, data: dato } = useQuery(All_CATSERV, {
-        
+      const { loading: loade, data: datoe , error: erroer} = useQuery(ALL_TYPEPROD, {
     });
-
-     /* const { loading, error, data } = useQuery(PagProd, {
-        variables: {
-			first: data['show'], 
-			after: data['page'],
-			services_Categoria_Nombre: datos['q'],
-            services_Zipcode: datos['zipcode']
-           // services_Zipcode: 32110
-        },
-    });*/
+    
+    const { loading: loader, data: datero , error: errore} = useQuery(PagProduc, {
+	});
 
 
-      const handleSubmit = async (event,categoria) => {
+      const handleSubmit = async (event,createProducto) => {
   
         event.preventDefault();
-        await categoria().then(res => {
+        await createProducto().then(res => {
         console.log("sirvio")
         console.log(error.message)  
         }).catch(error => {
@@ -88,11 +51,36 @@ const DashboardCategoria = () => {
         
       };
 
-      if(loading) return <text>Cargando....</text>;
-    if (error1) return (
-    <text>Error! ${error1.message}</text>
-    );
 
+      const displayTipoProducto = () => {
+
+		if(loade){
+		  return( <option disabled>Loading tipo de producto</option>);
+		}
+		else
+		{
+            if(datoe!=null){
+
+		  return datoe.allTipoProducto.edges.map(link => {
+			
+			  return(
+			<option value={link.node.nombre}>{link.node.nombre}</option>
+			  )
+			
+          }    
+               );
+        }
+        else{
+			return null;
+		}
+	  }
+    }
+
+
+    if(loader) return <text>Cargando....</text>;
+    if (errore) return (
+    <text>Error! ${errorre.message}</text>
+    );
       console.log("sopa")
     return(
         <div>
@@ -128,8 +116,7 @@ const DashboardCategoria = () => {
                                          aria-labelledby="all-tab">
                                         <div className="store-listing-style-04">
                                             
-                                            
-                                        {dato.allCategoriaServicio.edges.map(prestador => {
+                                        {datero.allProductos.edges.map(prestador => {
                                 return (
                                             <div className="store-listing-item">
                                                 <div className="d-flex align-items-center flex-wrap flex-lg-nowrap border-bottom py-4 py-lg-0">
@@ -196,8 +183,8 @@ const DashboardCategoria = () => {
                                             )
 }
 )}
-
-
+                                            
+                                            
                                         </div>
 
 
@@ -852,6 +839,105 @@ const DashboardCategoria = () => {
     </div>
 
 
+
+
+
+
+
+
+
+<div id="add-popup" className="mfp-hide">
+        <div className="form-login-register">
+            <div className="tabs mb-8">
+                <ul className="nav nav-pills tab-style-01 text-capitalize justify-content-center"
+                    role="tablist">
+                    <li className="nav-item">
+                        <a className="nav-link active" id="login-tab" data-toggle="tab"
+                           href="#login"
+                           role="tab"
+                           aria-controls="login" aria-selected="true"><h3>Crear Producto</h3></a>
+                    </li>
+                   
+                </ul>
+            </div>
+            <div className="tab-content">
+                <div className="tab-pane fade show active" id="login" role="tabpanel"
+                     aria-labelledby="login-tab">
+                    <div className="form-login">
+                        <form onSubmit={event => handleSubmit(event,createProducto)}>
+                            <div className="form-group mb-2">
+                                <label htmlFor="username" className="sr-only">Name</label>
+                                <input id="username" type="text" className="form-control" value={nombre} onChange={e => setnombre(e.target.value)} placeholder="Name"/>
+                            </div>
+                            <div className="form-group mb-3">
+                                <div className="input-group flex-nowrap align-items-center">
+                                    <label htmlFor="password" className="sr-only">Descripcion</label>
+                                    <input id="password" type="text" className="form-control" value={descripcion} onChange={e => setdescripcion(e.target.value)} placeholder="Descripcion"/>
+                                </div>
+                            </div>
+                            <div className="form-group mb-3">
+                                <div className="input-group flex-nowrap align-items-center">
+                                    <label htmlFor="password" className="sr-only">Moneda</label>
+                                    <input id="password" type="text" className="form-control" value={moneda} onChange={e => setmoneda(e.target.value)} placeholder="Moneda"/>
+                                </div>
+                            </div>
+                            <div className="form-group mb-3">
+                                <div className="input-group flex-nowrap align-items-center">
+                                    <label htmlFor="password" className="sr-only">Price Amount</label>
+                                    <input id="password" type="text" className="form-control" value={priceAmount} onChange={e => setprecioAmount(e.target.value)} placeholder="Price Amount"/>
+                                </div>
+                            </div>
+                            <div className="form-group mb-3">
+                                <div className="input-group flex-nowrap align-items-center">
+                                    <label htmlFor="password" className="sr-only">Minimal Price Amount</label>
+                                    <input id="password" type="text" className="form-control" value={minimalVariantPriceAmount} onChange={e => setminimalVariantPriceAmount(e.target.value)} placeholder="Minimal Price Amount"/>
+                                </div>
+                            </div>
+                            <div className="form-group mb-3">
+                                <div className="input-group flex-nowrap align-items-center">
+                                   
+                                <select 
+       onChange={e => (settipoProducto(e.target.value))}
+       className="form-control color-gray"
+       id="price-form">
+        <option>Tipo de Producto</option>
+        {displayTipoProducto()}
+            </select>
+
+												
+                                </div>
+                            </div>
+                            <div className="form-group mb-6">
+                                <div className="custom-control custom-checkbox">
+                                    <input type="checkbox" className="custom-control-input" id="check"/>
+                                    <label className="custom-control-label text-dark" htmlFor="check">Remember</label>
+                                </div>
+                            </div>
+                            <button type="submit"
+                                    className="btn btn-primary btn-block font-weight-bold text-uppercase font-size-lg rounded-sm mb-8" onClick={()=> createProducto()}>
+                                Add
+                            </button>
+                        </form>
+                        
+                        
+                    </div>
+
+
+                </div>
+                
+            </div>
+            <form>
+
+            </form>
+        </div>
+    </div>
+
+
+
+
+
+
+
     <div id="add-categoria" className="mfp-hide">
         <div className="form-login-register">
             <div className="tabs mb-8">
@@ -870,16 +956,16 @@ const DashboardCategoria = () => {
                 <div className="tab-pane fade show active" id="login" role="tabpanel"
                      aria-labelledby="login-tab">
                     <div className="form-login">
-                        <form onSubmit={event => handleSubmit(event,createCategoriaServicio)}>
+                        <form onSubmit={event => handleSubmit(event,createProducto)}>
                             <div className="font-size-md text-dark mb-5">Create Category of Service</div>
                             <div className="form-group mb-2">
                                 <label htmlFor="username" className="sr-only">Category</label>
-                                <input id="username" type="text" className="form-control" value={categoria} onChange={e => setcategoria(e.target.value)} placeholder="Username"/>
+                                <input id="username" type="text" className="form-control" value={nombre} onChange={e => setnombre(e.target.value)} placeholder="Username"/>
                             </div>
                             
                             
                             <button type="submit"
-                                    className="btn btn-primary btn-block font-weight-bold text-uppercase font-size-lg rounded-sm mb-8" onClick={()=> createCategoriaServicio()}>
+                                    className="btn btn-primary btn-block font-weight-bold text-uppercase font-size-lg rounded-sm mb-8" onClick={()=> createProducto()}>
                                 Add
                             </button>
                         </form>
@@ -1021,4 +1107,4 @@ const DashboardCategoria = () => {
 
 }
 
-export default withApollo(DashboardCategoria);
+export default withApollo(DashboardProducto);

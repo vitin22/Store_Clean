@@ -14,17 +14,44 @@ query usuarios{
 }
 `;
 
+export const ALL_TYPEPROD = gql`
+query alltTipoProducto($first: Int, $after: String){
+  allTipoProducto(first: $first, after: $after){
+    edges{
+      node{
+        nombre
+        
+      }
+    }
+  }
+  
+}
+`;
+
+
 export const All_CATSERV = gql`
-query {
-  allCategoriaServicio{
-  edges{
-    node{
-      id
-      nombre
-     
+query allCategoriaServicio($first: Int, $after: String){
+  allCategoriaServicio(first: $first, after: $after){
+    edges{
+      node{
+        nombre
+      }
     }
   }
 }
+`;
+
+export const All_PRODUC = gql`
+query allProductos($first: Int, $after: String){
+  allProductos(first: $first, after: $after){
+    edges{
+      node{
+        nombre
+        
+      }
+    }
+  }
+  
 }
 `;
 
@@ -139,6 +166,36 @@ query allPrestadorServicio($first: Int, $after: String){
  }
 `;
 
+
+export const PagServ = gql`
+query allServicio($first: Int, $after: String){
+  allServicio(first: $first, after: $after){
+    edges{
+      node{
+        nombre
+        
+        
+      }
+    }
+  }
+  
+}
+`;
+
+
+export const PagProduc = gql`
+query allProductos($first: Int, $after: String){
+  allProductos(first: $first, after: $after){
+    edges{
+      node{
+        nombre
+        
+      }
+    }
+  }
+  
+}
+`;
 
 export const ALL_CIUDZIP = gql`
 query allCiudad($zipCode: Int){

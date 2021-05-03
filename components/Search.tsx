@@ -154,16 +154,19 @@ const Ipsort = async () =>{
 
 	  //const { loading: load, data: dato } = useQuery(All_CATSERV, {
 	//});
-	const { loading: loade, data: datoe } = useQuery(All_CONDADO, {
-	});
+	const { loading: loade, data: datoe } = useQuery(All_CONDADO,
+		{client:client}
+	);
 	const { loading: loadz, data: datoz } = useQuery(ALL_ZIP, {
 		skip: false,
-		variables: {condado}
+		variables: {condado},
+		client:client
 		
 	});
 	const { loading: loada, data: datoa } = useQuery(ALL_CONZIP, {
 		skip: true,
-		variables: {zipcode}
+		variables: {zipcode},
+		client:client
 		
 	});
 
@@ -559,7 +562,7 @@ else{
 	};
 }
 
-export default withApollo(Search);
+export default Search;
 
 {/*
 			<div id="header">

@@ -1,12 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import Login from './Login'
 
 
 
  function Header() {
-    const [usuario, setusuario] = useState('null');
-    useEffect(() => {setusuario(localStorage.getItem("user"))})
     
+
     return (
 <div>
  
@@ -164,13 +163,16 @@ import Login from './Login'
                                 
                                 
                                 <li className="nav-item">
-                                    <a className="nav-link" href="#">Administration <span className="caret"><i
+                                    <a className="nav-link" href="#">Docs <span className="caret"><i
                                             className="fas fa-angle-down"></i></span></a>
                                     <ul className="sub-menu x-animated x-fadeInUp">
                                         <li className="nav-item">
-                                            <a className="nav-link" href="dashboard">Dashboard</a>
+                                            <a className="nav-link" href="document/introduction.html">Documentation</a>
                                         </li>
-                                       
+                                        <li className="nav-item">
+                                            <a className="nav-link" href="starter/introduction.html">Get started
+                                            </a>
+                                        </li>
                                     </ul>
                                 </li>
                             </ul>
@@ -182,26 +184,20 @@ import Login from './Login'
                                        data-mfp-options='{"type":"inline","mainclassName":"mfp-move-from-top mfp-align-top search-popup-bg","closeOnBgClick":false,"showCloseBtn":false}'><i
                                             className="far fa-search"></i></a>
                                 </div>
-                                { usuario ?
                                 <div className="header-customize-item">
                                     <a href="#login-popup" className="link" data-gtf-mfp="true"
                                        data-mfp-options='{"type":"inline"}'>
                                         <svg className="icon icon-user-circle-o">
                                             <use xlinkHref="#icon-user-circle-o"></use>
                                         </svg>
-                                        Logueado</a>
+                                        Log in</a>
                                 </div>
-                                :
-                                 <div className="header-customize-item">
-                                 <a href="#login-popup" className="link" data-gtf-mfp="true"
-                                    data-mfp-options='{"type":"inline"}'>
-                                     <svg className="icon icon-user-circle-o">
-                                         <use xlinkHref="#icon-user-circle-o"></use>
-                                     </svg>
-                                     Log in</a>
-                             </div>
-                            }
-                             
+                                <div className="header-customize-item">
+                                    <a href="#add-popup" className="btn btn-primary btn-icon-right" data-gtf-mfp="true"
+                                       data-mfp-options='{"type":"inline"}'>Add
+                                        Listing <i
+                                                className="far fa-angle-right"></i></a>
+                                </div>
                             </div>
                         </div>
                     </nav>

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Estilo from './Script'
 import Search from './Search';
 import Header from './Header';
@@ -9,6 +9,9 @@ import SliderMioDos from '@components/CarouselDos'
 import SliderMioTres from '@components/CarouselTres'
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
+import Login from './Login';
+import Logout from './Logout';
+import { route } from 'next/dist/next-server/server/router';
 
 
 const responsive = {
@@ -33,6 +36,22 @@ const responsive = {
   const rueda = '{"slidesToShow": 2,"autoplay":false,"dots":false,"responsive":[{"breakpoint": 992,"settings": {"slidesToShow": 1,"arrows":false}}]}';
   const papa = "sonya"
  function Home() {
+
+    const [logueado, setlogueado] = useState(false);
+
+
+    useEffect(() => {
+        console.log(localStorage.getItem("user"))
+
+        if (localStorage.getItem("user")==null){
+            setlogueado(true);
+            console.log(logueado)
+         }
+         else {
+            setlogueado(false);
+         }
+    
+    })
     
     
     return (
@@ -3489,6 +3508,7 @@ const responsive = {
         {/*<!-- #footer end -->*/}
     </div>
     {/*<!-- #site-wrapper end-->*/}
+    {logueado ? <Login/>:<Logout/>}
     
     <div id="search-popup" className="mfp-hide">
         <div className="search-popup text-center">

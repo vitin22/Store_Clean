@@ -165,12 +165,21 @@ mutation($categoria: String!){
 `;
 
 export const ADD_TIPOPRODUCTO = gql`
-mutation($hasVariants: Boolean, $isShippingRequired: Boolean, $nombre: String){
-  tipoProductoId(
+mutation($hasVariants: Boolean, $isShippingRequired: Boolean,$nombre: String,){
+  createTipoProducto(
     hasVariants: $hasVariants,
-    isShippingRequired: $isShippingRequired,
+    isShippingRequired: $isShippingRequired
     nombre: $nombre
-  )  
+    
+  )  {
+    tipoProducto{
+      id
+      nombre
+        hasVariants
+      isShippingRequired
+      
+    }
+  }
   }
 
 `;
@@ -205,7 +214,34 @@ mutation($description: String, $minimalVariantPriceAmount: Float, $moneda: Strin
     nombre: $nombre,
     priceAmount: $priceAmount,
     tipoProducto: $tipoProducto
-  )  
+  )  {
+    producto{
+      id
+      productType{
+        id
+      }
+        nombre
+      description
+      moneda
+      priceAmount
+      variants{
+        edges{
+          node{
+            id
+          }
+        }
+      }
+      servicioSet{
+        edges{
+          node{
+            id
+          }
+        }
+      }
+      minimalVariantPriceAmount
+      
+    }
+  }
   }
 
 `;

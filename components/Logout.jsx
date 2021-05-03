@@ -46,7 +46,7 @@ import Link from 'next/link';
                                     </form>
 */ 
 
-function Login() {
+function Logout() {
     // local
     const route = useRouter()
     let [username, setUserName] = useState("");
@@ -65,21 +65,16 @@ function Login() {
         
         event.preventDefault();
         await tokenAuth().then(res => {
-            localStorage.setItem("authToken", res.data.tokenAuth.token);
-            localStorage.setItem("user", username);
-            console.log(localStorage.getItem("user"))
-            route.push('/home')
+            localStorage.removeItem("authToken");
+            console.log(localStorage.getItem("authToken"))
+            route.push('/testing')
         }).catch(error => {
-            console.log('error login')
+            console.log('error logout')
         });
         
     };
 
-    const [tokenAuth, { loading,error,called,client }] = useMutation(LOGIN_MUTATION, {
-variables: { username, password}
-//,
-//refetchQueries: ['getRegistry']
-});
+ 
 
     return (
 <div>
@@ -94,43 +89,24 @@ variables: { username, password}
                         <a className="nav-link active" id="login-tab" data-toggle="tab"
                            href="#login"
                            role="tab"
-                           aria-controls="login" aria-selected="true"><h3>Log In</h3></a>
+                           aria-controls="login" aria-selected="true"><h3>Logout</h3></a>
                     </li>
-                    <li className="nav-item">
-                        <a className="nav-link" id="register-tab" data-toggle="tab" href="#register"
-                           role="tab"
-                           aria-controls="register" aria-selected="false"><h3>Register</h3></a>
-                    </li>
+                   
                 </ul>
             </div>
             <div className="tab-content">
                 <div className="tab-pane fade show active" id="login" role="tabpanel"
                      aria-labelledby="login-tab">
                     <div className="form-login">
-                        <form onSubmit={event => handleSubmit(event, tokenAuth, client)}>
-                            <div className="font-size-md text-dark mb-5">Log In Your Account</div>
-                            <div className="form-group mb-2">
-                                <label htmlFor="username" className="sr-only">Username</label>
-                                <input id="username" type="text" className="form-control" name="username" value={username} onChange={e => setUserName(e.target.value)} placeholder="Username"/>
-                            </div>
-                            <div className="form-group mb-3">
-                                <div className="input-group flex-nowrap align-items-center">
-                                    <label htmlFor="password" className="sr-only">Password</label>
-                                    <input id="password" type="text" className="form-control" name="pass" value={password} onChange={event => setPassword(event.target.value)} placeholder="Password"/>
-                                    <a href="#" className="input-group-append text-decoration-none">Forgot?</a>
-                                </div>
-                            </div>
-                            <div className="form-group mb-6">
-                                <div className="custom-control custom-checkbox">
-                                    <input type="checkbox" className="custom-control-input" id="check"/>
-                                    <label className="custom-control-label text-dark" htmlFor="check">Remember</label>
-                                </div>
-                            </div>
+                    <form onSubmit={event => handleSubmit(event, tokenAuth, client)}>
+                            <div className="font-size-md text-dark mb-5">Logout In Your Account</div>
+                        
                             <button type="submit"
                                     className="btn btn-primary btn-block font-weight-bold text-uppercase font-size-lg rounded-sm mb-8">
-                                Log In
+                                Logout 
                             </button>
                         </form>
+                        
                         <div className="font-size-md text-dark mb-5">Or Log In With</div>
                         <div className="social-icon origin-color si-square">
                             <ul className="row no-gutters list-inline text-center">
@@ -168,45 +144,7 @@ variables: { username, password}
 
 
                 </div>
-                <div className="tab-pane fade " id="register" role="tabpanel"
-                     aria-labelledby="register-tab">
-                    <div className="form-register">
-                        <form>
-                            <div className="font-size-md text-dark mb-5">Create Your Account</div>
-                            <div className="form-group mb-2">
-                                <label htmlFor="username-rt" className="sr-only">Username</label>
-                                <input id="username-rt" type="text" className="form-control" placeholder="Username"/>
-                            </div>
-                            <div className="form-group mb-2">
-                                <label htmlFor="email" className="sr-only">Email</label>
-                                <input id="email" type="text" className="form-control" placeholder="Email Address"/>
-                            </div>
-                            <div className="form-group mb-2">
-                                <label htmlFor="password-rt" className="sr-only">Username</label>
-                                <input id="password-rt" type="password" className="form-control" placeholder="Password"/>
-                            </div>
-                            <div className="form-group mb-3">
-                                <label htmlFor="r-password" className="sr-only">Username</label>
-                                <input id="r-password" type="password" className="form-control"
-                                       placeholder="Retype password"/>
-                            </div>
-
-                            <div className="form-group mb-8">
-                                <div className="custom-control custom-checkbox">
-                                    <input type="checkbox" className="custom-control-input" id="check-term"/>
-                                    <label className="custom-control-label text-dark" htmlFor="check-term">You agree with our
-                                        Terms Privacy Policy and</label>
-                                </div>
-                            </div>
-                            <button type="submit"
-                                    className="btn btn-primary btn-block font-weight-bold text-uppercase font-size-lg rounded-sm">
-                                Create an
-                                account
-                            </button>
-                        </form>
-                    </div>
-
-                </div>
+               
             </div>
             <form>
 
@@ -223,7 +161,7 @@ variables: { username, password}
     );
 }
 
-export default withApollo(Login);
+export default withApollo(Logout);
 
 
 

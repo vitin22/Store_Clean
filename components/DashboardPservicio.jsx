@@ -1,15 +1,17 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Estilo from './ScriptD'
 
-import { ADD_CATEGORIA } from './Apollo/jobs.mutations';
-import {  PagProServ } from './Apollo/jobs.query';
+import { ADD_CATEGORIA, DEL_SERVICIO, LOGIN_MUTATION } from './Apollo/jobs.mutations';
+import {  PagServ } from './Apollo/jobs.query';
 import { useMutation, useQuery } from '@apollo/react-hooks';
 import gql from 'graphql-tag';
 import {useRouter, Router} from 'next/router'
 import Header from './Header'
 import DashboardSidebar from './DashboardSidebar'
+import PserviciosContent from './PserviciosContent'
 import Datos, { ImageValidate } from './Store/Datos';
-
+import { client } from '@components/MyApollo/MyApollo';
+import Logout from './Logout'
 
 
 //import { newRegistery, Registery } from './Type';
@@ -23,23 +25,41 @@ import Link from 'next/link';
 
 const DashboardPservicio = () => {
 
-    const router = useRouter();
+    
+
+    
     var datos = Datos();
     const [rango, setRango] = useState('null');
 
     const [categoria, setcategoria] = useState('');
+    const [servicioId, setservicioId] = useState('');
     const route = useRouter()
     const [createCategoriaServicio, { error,data }] = useMutation(ADD_CATEGORIA, {
-        variables: { categoria} 
+        variables: { categoria},
+        client:client
       });
 
-        const { loading, error: error1, data: dato } = useQuery(PagProServ, {
-        
-    });
+
+      const [deleteServicio, { error: erro,data: dat }] = useMutation(DEL_SERVICIO, {
+        variables: { servicioId },
+        client:client 
+      });
+
+      //  const { loading, error: error1, data: dato } = useQuery(PagServ, 
+       //     { client:client }
+       //     );
 
     
+         
+            useEffect(() => {
+                console.log(localStorage.getItem("user"))
 
-
+                if (localStorage.getItem("user")==null){
+                    return route.push('/home')
+                    
+                 }
+            
+            })
 
 
       const handleSubmit = async (event,createCategoriaServicio) => {
@@ -55,12 +75,15 @@ const DashboardPservicio = () => {
       };
 
 
-      if(loading) return <text>Cargando....</text>;
-    if (error1) return (
-    <text>Error! ${error1.message}</text>
-    );
+      
 
-      console.log({dato})
+
+     // if(loading) return <text>Cargando....</text>;
+   // if (error1) return (
+    //<text>Error! ${error1.message}</text>
+   // );
+
+    //  console.log({dato})
     return(
         <div>
 <Estilo/>
@@ -73,259 +96,15 @@ const DashboardPservicio = () => {
         <div id="wrapper-content" className="wrapper-content pt-0 pb-0">
             <div className="page-wrapper d-flex flex-wrap flex-xl-nowrap">
                 <DashboardSidebar/>
-                <div className="page-container">
-                    <div className="container-fluid">
-                        <div className="page-content-wrapper d-flex flex-column">
-                            <h1 className="font-size-h4 mb-4 font-weight-normal">My Listings</h1>
-                            <div className="page-content">
-                                <div className="tabs">
-                                    <ul className="nav nav-pills tab-style-01 font-size-lg" role="tablist">
-                                        <li className="nav-item">
-                                            <a className="nav-link active" id="all-tab" data-toggle="tab" href="#all"
-                                               role="tab"
-                                               aria-controls="all" aria-selected="true">All Listings (15) </a>
-                                        </li>
-                                        
-                                        
-                                       
-                                    </ul>
-                                </div>
-                                <div className="tab-content">
-                                    <div className="tab-pane fade show active" id="all" role="tabpanel"
-                                         aria-labelledby="all-tab">
-                                        <div className="store-listing-style-04">
-                                        {dato.allPrestadorServicio.edges.map(prestador => {
-                                return (
-                                            <div className="store-listing-item">
-                                                <div className="d-flex align-items-center flex-wrap flex-lg-nowrap border-bottom py-4 py-lg-0">
-                                                    <div className="store media align-items-stretch py-4">
-                                                        <a href="listing-details-full-image.html" className="store-image">
-                                                            <img src="images/shop/favourite-01.jpg" alt="Favourite 1"/>
-                                                        </a>
-                                                        <div className="media-body px-0 pt-4 pt-md-0">
-                                                            <a href="listing-details-image.html"
-                                                               className="font-size-lg font-weight-semibold text-dark d-inline-block mb-2 lh-1"><span
-                                                                    className="letter-spacing-25">{prestador.node.nombre}</span>
-                                                            </a>
-                                                            <ul className="list-inline store-meta mb-3 font-size-sm d-flex align-items-center flex-wrap">
-                                                                <li className="list-inline-item"><span
-                                                                        className="badge badge-success d-inline-block mr-1">5.0</span><span
-                                                                        className="number">4 rating</span>
-                                                                </li>
-                                                                <li className="list-inline-item separate"></li>
-                                                                <li className="list-inline-item"><span
-                                                                        className="mr-1">From</span><span
-                                                                        className="text-danger font-weight-semibold">$56.00</span>
-                                                                </li>
-                                                                <li className="list-inline-item separate"></li>
-                                                                <li className="list-inline-item"><a href="#"
-                                                                                                className="link-hover-secondary-primary">
-                                                                    <svg className="icon icon-cog">
-                                                                        <use xlinkHref="#icon-cog"></use>
-                                                                    </svg>
-                                                                    <span>Service</span>
-                                                                </a></li>
-                                                            </ul>
-                                                            <div className="border-top pt-2 d-flex">
-															<span
-                                                                    className="d-inline-block mr-1"><i
-                                                                    className="fal fa-map-marker-alt">
-															</i>
-																</span>
-                                                                <a href="#"
-                                                                   className="text-secondary text-decoration-none address">San
-                                                                    Francisco,
-                                                                    CA</a>
-                                                                <div className="ml-0 ml-sm-auto">
-                                                                    <span className="label">Status:</span>
-                                                                    <span className="status active">Active</span>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div className="action ml-0 ml-lg-auto mt-3 mt-lg-0 align-items-center flex-wrap flex-sm-nowrap w-100 w-lg-auto">
-                                                        <a href="page-submit-listing.html"
-                                                           className="btn btn-light btn-icon-left mb-2 mb-sm-0 font-size-md">
-                                                            <i className="fal fa-edit"></i>
-                                                            Edit
-                                                        </a>
-                                                        <a href="#"
-                                                           className="btn btn-primary btn-icon-left mb-2 mb-sm-0 px-5 font-size-md">
-                                                            <i className="fal fa-trash-alt"></i>
-                                                            Delete
-                                                        </a>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            
-                                            )
-}
-)}
-                                            
-                                        </div>
-                                        <ul className="pagination pagination-style-02">
-                                            <li className="page-item"><a href="#" className="page-link bg-gray"><i
-                                                    className="fal fa-chevron-left"></i></a>
-                                            </li>
-                                            <li className="page-item"><a href="#" className="page-link current bg-gray">1</a>
-                                            </li>
-                                            <li className="page-item"><a href="#" className="page-link bg-gray">2</a></li>
-                                            <li className="page-item"><a href="#" className="page-link bg-gray">3</a></li>
-                                            <li className="page-item"><a href="#" className="page-link bg-gray">...</a></li>
-                                            <li className="page-item"><a href="#" className="page-link bg-gray">5</a></li>
-                                            <li className="page-item"><a href="#" className="page-link bg-gray"><i
-                                                    className="fal fa-chevron-right"></i></a>
-                                            </li>
-                                        </ul>
-                                    </div>
-
-
-                                   
-                                    
-                                   
-                                </div>
-
-                            </div>
-                            <div className="mt-5">
-                                &copy; 2020 Thedir. All Rights Reserved.
-                            </div>
-                        </div>
-                    </div>
-                </div>
+               <PserviciosContent/>
             </div>
 
         </div>
         {/*<!-- #wrapper-content end -->*/}
     </div>
     {/*<!-- #site-wrapper end-->*/}
-    <div id="login-popup" className="mfp-hide">
-        <div className="form-login-register">
-            <div className="tabs mb-8">
-                <ul className="nav nav-pills tab-style-01 text-capitalize justify-content-center"
-                    role="tablist">
-                    <li className="nav-item">
-                        <a className="nav-link active" id="login-tab" data-toggle="tab"
-                           href="#login"
-                           role="tab"
-                           aria-controls="login" aria-selected="true"><h3>Log In</h3></a>
-                    </li>
-                    <li className="nav-item">
-                        <a className="nav-link" id="register-tab" data-toggle="tab" href="#register"
-                           role="tab"
-                           aria-controls="register" aria-selected="false"><h3>Register</h3></a>
-                    </li>
-                </ul>
-            </div>
-            <div className="tab-content">
-                <div className="tab-pane fade show active" id="login" role="tabpanel"
-                     aria-labelledby="login-tab">
-                    <div className="form-login">
-                        <form>
-                            <div className="font-size-md text-dark mb-5">Log In Your Account</div>
-                            <div className="form-group mb-2">
-                                <label htmlFor="username" className="sr-only">Username</label>
-                                <input id="username" type="text" className="form-control" placeholder="Username"/>
-                            </div>
-                            <div className="form-group mb-3">
-                                <div className="input-group flex-nowrap align-items-center">
-                                    <label htmlFor="password" className="sr-only">Password</label>
-                                    <input id="password" type="text" className="form-control" placeholder="Password"/>
-                                    <a href="#" className="input-group-append text-decoration-none">Forgot?</a>
-                                </div>
-                            </div>
-                            <div className="form-group mb-6">
-                                <div className="custom-control custom-checkbox">
-                                    <input type="checkbox" className="custom-control-input" id="check"/>
-                                    <label className="custom-control-label text-dark" htmlFor="check">Remember</label>
-                                </div>
-                            </div>
-                            <button type="submit"
-                                    className="btn btn-primary btn-block font-weight-bold text-uppercase font-size-lg rounded-sm mb-8">
-                                Log In
-                            </button>
-                        </form>
-                        <div className="font-size-md text-dark mb-5">Or Log In With</div>
-                        <div className="social-icon origin-color si-square">
-                            <ul className="row no-gutters list-inline text-center">
-                                <li className="list-inline-item si-facebook col-3">
-                                    <a target="_blank" title="Facebook" href="#">
-                                        <i className="fab fa-facebook-f">
-                                        </i>
-                                        <span>Facebook</span>
-                                    </a>
-                                </li>
-                                <li className="list-inline-item si-twitter col-3">
-                                    <a target="_blank" title="Twitter" href="#">
-                                        <i className="fab fa-twitter">
-                                        </i>
-                                        <span>Twitter</span>
-                                    </a>
-                                </li>
-                                <li className="list-inline-item si-google col-3">
-                                    <a target="_blank" title="Google plus" href="#">
-                                        <svg className="icon icon-google-plus-symbol">
-                                            <use xlinkHref="#icon-google-plus-symbol"></use>
-                                        </svg>
-                                        <span>Google plus</span>
-                                    </a>
-                                </li>
-                                <li className="list-inline-item si-rss col-3">
-                                    <a target="_blank" title="RSS" href="#">
-                                        <i className="fas fa-rss"></i>
-                                        <span>RSS</span>
-                                    </a>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-
-
-                </div>
-                <div className="tab-pane fade " id="register" role="tabpanel"
-                     aria-labelledby="register-tab">
-                    <div className="form-register">
-                        <form>
-                            <div className="font-size-md text-dark mb-5">Create Your Account</div>
-                            <div className="form-group mb-2">
-                                <label htmlFor="username-rt" className="sr-only">Username</label>
-                                <input id="username-rt" type="text" className="form-control" placeholder="Username"/>
-                            </div>
-                            <div className="form-group mb-2">
-                                <label htmlFor="email" className="sr-only">Email</label>
-                                <input id="email" type="text" className="form-control" placeholder="Email Address"/>
-                            </div>
-                            <div className="form-group mb-2">
-                                <label htmlFor="password-rt" className="sr-only">Username</label>
-                                <input id="password-rt" type="password" className="form-control" placeholder="Password"/>
-                            </div>
-                            <div className="form-group mb-3">
-                                <label htmlFor="r-password" className="sr-only">Username</label>
-                                <input id="r-password" type="password" className="form-control"
-                                       placeholder="Retype password"/>
-                            </div>
-
-                            <div className="form-group mb-8">
-                                <div className="custom-control custom-checkbox">
-                                    <input type="checkbox" className="custom-control-input" id="check-term"/>
-                                    <label className="custom-control-label text-dark" htmlFor="check-term">You agree with our
-                                        Terms Privacy Policy and</label>
-                                </div>
-                            </div>
-                            <button type="submit"
-                                    className="btn btn-primary btn-block font-weight-bold text-uppercase font-size-lg rounded-sm">
-                                Create an
-                                account
-                            </button>
-                        </form>
-                    </div>
-
-                </div>
-            </div>
-            <form>
-
-            </form>
-        </div>
-    </div>
+    <Logout/>
+    
     <div id="search-popup" className="mfp-hide">
         <div className="search-popup text-center">
             <h2 className="mb-8">Search</h2>
@@ -731,4 +510,4 @@ const DashboardPservicio = () => {
 
 }
 
-export default withApollo(DashboardPservicio);
+export default DashboardPservicio;
