@@ -1,16 +1,16 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import Estilo from './ScriptD'
 
-import { ADD_CATEGORIA, DEL_SERVICIO, LOGIN_MUTATION } from './Apollo/jobs.mutations';
-import {  PagServ } from './Apollo/jobs.query';
-import { useMutation, useQuery } from '@apollo/react-hooks';
+import { ADD_GRUPSERVICIO } from '@components/Apollo/jobs.mutations';
+import { ALL_TYPEPROD, PagProduc} from '@components/Apollo/jobs.query';
+import { useMutation } from '@apollo/react-hooks';
+import { useQuery } from '@apollo/react-hooks';
+import { client } from '@components/MyApollo/MyApollo';
 import gql from 'graphql-tag';
 import {useRouter, Router} from 'next/router'
-import Header from './Header'
+import HeaderAdd from './HeaderAdd'
 import DashboardSidebar from './DashboardSidebar'
-import PserviciosContent from './PserviciosContent'
-import Datos, { ImageValidate } from './Store/Datos';
-import { client } from '@components/MyApollo/MyApollo';
+import GserviciosContent from './GserviciosContent'
 import Logout from './Logout'
 
 
@@ -23,70 +23,28 @@ import Link from 'next/link';
 
 
 
-const DashboardPservicio = () => {
-
-    
-
-    
-    var datos = Datos();
-    const [rango, setRango] = useState('null');
-
-    const [active, setactive] = useState('');
-    const [apellidos, setapellidos] = useState('');
-    const [background, setbackground] = useState('');
-    const [birthDate, setbirthDate] = useState('');
-    const [email, setemail] = useState('');
-    const [localidad, setlocalidad] = useState('');
+const DashboardGservicios = () => {
     const [nombre, setnombre] = useState('');
-    const [particularOrBusinessAddress, setparticularOrBusinessAddress] = useState('');
-    const [phone, setphone] = useState('');
-    const [services, setservices] = useState('');
-    const [socialSecurityNumber, setsocialSecurityNumber] = useState('');
-
-
-    const route = useRouter()
-    const [createPrestadorServicio, { error,data }] = useMutation(ADD_PRESERVICIO, {
-        variables: { active,
-            apellidos,
-            background,
-            birthDate,
-            email,
-            localidad,
-            nombre,
-            particularOrBusinessAddress,
-            phone,
-            services,
-            socialSecurityNumber},
+    
+    
+    const [createGrupoServicio, { error,data }] = useMutation(ADD_GRUPSERVICIO, {
+        variables: { nombre},
         client:client
       });
 
-
-      const [deleteServicio, { error: erro,data: dat }] = useMutation(DEL_SERVICIO, {
-        variables: { servicioId },
-        client:client 
-      });
-
-      //  const { loading, error: error1, data: dato } = useQuery(PagServ, 
-       //     { client:client }
-       //     );
+     
 
     
-         
-            useEffect(() => {
-                console.log(localStorage.getItem("user"))
-
-                if (localStorage.getItem("user")==null){
-                    return route.push('/home')
-                    
-                 }
-            
-            })
+    
+   // const { loading: loader, data: datero , error: errore} = useQuery(PagProduc,
+    //     {client: client}
+    //     );
 
 
-      const handleSubmit = async (event,createPrestadorServicio) => {
+      const handleSubmit = async (event,createGrupoServicio) => {
   
         event.preventDefault();
-        await createPrestadorServicio().then(res => {
+        await createGrupoServicio().then(res => {
         console.log("sirvio")
         console.log(error.message)  
         }).catch(error => {
@@ -96,36 +54,32 @@ const DashboardPservicio = () => {
       };
 
 
-      
+     
 
-
-     // if(loading) return <text>Cargando....</text>;
-   // if (error1) return (
-    //<text>Error! ${error1.message}</text>
-   // );
-
-    //  console.log({dato})
+    //if(loader) return <text>Cargando....</text>;
+    //if (errore) return (
+    //<text>Error! ${errore.message}</text>
+    //);
+      console.log("sopa")
     return(
         <div>
 <Estilo/>
 {/*<!-- #site-wrapper start -->*/}
     <div id="site-wrapper" className="site-wrapper panel dashboards">
         {/*<!-- #header start -->*/}
-        <Header/>
+        <HeaderAdd/>
         {/*<!-- #header end -->*/}
         {/*<!-- #wrapper-content start -->*/}
         <div id="wrapper-content" className="wrapper-content pt-0 pb-0">
             <div className="page-wrapper d-flex flex-wrap flex-xl-nowrap">
                 <DashboardSidebar/>
-               <PserviciosContent/>
-            </div>
-
+              
+<GserviciosContent/>
         </div>
         {/*<!-- #wrapper-content end -->*/}
     </div>
     {/*<!-- #site-wrapper end-->*/}
-    <Logout/>
-    
+   <Logout/>
     <div id="search-popup" className="mfp-hide">
         <div className="search-popup text-center">
             <h2 className="mb-8">Search</h2>
@@ -362,7 +316,14 @@ const DashboardPservicio = () => {
     </div>
 
 
-    <div id="add-categoria" className="mfp-hide">
+
+
+
+
+
+
+
+<div id="add-popup" className="mfp-hide">
         <div className="form-login-register">
             <div className="tabs mb-8">
                 <ul className="nav nav-pills tab-style-01 text-capitalize justify-content-center"
@@ -371,59 +332,23 @@ const DashboardPservicio = () => {
                         <a className="nav-link active" id="login-tab" data-toggle="tab"
                            href="#login"
                            role="tab"
-                           aria-controls="login" aria-selected="true"><h3>Category</h3></a>
+                           aria-controls="login" aria-selected="true"><h3>Crear Tipo de Producto</h3></a>
                     </li>
-                    
+                   
                 </ul>
             </div>
             <div className="tab-content">
                 <div className="tab-pane fade show active" id="login" role="tabpanel"
                      aria-labelledby="login-tab">
                     <div className="form-login">
-                        <form onSubmit={event => handleSubmit(event,createPrestadorServicio)}>
-                            <div className="font-size-md text-dark mb-5">Create Prestador of Service</div>
+                        <form onSubmit={event => handleSubmit(event,createTipoProducto)}>
                             <div className="form-group mb-2">
-                                <label htmlFor="username" className="sr-only">Apellidos</label>
-                                <input id="apellidos" type="text" className="form-control" value={apellidos} onChange={e => setapellidos(e.target.value)} placeholder="Apellidos"/>
+                                <label htmlFor="username" className="sr-only">Name</label>
+                                <input id="username" type="text" className="form-control" value={nombre} onChange={e => setnombre(e.target.value)} placeholder="Name"/>
                             </div>
-                            <div className="form-group mb-2">
-                                <label htmlFor="username" className="sr-only">background</label>
-                                <input id="background" type="text" className="form-control" value={background} onChange={e => setbackground(e.target.value)} placeholder="background"/>
-                            </div>
-                            <div className="form-group mb-2">
-                                <label htmlFor="username" className="sr-only">birthDate</label>
-                                <input id="birthDate" type="text" className="form-control" value={birthDate} onChange={e => setbirthDate(e.target.value)} placeholder="birthDate"/>
-                            </div>
-                            <div className="form-group mb-2">
-                                <label htmlFor="username" className="sr-only">email</label>
-                                <input id="email" type="text" className="form-control" value={email} onChange={e => setemail(e.target.value)} placeholder="email"/>
-                            </div>
-                            <div className="form-group mb-2">
-                                <label htmlFor="username" className="sr-only">localidad</label>
-                                <input id="localidad" type="text" className="form-control" value={localidad} onChange={e => setlocalidad(e.target.value)} placeholder="localidad"/>
-                            </div>
-                            <div className="form-group mb-2">
-                                <label htmlFor="username" className="sr-only">nombre</label>
-                                <input id="nombre" type="text" className="form-control" value={nombre} onChange={e => setnombre(e.target.value)} placeholder="nombre"/>
-                            </div>
-                            <div className="form-group mb-2">
-                                <label htmlFor="username" className="sr-only">particularOrBusinessAddress</label>
-                                <input id="particularOrBusinessAddress" type="text" className="form-control" value={particularOrBusinessAddress} onChange={e => setparticularOrBusinessAddress(e.target.value)} placeholder="particularOrBusinessAddress"/>
-                            </div>
-                            <div className="form-group mb-2">
-                                <label htmlFor="username" className="sr-only">phone</label>
-                                <input id="phone" type="text" className="form-control" value={phone} onChange={e => setphone(e.target.value)} placeholder="phone"/>
-                            </div>
-                            <div className="form-group mb-2">
-                                <label htmlFor="username" className="sr-only">services</label>
-                                <input id="services" type="text" className="form-control" value={services} onChange={e => setservices(e.target.value)} placeholder="services"/>
-                            </div>
-                            <div className="form-group mb-2">
-                                <label htmlFor="username" className="sr-only">socialSecurityNumber</label>
-                                <input id="socialSecurityNumber" type="text" className="form-control" value={socialSecurityNumber} onChange={e => setsocialSecurityNumber(e.target.value)} placeholder="socialSecurityNumber"/>
-                            </div>
+                       
                             <button type="submit"
-                                    className="btn btn-primary btn-block font-weight-bold text-uppercase font-size-lg rounded-sm mb-8" onClick={()=> createPrestadorServicio()}>
+                                    className="btn btn-primary btn-block font-weight-bold text-uppercase font-size-lg rounded-sm mb-8" onClick={()=> createTipoProducto()}>
                                 Add
                             </button>
                         </form>
@@ -440,6 +365,7 @@ const DashboardPservicio = () => {
             </form>
         </div>
     </div>
+
 
     {/*<!-- External JavaScripts -->*/}
     <script src="vendors/jquery.min.js"></script>
@@ -560,9 +486,9 @@ const DashboardPservicio = () => {
     </svg>
 
         </div>
-
+</div>
     );
 
 }
 
-export default DashboardPservicio;
+export default DashboardGservicios;

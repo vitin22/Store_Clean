@@ -22,7 +22,7 @@ function DashboardSidebar() {
                         </div>
                         <ul className="list-group list-group-flush list-group-borderless">
                             <li className="list-group-item p-0 mb-2 lh-15">
-                                <a href="panel-dashboard.html"
+                                <a href="dashboard"
                                    className="d-flex align-items-center link-hover-dark-primary font-size-md">
                                     <span className="d-inline-block mr-3"><i className="fal fa-cog"></i></span>
                                     <span>Dashboard</span>
@@ -38,12 +38,7 @@ function DashboardSidebar() {
                                     <span>Gestionar</span>
                                     <span className=" ml-auto"><i className="fal fa-chevron-down"></i></span>
                                 </a>
-                                <ul className="submenu collapse list-group list-group-flush list-group-borderless pt-2 mb-0 sidebar-menu"
-                                    id="listing">
-                                    <li className="list-group-item p-0 mb-2 lh-15"><a href="dashboardcategorias"
-                                                                                  className="link-hover-dark-primary font-size-md">Categorias
-                                                                                  </a></li>
-                                </ul>
+                               
                                 <ul className="submenu collapse list-group list-group-flush list-group-borderless pt-2 mb-0 sidebar-menu"
                                     id="listing">
                                     <li className="list-group-item p-0 mb-2 lh-15"><a href="dashboardproductos"
@@ -58,10 +53,34 @@ function DashboardSidebar() {
                                 </ul>
                                 <ul className="submenu collapse list-group list-group-flush list-group-borderless pt-2 mb-0 sidebar-menu"
                                     id="listing">
+                                    <li className="list-group-item p-0 mb-2 lh-15"><a href="dashboardgservicios"
+                                                                                  className="link-hover-dark-primary font-size-md">Grupo de Servicios
+                                                                                  </a></li>
+                                </ul>
+                                <ul className="submenu collapse list-group list-group-flush list-group-borderless pt-2 mb-0 sidebar-menu"
+                                    id="listing">
+                                    <li className="list-group-item p-0 mb-2 lh-15"><a href="dashboardtipoproducto"
+                                                                                  className="link-hover-dark-primary font-size-md">Tipo de Producto</a></li>
+                                </ul>
+                                <ul className="submenu collapse list-group list-group-flush list-group-borderless pt-2 mb-0 sidebar-menu"
+                                    id="listing">
+                                    <li className="list-group-item p-0 mb-2 lh-15"><a href="dashboardvarianteproducto"
+                                                                                  className="link-hover-dark-primary font-size-md">Variante de Producto</a></li>
+                                </ul>
+                                <ul className="submenu collapse list-group list-group-flush list-group-borderless pt-2 mb-0 sidebar-menu"
+                                    id="listing">
                                     <li className="list-group-item p-0 mb-2 lh-15"><a href="dashboardpservicios"
-                                                                                  className="link-hover-dark-primary font-size-md">Proveedor de Servicios</a></li>
+                                                                                  className="link-hover-dark-primary font-size-md">Prestador de Servicios</a></li>
+                                </ul>
+                                <ul className="submenu collapse list-group list-group-flush list-group-borderless pt-2 mb-0 sidebar-menu"
+                                    id="listing">
+                                    <li className="list-group-item p-0 mb-2 lh-15"><a href="dashboardpserviciosappliance"
+                                                                                  className="link-hover-dark-primary font-size-md">Prestador de Servicios Appliance</a></li>
                                 </ul>
                             </li>
+
+
+                            {/*<!-- #header start -->
                             <li className="list-group-item p-0 mb-2 lh-15">
                                 <a href="panel-my-favourite.html"
                                    className="d-flex align-items-center link-hover-dark-primary font-size-md">
@@ -143,13 +162,15 @@ function DashboardSidebar() {
                                     <span>My Profile</span>
                                 </a>
                             </li>
+                            
                             <li className="list-group-item p-0 mb-2 lh-15">
-                                <a href="#" className="d-flex align-items-center link-hover-dark-primary font-size-md">
+                                <a href="#login-popup" className="d-flex align-items-center link-hover-dark-primary font-size-md">
 									<span className="d-inline-block mr-3"><svg className="icon icon-exit"><use
                                             xlinkHref="#icon-exit"></use></svg></span>
                                     <span>Logout</span>
                                 </a>
                             </li>
+                            */}
                         </ul>
                     </div>
                 </div>

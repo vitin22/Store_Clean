@@ -163,16 +163,13 @@ import Login from './Login'
                                 
                                 
                                 <li className="nav-item">
-                                    <a className="nav-link" href="#">Docs <span className="caret"><i
+                                    <a className="nav-link" href="#">Administration <span className="caret"><i
                                             className="fas fa-angle-down"></i></span></a>
                                     <ul className="sub-menu x-animated x-fadeInUp">
                                         <li className="nav-item">
-                                            <a className="nav-link" href="document/introduction.html">Documentation</a>
+                                            <a className="nav-link" href="dashboard">Dashboard</a>
                                         </li>
-                                        <li className="nav-item">
-                                            <a className="nav-link" href="starter/introduction.html">Get started
-                                            </a>
-                                        </li>
+                                       
                                     </ul>
                                 </li>
                             </ul>
@@ -190,7 +187,7 @@ import Login from './Login'
                                         <svg className="icon icon-user-circle-o">
                                             <use xlinkHref="#icon-user-circle-o"></use>
                                         </svg>
-                                        Log in</a>
+                                        Logueado</a>
                                 </div>
                                 <div className="header-customize-item">
                                     <a href="#add-popup" className="btn btn-primary btn-icon-right" data-gtf-mfp="true"

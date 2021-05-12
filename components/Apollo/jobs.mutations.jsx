@@ -312,28 +312,34 @@ mutation( $varianteId: String! ){
 
 
 export const ADD_SERVICIO = gql`
-mutation($active: Boolean,$avaibleTimeFrom: Time,$availableTimeTo: Time, $avaliableOnlyOnBusinessLocation: Boolean, $categoriaId: Int, $licencia: String, $nombre: String, $precio: Float, $precioAlternativo: Float, $serviceDescription: String, $zipCode: Int){
+mutation( $active: Boolean,$avaibleTimeFrom: Time,$availableTimeTo: Time, $avaliableOnlyOnBusinessLocation: Boolean,$grupoid: String, $licencia: String, $nombre: String, $precio: Float, $precioAlternativo: Float, $serviceDescription: String, $zipCode: Int){
   createServicio(
-    active: $active,
-    availableTimeFrom: $avaibleTimeFrom,
-    availableTimeTo: $availableTimeTo,
-    avaliableOnlyOnBusinessLocation: $avaliableOnlyOnBusinessLocation,
-    categoriaId: $categoriaId,
+    active:$active,
+    availableTimeFrom:$avaibleTimeFrom,
+    availableTimeTo:$availableTimeTo,
+    avaliableOnlyOnBusinessLocation:$avaliableOnlyOnBusinessLocation,
     licencia: $licencia,
     nombre: $nombre,
     precio: $precio,
     precioAlternativo: $precioAlternativo,
     serviceDescription: $serviceDescription,
     zipCode: $zipCode
+    grupoId: $grupoid
     
   )  {
     servicio{
       id
-      categoria{
-        id
-      }
       nombre
       precio
+      precioAlternativo
+      grupo{
+        nombre
+      }
+      licencia
+      productos{
+        nombre
+      }
+      serviceDescription
       zipCode
     }
   }
@@ -374,7 +380,7 @@ mutation( $servicioId: String! ){
 
 export const ADD_PRESERVICIO = gql`
 mutation( $active: Boolean, $apellidos: String, $background: [BackgroundCheck], $birthDate: Date, $email: String, $localidad: [ZipCodes]!, $nombre: String, $particularOrBusinessAddress: String, $phone: String, $services: [Services], $socialSecurityNumber: String ){
-  deleteServicio(
+  createPrestadorServicio(
     active: $active,
     apellidos: $apellidos,
     background: $background,
@@ -424,4 +430,102 @@ mutation( $prestadorServicioIda: String! ){
   )  
   }
 
+`;
+
+export const ADD_GRUPSERVICIO = gql`
+mutation( $categoriaId: String!, $nombre: String){
+  createGrupoServicio(
+      categoriaId:$categoriaId,
+    nombre:$nombre
+    
+  )  {
+   grupo{
+    nombre
+  }
+  }
+}
+
+`;
+
+
+export const UPD_GRUPSERVICIO = gql`
+mutation( $categoriaId: String!, $grupoId: String!,$nombre: String){
+  updateGrupoServicio(
+        categoriaId: $categoriaId
+        grupoId: $grupoId,
+        nombre: $nombre
+  ) 
+  {
+    grupo{
+      nombre
+      id
+      categoria{
+        nombre
+      }
+    }
+  }
+}
+`;
+
+
+export const DEL_GRUPSERVICIO = gql`
+mutation( $grupoId: String!){
+  deleteGrupoServicio(
+        grupoId: $grupoId
+       
+  ) 
+  {
+    grupoId
+  }
+}
+`;
+
+
+export const ACEPT_PresAppli = gql`
+mutation( $prestadorServicioApplianceId: String,  ){
+  acceptPrestadorAppliance(
+prestadorServicioApplianceId: $prestadorServicioApplianceId
+
+  )  
+  {
+    prestadorServicioAppliance{
+      nombre
+    }
+  }
+  }
+`;
+
+export const REJECT_PresAppli = gql`
+mutation( $prestadorServicioApplianceId: String,  ){
+  rejectPrestadorAppliance(
+prestadorServicioApplianceId: $prestadorServicioApplianceId
+
+  )  
+  {
+    prestadorServicioAppliance{
+      nombre
+    }
+  }
+  }
+`;
+
+
+export const REGIS_PrestAppli = gql`
+mutation($apellidos : String, $birthDate: Date ,$email: String, $nombre: String, $particularOrBusinessAddress: String, $password: String, $phone: String, $socialSecurityNumber: String){
+  registerPrestadorAppliance(
+    apellidos : $apellidos 
+    birthDate: $birthDate
+    email: $email
+    nombre: $nombre
+    particularOrBusinessAddress: $particularOrBusinessAddress
+    password: $password
+    phone: $phone,
+    socialSecurityNumber: $socialSecurityNumber
+    
+  ){
+    prestadorServicioAppliance{
+      nombre
+    }
+  }
+}
 `;

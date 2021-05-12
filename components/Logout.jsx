@@ -9,6 +9,7 @@ import Estilo from './ScriptD'
 //import { newRegistery, Registery } from './Type';
 import withApollo from './Apollo/apollo';
 import Link from 'next/link';
+import { client } from './Apollo/ApolloV';
 
 
 /*
@@ -61,16 +62,9 @@ function Logout() {
         setShowPassword(!showPassword)
     };
 
-    const handleSubmit = async (event, tokenAuth, client) => {
+    const handleSubmit = () => {
         
-        event.preventDefault();
-        await tokenAuth().then(res => {
-            localStorage.removeItem("authToken");
-            console.log(localStorage.getItem("authToken"))
-            route.push('/testing')
-        }).catch(error => {
-            console.log('error logout')
-        });
+        client.resetStore();
         
     };
 
@@ -98,7 +92,7 @@ function Logout() {
                 <div className="tab-pane fade show active" id="login" role="tabpanel"
                      aria-labelledby="login-tab">
                     <div className="form-login">
-                    <form onSubmit={event => handleSubmit(event, tokenAuth, client)}>
+                    <form onSubmit={event => handleSubmit()}>
                             <div className="font-size-md text-dark mb-5">Logout In Your Account</div>
                         
                             <button type="submit"

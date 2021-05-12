@@ -197,6 +197,84 @@ query allProductos($first: Int, $after: String){
 }
 `;
 
+
+export const PagTipoProduc = gql`
+query allTipoProductos($first: Int, $after: String){
+  allTipoProducto(first: $first, after: $after){
+    edges{
+      node{
+        nombre
+        
+      }
+    }
+  }
+  
+}
+`;
+
+
+export const PagVariantProduc = gql`
+query allVarianteProducto($first: Int, $after: String){
+  allVarianteProducto(first: $first, after: $after){
+    edges{
+      node{
+        nombre
+        
+      }
+    }
+  }
+  
+}
+`;
+
+export const PagProvServAppli = gql`
+query allPrestadorServicioAppliance($first: Int, $after: String){
+  allPrestadorServicioAppliance(first: $first, after: $after){
+    edges{
+      node{
+        nombre
+        
+      }
+    }
+  }
+  
+}
+`;
+
+
+export const PagProvServTest = gql`
+query allPrestadorServicioTest($first: Int, $after: String){
+  allPrestadorServicioTest(first: $first, after: $after){
+    edges{
+      node{
+        nombre
+        
+      }
+    }
+  }
+  
+}
+`;
+
+
+
+export const PagGrupServ = gql`
+query allGrupoServicio($first: Int, $after: String){
+  allGrupoServicio(first: $first, after: $after){
+    edges{
+      node{
+        nombre
+        id
+        
+      }
+    }
+  }
+  
+}
+`;
+
+
+
 export const ALL_CIUDZIP = gql`
 query allCiudad($zipCode: Int){
   allCiudad(zipCode: $zipCode){
@@ -216,5 +294,19 @@ query allCiudad($zipCode: Int){
  }
  }
 `;
+
+
+export const ALL_USER = gql`
+query users($first: Int, $after: String){
+  users(first: $first, after: $after){
+       edges{
+      node{
+        username
+            }
+    }
+  }
+}
+`;
+
 
 

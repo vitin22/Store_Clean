@@ -1,14 +1,17 @@
 import React, { useState } from 'react';
 import Estilo from './ScriptD'
 
-import { ADD_PRODUCTO } from '@components/Apollo/jobs.mutations';
+import { ADD_TIPOPRODUCTO } from '@components/Apollo/jobs.mutations';
 import { ALL_TYPEPROD, PagProduc} from '@components/Apollo/jobs.query';
 import { useMutation } from '@apollo/react-hooks';
 import { useQuery } from '@apollo/react-hooks';
+import { client } from '@components/MyApollo/MyApollo';
 import gql from 'graphql-tag';
 import {useRouter, Router} from 'next/router'
-import Header from './Header'
+import HeaderAdd from './HeaderAdd'
 import DashboardSidebar from './DashboardSidebar'
+import TipoProductoContent from './TipoProductoContent'
+import Logout from './Logout'
 
 
 //import { newRegistery, Registery } from './Type';
@@ -20,29 +23,27 @@ import Link from 'next/link';
 
 
 
-const DashboardProducto = () => {
+const DashboardTipoProducto = () => {
     const [nombre, setnombre] = useState('');
-    const [descripcion, setdescripcion] = useState('');
-    const [minimalVariantPriceAmount, setminimalVariantPriceAmount] = useState('');
-    const [moneda, setmoneda] = useState('');
-    const [priceAmount, setprecioAmount] = useState('');
-    const [tipoProducto, settipoProducto] = useState('');
-    const route = useRouter()
-    const [createProducto, { error,data }] = useMutation(ADD_PRODUCTO, {
-        variables: { descripcion, minimalVariantPriceAmount, moneda, nombre, priceAmount, tipoProducto} 
+    const [hasVariants, sethasVariants] = useState('');
+    const [isShippingRequired, setisShippingRequired] = useState('');
+    
+    const [createTipoProducto, { error,data }] = useMutation(ADD_TIPOPRODUCTO, {
+        variables: { hasVariants, isShippingRequired, nombre},
+        client:client
       });
 
-      const { loading: loade, data: datoe , error: erroer} = useQuery(ALL_TYPEPROD, {
-    });
+     
     
-    const { loading: loader, data: datero , error: errore} = useQuery(PagProduc, {
-	});
+   // const { loading: loader, data: datero , error: errore} = useQuery(PagProduc,
+    //     {client: client}
+    //     );
 
 
-      const handleSubmit = async (event,createProducto) => {
+      const handleSubmit = async (event,createTipoProducto) => {
   
         event.preventDefault();
-        await createProducto().then(res => {
+        await createTipoProducto().then(res => {
         console.log("sirvio")
         console.log(error.message)  
         }).catch(error => {
@@ -52,35 +53,12 @@ const DashboardProducto = () => {
       };
 
 
-      const displayTipoProducto = () => {
+     
 
-		if(loade){
-		  return( <option disabled>Loading tipo de producto</option>);
-		}
-		else
-		{
-            if(datoe!=null){
-
-		  return datoe.allTipoProducto.edges.map(link => {
-			
-			  return(
-			<option value={link.node.nombre}>{link.node.nombre}</option>
-			  )
-			
-          }    
-               );
-        }
-        else{
-			return null;
-		}
-	  }
-    }
-
-
-    if(loader) return <text>Cargando....</text>;
-    if (errore) return (
-    <text>Error! ${errorre.message}</text>
-    );
+    //if(loader) return <text>Cargando....</text>;
+    //if (errore) return (
+    //<text>Error! ${errore.message}</text>
+    //);
       console.log("sopa")
     return(
         <div>
@@ -88,521 +66,19 @@ const DashboardProducto = () => {
 {/*<!-- #site-wrapper start -->*/}
     <div id="site-wrapper" className="site-wrapper panel dashboards">
         {/*<!-- #header start -->*/}
-        <Header/>
+        <HeaderAdd/>
         {/*<!-- #header end -->*/}
         {/*<!-- #wrapper-content start -->*/}
         <div id="wrapper-content" className="wrapper-content pt-0 pb-0">
             <div className="page-wrapper d-flex flex-wrap flex-xl-nowrap">
                 <DashboardSidebar/>
-                <div className="page-container">
-                    <div className="container-fluid">
-                        <div className="page-content-wrapper d-flex flex-column">
-                            <h1 className="font-size-h4 mb-4 font-weight-normal">My Listings</h1>
-                            <div className="page-content">
-                                <div className="tabs">
-                                    <ul className="nav nav-pills tab-style-01 font-size-lg" role="tablist">
-                                        <li className="nav-item">
-                                            <a className="nav-link active" id="all-tab" data-toggle="tab" href="#all"
-                                               role="tab"
-                                               aria-controls="all" aria-selected="true">All Listings (15) </a>
-                                        </li>
-                                        
-                                        
-                                       
-                                    </ul>
-                                </div>
-                                <div className="tab-content">
-                                    <div className="tab-pane fade show active" id="all" role="tabpanel"
-                                         aria-labelledby="all-tab">
-                                        <div className="store-listing-style-04">
-                                            
-                                        {datero.allProductos.edges.map(prestador => {
-                                return (
-                                            <div className="store-listing-item">
-                                                <div className="d-flex align-items-center flex-wrap flex-lg-nowrap border-bottom py-4 py-lg-0">
-                                                    <div className="store media align-items-stretch py-4">
-                                                        <a href="listing-details-full-image.html" className="store-image">
-                                                            <img src="images/shop/favourite-01.jpg" alt="Favourite 1"/>
-                                                        </a>
-                                                        <div className="media-body px-0 pt-4 pt-md-0">
-                                                            <a href="listing-details-image.html"
-                                                               className="font-size-lg font-weight-semibold text-dark d-inline-block mb-2 lh-1"><span
-                                                                    className="letter-spacing-25">{prestador.node.nombre}</span>
-                                                            </a>
-                                                            <ul className="list-inline store-meta mb-3 font-size-sm d-flex align-items-center flex-wrap">
-                                                                <li className="list-inline-item"><span
-                                                                        className="badge badge-success d-inline-block mr-1">5.0</span><span
-                                                                        className="number">4 rating</span>
-                                                                </li>
-                                                                <li className="list-inline-item separate"></li>
-                                                                <li className="list-inline-item"><span
-                                                                        className="mr-1">From</span><span
-                                                                        className="text-danger font-weight-semibold">$56.00</span>
-                                                                </li>
-                                                                <li className="list-inline-item separate"></li>
-                                                                <li className="list-inline-item"><a href="#"
-                                                                                                className="link-hover-secondary-primary">
-                                                                    <svg className="icon icon-cog">
-                                                                        <use xlinkHref="#icon-cog"></use>
-                                                                    </svg>
-                                                                    <span>Service</span>
-                                                                </a></li>
-                                                            </ul>
-                                                            <div className="border-top pt-2 d-flex">
-															<span
-                                                                    className="d-inline-block mr-1"><i
-                                                                    className="fal fa-map-marker-alt">
-															</i>
-																</span>
-                                                                <a href="#"
-                                                                   className="text-secondary text-decoration-none address">San
-                                                                    Francisco,
-                                                                    CA</a>
-                                                                <div className="ml-0 ml-sm-auto">
-                                                                    <span className="label">Status:</span>
-                                                                    <span className="status active">Active</span>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div className="action ml-0 ml-lg-auto mt-3 mt-lg-0 align-items-center flex-wrap flex-sm-nowrap w-100 w-lg-auto">
-                                                        <a href="page-submit-listing.html"
-                                                           className="btn btn-light btn-icon-left mb-2 mb-sm-0 font-size-md">
-                                                            <i className="fal fa-edit"></i>
-                                                            Edit
-                                                        </a>
-                                                        <a href="#"
-                                                           className="btn btn-primary btn-icon-left mb-2 mb-sm-0 px-5 font-size-md">
-                                                            <i className="fal fa-trash-alt"></i>
-                                                            Delete
-                                                        </a>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            
-                                            )
-}
-)}
-                                            
-                                            
-                                        </div>
-
-
-                                        <ul className="pagination pagination-style-02">
-                                            <li className="page-item"><a href="#" className="page-link bg-gray"><i
-                                                    className="fal fa-chevron-left"></i></a>
-                                            </li>
-                                            <li className="page-item"><a href="#" className="page-link current bg-gray">1</a>
-                                            </li>
-                                            <li className="page-item"><a href="#" className="page-link bg-gray">2</a></li>
-                                            <li className="page-item"><a href="#" className="page-link bg-gray">3</a></li>
-                                            <li className="page-item"><a href="#" className="page-link bg-gray">...</a></li>
-                                            <li className="page-item"><a href="#" className="page-link bg-gray">5</a></li>
-                                            <li className="page-item"><a href="#" className="page-link bg-gray"><i
-                                                    className="fal fa-chevron-right"></i></a>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                    <div className="tab-pane fade" id="active" role="tabpanel" aria-labelledby="active-tab">
-                                        <div className="store-listing-style-04">
-                                            <div className="store-listing-item">
-                                                <div className="d-flex align-items-center flex-wrap flex-lg-nowrap border-bottom py-4 py-lg-0">
-                                                    <div className="store media align-items-stretch py-4">
-                                                        <a href="listing-details-full-image.html" className="store-image">
-                                                            <img src="images/shop/favourite-01.jpg" alt="Favourite 1"/>
-                                                        </a>
-                                                        <div className="media-body px-0 pt-4 pt-md-0">
-                                                            <a href="listing-details-image.html"
-                                                               className="font-size-lg font-weight-semibold text-dark d-inline-block mb-2 lh-1"><span
-                                                                    className="letter-spacing-25">Furniture Assembly</span>
-                                                            </a>
-                                                            <ul className="list-inline store-meta mb-3 font-size-sm d-flex align-items-center flex-wrap">
-                                                                <li className="list-inline-item"><span
-                                                                        className="badge badge-success d-inline-block mr-1">5.0</span><span
-                                                                        className="number">4 rating</span>
-                                                                </li>
-                                                                <li className="list-inline-item separate"></li>
-                                                                <li className="list-inline-item"><span
-                                                                        className="mr-1">From</span><span
-                                                                        className="text-danger font-weight-semibold">$56.00</span>
-                                                                </li>
-                                                                <li className="list-inline-item separate"></li>
-                                                                <li className="list-inline-item"><a href="#"
-                                                                                                className="link-hover-secondary-primary">
-                                                                    <svg className="icon icon-cog">
-                                                                        <use xlinkHref="#icon-cog"></use>
-                                                                    </svg>
-                                                                    <span>Service</span>
-                                                                </a></li>
-                                                            </ul>
-                                                            <div className="border-top pt-2 d-flex">
-															<span
-                                                                    className="d-inline-block mr-1"><i
-                                                                    className="fal fa-map-marker-alt">
-															</i>
-																</span>
-                                                                <a href="#"
-                                                                   className="text-secondary text-decoration-none address">San
-                                                                    Francisco,
-                                                                    CA</a>
-                                                                <div className="ml-0 ml-sm-auto">
-                                                                    <span className="label">Status:</span>
-                                                                    <span className="status active">Active</span>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div className="action ml-0 ml-lg-auto mt-3 mt-lg-0 align-items-center flex-wrap flex-sm-nowrap w-100 w-lg-auto">
-                                                        <a href="page-submit-listing.html"
-                                                           className="btn btn-light btn-icon-left mb-2 mb-sm-0 font-size-md">
-                                                            <i className="fal fa-edit"></i>
-                                                            Edit
-                                                        </a>
-                                                        <a href="#"
-                                                           className="btn btn-primary btn-icon-left mb-2 mb-sm-0 px-5 font-size-md">
-                                                            <i className="fal fa-trash-alt"></i>
-                                                            Delete
-                                                        </a>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div className="store-listing-item">
-                                                <div className="d-flex align-items-center flex-wrap flex-lg-nowrap border-bottom py-4 py-lg-0">
-                                                    <div className="store media align-items-stretch py-4">
-                                                        <a href="listing-details-full-image.html" className="store-image">
-                                                            <img src="images/shop/favourite-02.jpg" alt="Favourite 1"/>
-                                                        </a>
-                                                        <div className="media-body px-0 pt-4 pt-md-0">
-                                                            <a href="listing-details-image.html"
-                                                               className="font-size-lg font-weight-semibold text-dark d-inline-block mb-2 lh-1"><span
-                                                                    className="letter-spacing-25">Roman Kraft Hotel</span>
-                                                            </a>
-                                                            <ul className="list-inline store-meta mb-3 font-size-sm d-flex align-items-center flex-wrap">
-                                                                <li className="list-inline-item"><span
-                                                                        className="badge badge-success d-inline-block mr-1">5.0</span><span
-                                                                        className="number">4 rating</span>
-                                                                </li>
-                                                                <li className="list-inline-item separate"></li>
-                                                                <li className="list-inline-item"><span
-                                                                        className="mr-1">From</span><span
-                                                                        className="text-danger font-weight-semibold">$56.00</span>
-                                                                </li>
-                                                                <li className="list-inline-item separate"></li>
-                                                                <li className="list-inline-item">
-                                                                    <a href="#"
-                                                                       className="link-hover-secondary-primary">
-                                                                        <svg className="icon icon-bed">
-                                                                            <use xlinkHref="#icon-bed"></use>
-                                                                        </svg>
-                                                                        Hotel
-                                                                    </a>
-                                                                </li>
-                                                            </ul>
-                                                            <div className="border-top pt-2 d-flex">
-															<span
-                                                                    className="d-inline-block mr-1"><i
-                                                                    className="fal fa-map-marker-alt">
-															</i>
-																</span>
-                                                                <a href="#"
-                                                                   className="text-secondary text-decoration-none address">San
-                                                                    Francisco,
-                                                                    CA</a>
-                                                                <div className="ml-0 ml-sm-auto">
-                                                                    <span className="label">Status:</span>
-                                                                    <span className="status active">Active</span>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div className="action ml-0 ml-lg-auto mt-3 mt-lg-0 align-items-center flex-wrap flex-sm-nowrap w-100 w-lg-auto">
-                                                        <a href="page-submit-listing.html"
-                                                           className="btn btn-light btn-icon-left mb-2 mb-sm-0 font-size-md">
-                                                            <i className="fal fa-edit"></i>
-                                                            Edit
-                                                        </a>
-                                                        <a href="#"
-                                                           className="btn btn-primary btn-icon-left mb-2 mb-sm-0 px-5 font-size-md">
-                                                            <i className="fal fa-trash-alt"></i>
-                                                            Delete
-                                                        </a>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div className="tab-pane fade" id="pending" role="tabpanel"
-                                         aria-labelledby="pending-tab">
-                                        <div className="store-listing-style-04">
-                                            <div className="store-listing-item">
-                                                <div className="d-flex align-items-center flex-wrap flex-lg-nowrap border-bottom py-4 py-lg-0">
-                                                    <div className="store media align-items-stretch py-4">
-                                                        <a href="listing-details-full-image.html" className="store-image">
-                                                            <img src="images/shop/favourite-03.jpg" alt="Favourite 1"/>
-                                                        </a>
-                                                        <div className="media-body px-0 pt-4 pt-md-0">
-                                                            <a href="listing-details-image.html"
-                                                               className="font-size-lg font-weight-semibold text-dark d-inline-block mb-2 lh-1"><span
-                                                                    className="letter-spacing-25">Karly Gomez Cake</span>
-                                                            </a>
-                                                            <ul className="list-inline store-meta mb-3 font-size-sm d-flex align-items-center flex-wrap">
-                                                                <li className="list-inline-item"><span
-                                                                        className="mr-1">From</span><span
-                                                                        className="text-danger font-weight-semibold">$56.00</span>
-                                                                </li>
-                                                                <li className="list-inline-item separate"></li>
-                                                                <li className="list-inline-item">
-                                                                    <a href="#" className="link-hover-secondary-primary">
-                                                                        <svg className="icon icon-bed">
-                                                                            <use xlinkHref="#icon-bed"></use>
-                                                                        </svg>
-                                                                        <span>Hotel</span>
-                                                                    </a>
-                                                                </li>
-                                                            </ul>
-                                                            <div className="border-top pt-2 d-flex">
-															<span
-                                                                    className="d-inline-block mr-1"><i
-                                                                    className="fal fa-map-marker-alt">
-															</i>
-																</span>
-                                                                <a href="#"
-                                                                   className="text-secondary text-decoration-none address">San
-                                                                    Francisco,
-                                                                    CA</a>
-                                                                <div className="ml-0 ml-sm-auto">
-                                                                    <span className="label">Status:</span>
-                                                                    <span className="status pending">Pending</span>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div className="action ml-0 ml-lg-auto mt-3 mt-lg-0 align-items-center flex-wrap flex-sm-nowrap w-100 w-lg-auto">
-                                                        <a href="page-submit-listing.html"
-                                                           className="btn btn-light btn-icon-left mb-2 mb-sm-0 font-size-md">
-                                                            <i className="fal fa-edit"></i>
-                                                            Edit
-                                                        </a>
-                                                        <a href="#"
-                                                           className="btn btn-primary btn-icon-left mb-2 mb-sm-0 px-5 font-size-md">
-                                                            <i className="fal fa-trash-alt"></i>
-                                                            Delete
-                                                        </a>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                    </div>
-                                    <div className="tab-pane fade" id="expires" role="tabpanel"
-                                         aria-labelledby="expires-tab">
-                                        <div className="store-listing-style-04">
-                                            <div className="store-listing-item">
-                                                <div className="d-flex align-items-center flex-wrap flex-lg-nowrap border-bottom py-4 py-lg-0">
-                                                    <div className="store media align-items-stretch py-4">
-                                                        <a href="listing-details-full-image.html" className="store-image">
-                                                            <img src="images/shop/favourite-04.jpg" alt="Favourite 1"/>
-                                                        </a>
-                                                        <div className="media-body px-0 pt-4 pt-md-0">
-                                                            <a href="listing-details-image.html"
-                                                               className="font-size-lg font-weight-semibold text-dark d-inline-block mb-2 lh-1"><span
-                                                                    className="letter-spacing-25">Furniture Assembly</span>
-                                                            </a>
-                                                            <ul className="list-inline store-meta mb-3 font-size-sm d-flex align-items-center flex-wrap">
-                                                                <li className="list-inline-item"><span
-                                                                        className="badge badge-success d-inline-block mr-1">5.0</span><span
-                                                                        className="number">4 rating</span>
-                                                                </li>
-                                                                <li className="list-inline-item separate"></li>
-                                                                <li className="list-inline-item"><span
-                                                                        className="mr-1">From</span><span
-                                                                        className="text-danger font-weight-semibold">$56.00</span>
-                                                                </li>
-                                                                <li className="list-inline-item separate"></li>
-                                                                <li className="list-inline-item"><a href="#"
-                                                                                                className="link-hover-secondary-primary">
-                                                                    <svg className="icon icon-cog">
-                                                                        <use xlinkHref="#icon-cog"></use>
-                                                                    </svg>
-                                                                    <span>Service</span>
-                                                                </a></li>
-                                                            </ul>
-                                                            <div className="border-top pt-2 d-flex">
-															<span
-                                                                    className="d-inline-block mr-1"><i
-                                                                    className="fal fa-map-marker-alt">
-															</i>
-																</span>
-                                                                <a href="#"
-                                                                   className="text-secondary text-decoration-none address">San
-                                                                    Francisco,
-                                                                    CA</a>
-                                                                <div className="ml-0 ml-sm-auto">
-                                                                    <span className="label">Status:</span>
-                                                                    <span className="status experied">Experied</span>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div className="action ml-0 ml-lg-auto mt-3 mt-lg-0 align-items-center flex-wrap flex-sm-nowrap w-100 w-lg-auto">
-                                                        <a href="page-submit-listing.html"
-                                                           className="btn btn-light btn-icon-left mb-2 mb-sm-0 font-size-md">
-                                                            <i className="fal fa-edit"></i>
-                                                            Edit
-                                                        </a>
-                                                        <a href="#"
-                                                           className="btn btn-primary btn-icon-left mb-2 mb-sm-0 px-5 font-size-md">
-                                                            <i className="fal fa-trash-alt"></i>
-                                                            Delete
-                                                        </a>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                            </div>
-                            <div className="mt-5">
-                                &copy; 2020 Thedir. All Rights Reserved.
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
+              
+<TipoProductoContent/>
         </div>
         {/*<!-- #wrapper-content end -->*/}
     </div>
     {/*<!-- #site-wrapper end-->*/}
-    <div id="login-popup" className="mfp-hide">
-        <div className="form-login-register">
-            <div className="tabs mb-8">
-                <ul className="nav nav-pills tab-style-01 text-capitalize justify-content-center"
-                    role="tablist">
-                    <li className="nav-item">
-                        <a className="nav-link active" id="login-tab" data-toggle="tab"
-                           href="#login"
-                           role="tab"
-                           aria-controls="login" aria-selected="true"><h3>Log In</h3></a>
-                    </li>
-                    <li className="nav-item">
-                        <a className="nav-link" id="register-tab" data-toggle="tab" href="#register"
-                           role="tab"
-                           aria-controls="register" aria-selected="false"><h3>Register</h3></a>
-                    </li>
-                </ul>
-            </div>
-            <div className="tab-content">
-                <div className="tab-pane fade show active" id="login" role="tabpanel"
-                     aria-labelledby="login-tab">
-                    <div className="form-login">
-                        <form>
-                            <div className="font-size-md text-dark mb-5">Log In Your Account</div>
-                            <div className="form-group mb-2">
-                                <label htmlFor="username" className="sr-only">Username</label>
-                                <input id="username" type="text" className="form-control" placeholder="Username"/>
-                            </div>
-                            <div className="form-group mb-3">
-                                <div className="input-group flex-nowrap align-items-center">
-                                    <label htmlFor="password" className="sr-only">Password</label>
-                                    <input id="password" type="text" className="form-control" placeholder="Password"/>
-                                    <a href="#" className="input-group-append text-decoration-none">Forgot?</a>
-                                </div>
-                            </div>
-                            <div className="form-group mb-6">
-                                <div className="custom-control custom-checkbox">
-                                    <input type="checkbox" className="custom-control-input" id="check"/>
-                                    <label className="custom-control-label text-dark" htmlFor="check">Remember</label>
-                                </div>
-                            </div>
-                            <button type="submit"
-                                    className="btn btn-primary btn-block font-weight-bold text-uppercase font-size-lg rounded-sm mb-8">
-                                Log In
-                            </button>
-                        </form>
-                        <div className="font-size-md text-dark mb-5">Or Log In With</div>
-                        <div className="social-icon origin-color si-square">
-                            <ul className="row no-gutters list-inline text-center">
-                                <li className="list-inline-item si-facebook col-3">
-                                    <a target="_blank" title="Facebook" href="#">
-                                        <i className="fab fa-facebook-f">
-                                        </i>
-                                        <span>Facebook</span>
-                                    </a>
-                                </li>
-                                <li className="list-inline-item si-twitter col-3">
-                                    <a target="_blank" title="Twitter" href="#">
-                                        <i className="fab fa-twitter">
-                                        </i>
-                                        <span>Twitter</span>
-                                    </a>
-                                </li>
-                                <li className="list-inline-item si-google col-3">
-                                    <a target="_blank" title="Google plus" href="#">
-                                        <svg className="icon icon-google-plus-symbol">
-                                            <use xlinkHref="#icon-google-plus-symbol"></use>
-                                        </svg>
-                                        <span>Google plus</span>
-                                    </a>
-                                </li>
-                                <li className="list-inline-item si-rss col-3">
-                                    <a target="_blank" title="RSS" href="#">
-                                        <i className="fas fa-rss"></i>
-                                        <span>RSS</span>
-                                    </a>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-
-
-                </div>
-                <div className="tab-pane fade " id="register" role="tabpanel"
-                     aria-labelledby="register-tab">
-                    <div className="form-register">
-                        <form>
-                            <div className="font-size-md text-dark mb-5">Create Your Account</div>
-                            <div className="form-group mb-2">
-                                <label htmlFor="username-rt" className="sr-only">Username</label>
-                                <input id="username-rt" type="text" className="form-control" placeholder="Username"/>
-                            </div>
-                            <div className="form-group mb-2">
-                                <label htmlFor="email" className="sr-only">Email</label>
-                                <input id="email" type="text" className="form-control" placeholder="Email Address"/>
-                            </div>
-                            <div className="form-group mb-2">
-                                <label htmlFor="password-rt" className="sr-only">Username</label>
-                                <input id="password-rt" type="password" className="form-control" placeholder="Password"/>
-                            </div>
-                            <div className="form-group mb-3">
-                                <label htmlFor="r-password" className="sr-only">Username</label>
-                                <input id="r-password" type="password" className="form-control"
-                                       placeholder="Retype password"/>
-                            </div>
-
-                            <div className="form-group mb-8">
-                                <div className="custom-control custom-checkbox">
-                                    <input type="checkbox" className="custom-control-input" id="check-term"/>
-                                    <label className="custom-control-label text-dark" htmlFor="check-term">You agree with our
-                                        Terms Privacy Policy and</label>
-                                </div>
-                            </div>
-                            <button type="submit"
-                                    className="btn btn-primary btn-block font-weight-bold text-uppercase font-size-lg rounded-sm">
-                                Create an
-                                account
-                            </button>
-                        </form>
-                    </div>
-
-                </div>
-            </div>
-            <form>
-
-            </form>
-        </div>
-    </div>
+   <Logout/>
     <div id="search-popup" className="mfp-hide">
         <div className="search-popup text-center">
             <h2 className="mb-8">Search</h2>
@@ -855,7 +331,7 @@ const DashboardProducto = () => {
                         <a className="nav-link active" id="login-tab" data-toggle="tab"
                            href="#login"
                            role="tab"
-                           aria-controls="login" aria-selected="true"><h3>Crear Producto</h3></a>
+                           aria-controls="login" aria-selected="true"><h3>Crear Tipo de Producto</h3></a>
                     </li>
                    
                 </ul>
@@ -864,57 +340,14 @@ const DashboardProducto = () => {
                 <div className="tab-pane fade show active" id="login" role="tabpanel"
                      aria-labelledby="login-tab">
                     <div className="form-login">
-                        <form onSubmit={event => handleSubmit(event,createProducto)}>
+                        <form onSubmit={event => handleSubmit(event,createTipoProducto)}>
                             <div className="form-group mb-2">
                                 <label htmlFor="username" className="sr-only">Name</label>
                                 <input id="username" type="text" className="form-control" value={nombre} onChange={e => setnombre(e.target.value)} placeholder="Name"/>
                             </div>
-                            <div className="form-group mb-3">
-                                <div className="input-group flex-nowrap align-items-center">
-                                    <label htmlFor="password" className="sr-only">Descripcion</label>
-                                    <input id="password" type="text" className="form-control" value={descripcion} onChange={e => setdescripcion(e.target.value)} placeholder="Descripcion"/>
-                                </div>
-                            </div>
-                            <div className="form-group mb-3">
-                                <div className="input-group flex-nowrap align-items-center">
-                                    <label htmlFor="password" className="sr-only">Moneda</label>
-                                    <input id="password" type="text" className="form-control" value={moneda} onChange={e => setmoneda(e.target.value)} placeholder="Moneda"/>
-                                </div>
-                            </div>
-                            <div className="form-group mb-3">
-                                <div className="input-group flex-nowrap align-items-center">
-                                    <label htmlFor="password" className="sr-only">Price Amount</label>
-                                    <input id="password" type="text" className="form-control" value={priceAmount} onChange={e => setprecioAmount(e.target.value)} placeholder="Price Amount"/>
-                                </div>
-                            </div>
-                            <div className="form-group mb-3">
-                                <div className="input-group flex-nowrap align-items-center">
-                                    <label htmlFor="password" className="sr-only">Minimal Price Amount</label>
-                                    <input id="password" type="text" className="form-control" value={minimalVariantPriceAmount} onChange={e => setminimalVariantPriceAmount(e.target.value)} placeholder="Minimal Price Amount"/>
-                                </div>
-                            </div>
-                            <div className="form-group mb-3">
-                                <div className="input-group flex-nowrap align-items-center">
-                                   
-                                <select 
-       onChange={e => (settipoProducto(e.target.value))}
-       className="form-control color-gray"
-       id="price-form">
-        <option>Tipo de Producto</option>
-        {displayTipoProducto()}
-            </select>
-
-												
-                                </div>
-                            </div>
-                            <div className="form-group mb-6">
-                                <div className="custom-control custom-checkbox">
-                                    <input type="checkbox" className="custom-control-input" id="check"/>
-                                    <label className="custom-control-label text-dark" htmlFor="check">Remember</label>
-                                </div>
-                            </div>
+                       
                             <button type="submit"
-                                    className="btn btn-primary btn-block font-weight-bold text-uppercase font-size-lg rounded-sm mb-8" onClick={()=> createProducto()}>
+                                    className="btn btn-primary btn-block font-weight-bold text-uppercase font-size-lg rounded-sm mb-8" onClick={()=> createTipoProducto()}>
                                 Add
                             </button>
                         </form>
@@ -932,56 +365,6 @@ const DashboardProducto = () => {
         </div>
     </div>
 
-
-
-
-
-
-
-    <div id="add-categoria" className="mfp-hide">
-        <div className="form-login-register">
-            <div className="tabs mb-8">
-                <ul className="nav nav-pills tab-style-01 text-capitalize justify-content-center"
-                    role="tablist">
-                    <li className="nav-item">
-                        <a className="nav-link active" id="login-tab" data-toggle="tab"
-                           href="#login"
-                           role="tab"
-                           aria-controls="login" aria-selected="true"><h3>Category</h3></a>
-                    </li>
-                    
-                </ul>
-            </div>
-            <div className="tab-content">
-                <div className="tab-pane fade show active" id="login" role="tabpanel"
-                     aria-labelledby="login-tab">
-                    <div className="form-login">
-                        <form onSubmit={event => handleSubmit(event,createProducto)}>
-                            <div className="font-size-md text-dark mb-5">Create Category of Service</div>
-                            <div className="form-group mb-2">
-                                <label htmlFor="username" className="sr-only">Category</label>
-                                <input id="username" type="text" className="form-control" value={nombre} onChange={e => setnombre(e.target.value)} placeholder="Username"/>
-                            </div>
-                            
-                            
-                            <button type="submit"
-                                    className="btn btn-primary btn-block font-weight-bold text-uppercase font-size-lg rounded-sm mb-8" onClick={()=> createProducto()}>
-                                Add
-                            </button>
-                        </form>
-                        
-                        
-                    </div>
-
-
-                </div>
-                
-            </div>
-            <form>
-
-            </form>
-        </div>
-    </div>
 
     {/*<!-- External JavaScripts -->*/}
     <script src="vendors/jquery.min.js"></script>
@@ -1102,9 +485,9 @@ const DashboardProducto = () => {
     </svg>
 
         </div>
-
+</div>
     );
 
 }
 
-export default withApollo(DashboardProducto);
+export default DashboardTipoProducto;

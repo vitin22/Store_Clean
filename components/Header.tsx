@@ -21,7 +21,7 @@ import Login from './Login'
                                  data-target="#navbar-main-menu">
                                 <span></span>
                             </div>
-                            <a className="navbar-brand navbar-brand-mobile" href="index.html">
+                            <a className="navbar-brand navbar-brand-mobile" href="home">
                                 <img src="images/logo.png" alt="TheDir"/>
                             </a>
                             <a className="mobile-button-search" href="#search-popup"
@@ -30,7 +30,7 @@ import Login from './Login'
                                     className="far fa-search"></i></a>
                         </div>
                         <div className="collapse navbar-collapse" id="navbar-main-menu">
-                            <a className="navbar-brand d-none d-xl-block" href="index.html">
+                            <a className="navbar-brand d-none d-xl-block" href="home">
                                 <img src="images/logo.png" alt="TheDir"/>
                             </a>
                             <div className="form-search form-search-style-04 d-flex mr-auto">
@@ -160,6 +160,8 @@ import Login from './Login'
 
                                 </form>
                             </div>
+
+                            { usuario ?
                             <ul className="navbar-nav">
                                 
                                 
@@ -174,6 +176,8 @@ import Login from './Login'
                                     </ul>
                                 </li>
                             </ul>
+                            :<label></label>
+                            }
 
                             <div className="header-customize justify-content-end align-items-center d-none d-xl-flex">
                                 <div className="header-customize-item button-search">

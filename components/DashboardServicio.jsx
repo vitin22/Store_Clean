@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import Estilo from './ScriptD'
 
-import { ADD_CATEGORIA } from './Apollo/jobs.mutations';
+import { ADD_SERVICIO} from './Apollo/jobs.mutations';
 import { useMutation } from '@apollo/react-hooks';
 import gql from 'graphql-tag';
 import {useRouter, Router} from 'next/router'
-import Header from './Header'
+import HeaderAdd from './HeaderAdd'
 import DashboardSidebar from './DashboardSidebar'
 
 
@@ -19,17 +19,24 @@ import Link from 'next/link';
 
 
 const DashboardServicio = () => {
-    const [categoria, setcategoria] = useState('');
+    const [nombre, setnombre] = useState('');
+    const [licencia, setlicencia] = useState('');
+    const [precio, setprecio] = useState('');
+    const [precioAlternativo, setprecioAlternativo] = useState('');
+    const [serviceDescription, setserviceDescription] = useState('');
+    const [zipCode, setzipCode] = useState('');
+    const [grupoid, setgrupoid] = useState('');
     const route = useRouter()
-    const [createCategoriaServicio, { error,data }] = useMutation(ADD_CATEGORIA, {
-        variables: { categoria} 
+    
+    const [createServicio, { error,data }] = useMutation(ADD_SERVICIO, {
+        variables: { licencia, nombre, precio, precioAlternativo, serviceDescription, zipCode, grupoid } 
       });
 
 
-      const handleSubmit = async (event,createCategoriaServicio) => {
+      const handleSubmit = async (event,createServicio) => {
   
         event.preventDefault();
-        await createCategoriaServicio().then(res => {
+        await createServicio().then(res => {
         console.log("sirvio")
         console.log(error.message)  
         }).catch(error => {
@@ -46,7 +53,7 @@ const DashboardServicio = () => {
 {/*<!-- #site-wrapper start -->*/}
     <div id="site-wrapper" className="site-wrapper panel dashboards">
         {/*<!-- #header start -->*/}
-        <Header/>
+        <HeaderAdd/>
         {/*<!-- #header end -->*/}
         {/*<!-- #wrapper-content start -->*/}
         <div id="wrapper-content" className="wrapper-content pt-0 pb-0">
@@ -73,6 +80,7 @@ const DashboardServicio = () => {
                                     <div className="tab-pane fade show active" id="all" role="tabpanel"
                                          aria-labelledby="all-tab">
                                         <div className="store-listing-style-04">
+                                            
                                             <div className="store-listing-item">
                                                 <div className="d-flex align-items-center flex-wrap flex-lg-nowrap border-bottom py-4 py-lg-0">
                                                     <div className="store media align-items-stretch py-4">
@@ -976,7 +984,7 @@ const DashboardServicio = () => {
                         <a className="nav-link active" id="login-tab" data-toggle="tab"
                            href="#login"
                            role="tab"
-                           aria-controls="login" aria-selected="true"><h3>Category</h3></a>
+                           aria-controls="login" aria-selected="true"><h3>Service</h3></a>
                     </li>
                     
                 </ul>
@@ -985,11 +993,11 @@ const DashboardServicio = () => {
                 <div className="tab-pane fade show active" id="login" role="tabpanel"
                      aria-labelledby="login-tab">
                     <div className="form-login">
-                        <form onSubmit={event => handleSubmit(event,createCategoriaServicio)}>
-                            <div className="font-size-md text-dark mb-5">Create Category of Service</div>
+                        <form onSubmit={event => handleSubmit(event,createServicio)}>
+                            <div className="font-size-md text-dark mb-5">Create Service</div>
                             <div className="form-group mb-2">
-                                <label htmlFor="username" className="sr-only">Category</label>
-                                <input id="username" type="text" className="form-control" value={categoria} onChange={e => setcategoria(e.target.value)} placeholder="Username"/>
+                                <label htmlFor="username" className="sr-only">service</label>
+                                <input id="username" type="text" className="form-control" value={nombre} onChange={e => setname(e.target.value)} placeholder="name"/>
                             </div>
                             
                             
